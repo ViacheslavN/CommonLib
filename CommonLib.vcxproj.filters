@@ -40,6 +40,9 @@
     <Filter Include="filesystem">
       <UniqueIdentifier>{8b8cc4f2-3e27-49ec-ae0b-0badb86c8123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="log">
+      <UniqueIdentifier>{98a20606-9a68-4200-b4b5-749970a63c9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -105,6 +108,12 @@
     <ClInclude Include="stream\StreamBaseEmpty.h">
       <Filter>stream</Filter>
     </ClInclude>
+    <ClInclude Include="log\logger.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="str\StringTemplateArg.h">
+      <Filter>str</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -145,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="stream\FixedMemoryStream.cpp">
       <Filter>stream</Filter>
+    </ClCompile>
+    <ClCompile Include="log\logger.cpp">
+      <Filter>log</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

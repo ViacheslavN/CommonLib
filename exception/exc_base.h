@@ -37,8 +37,7 @@ public:
 	{
 		AddMsgT(format, arg1, arg2, arg3, arg4);
 	}
-
-
+	
 
 	template<class TArg>
 	CExcBase(const wstr& format, const TArg& arg) : m_srcThreadId(CThread::GetCurThreadId())
