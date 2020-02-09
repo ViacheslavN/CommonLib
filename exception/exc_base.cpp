@@ -4,7 +4,7 @@
 
 namespace CommonLib
 {
-	CExcBase::CExcBase() : m_srcThreadId(CThread::GetCurThreadId())
+	CExcBase::CExcBase() : m_srcThreadId(thread::CThread::GetCurThreadId())
 	{}
 
 	CExcBase::CExcBase(const CExcBase& exc) : m_srcThreadId(exc.m_srcThreadId), m_msgChain(exc.m_msgChain)
@@ -12,12 +12,12 @@ namespace CommonLib
 
 	}
 
-	CExcBase::CExcBase(const astr& msg) : m_srcThreadId(CThread::GetCurThreadId())
+	CExcBase::CExcBase(const astr& msg) : m_srcThreadId(thread::CThread::GetCurThreadId())
 	{
 		AddMsg(msg);
 	}
 
-	CExcBase::CExcBase(const wstr& msg) : m_srcThreadId(CThread::GetCurThreadId())
+	CExcBase::CExcBase(const wstr& msg) : m_srcThreadId(thread::CThread::GetCurThreadId())
 	{
 		AddMsg(StringEncoding::str_w2utf8_safe(msg));
 	}
@@ -141,6 +141,18 @@ namespace CommonLib
 	void CExcBase::RegenExc(const astr& format, const astr& msg1, const astr& msg2, const astr& msg3, const astr& msg4, std::exception& exc_src)
 	{
 		RegenExc(str_format::StrFormatSafe(format, msg1, msg2, msg3, msg4), exc_src);
+	}
+
+	astr CExcBase::GetErrorDesc(const std::exception& exc)
+	{
+		const CExcBase* pExcBase = dynamic_cast<const CExcBase*>(&exc);
+		if (pExcBase != NULL)
+		{
+			return pExcBase->what();
+		}
+
+		return exc.what() ? exc.what() : "Unknown exception";
+
 	}
 
 }

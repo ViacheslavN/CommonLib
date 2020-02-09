@@ -332,7 +332,9 @@
     <ClInclude Include="filesystem\File.h" />
     <ClInclude Include="filesystem\filesystem.h" />
     <ClInclude Include="filesystem\FileWin.h" />
+    <ClInclude Include="log\log.h" />
     <ClInclude Include="log\logger.h" />
+    <ClInclude Include="log\LogLinePerformer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stream\FixedMemoryStream.h" />
     <ClInclude Include="stream\MemoryStream.h" />
@@ -350,8 +352,10 @@
     <ClCompile Include="alloc\simpleAlloc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
     <ClCompile Include="exception\WinExc.cpp" />
+    <ClCompile Include="filesystem\File.cpp" />
     <ClCompile Include="filesystem\FileWin.cpp" />
     <ClCompile Include="log\logger.cpp" />
+    <ClCompile Include="log\LogLinePerformer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">Create</PrecompiledHeader>

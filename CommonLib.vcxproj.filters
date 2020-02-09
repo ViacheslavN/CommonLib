@@ -114,6 +114,12 @@
     <ClInclude Include="str\StringTemplateArg.h">
       <Filter>str</Filter>
     </ClInclude>
+    <ClInclude Include="log\log.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="log\LogLinePerformer.h">
+      <Filter>log</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -156,6 +162,12 @@
       <Filter>stream</Filter>
     </ClCompile>
     <ClCompile Include="log\logger.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\File.cpp">
+      <Filter>filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="log\LogLinePerformer.cpp">
       <Filter>log</Filter>
     </ClCompile>
   </ItemGroup>

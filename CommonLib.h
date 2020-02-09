@@ -15,6 +15,7 @@
 #include <list>
 #include <set>
 #include <sstream>
+#include <time.h>
 
 
 typedef std::string astr;

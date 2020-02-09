@@ -2,10 +2,13 @@
 
 namespace CommonLib
 {
-
-	class CThread
+	namespace thread
 	{
-	public:
-		static thread_id_t GetCurThreadId();
-	};
+		class CThread
+		{
+		public:
+			static thread_id_t GetCurThreadId();
+		};
+	}
+
 }

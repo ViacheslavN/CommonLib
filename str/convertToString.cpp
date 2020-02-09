@@ -133,12 +133,12 @@ namespace CommonLib
 		return buf;
 	}
 
-	astr str_utils::AStrTo(const wchar_t *ptrStr)
+	astr str_utils::AStrFrom(const wchar_t *ptrStr)
 	{
 		return StringEncoding::str_w2utf8_safe(ptrStr);
 	}
 
-	astr str_utils::AStrTo(const wstr& val)
+	astr str_utils::AStrFrom(const wstr& val)
 	{
 		return StringEncoding::str_w2utf8_safe(val);
 	}

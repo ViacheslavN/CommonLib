@@ -3,12 +3,15 @@
 
 namespace CommonLib
 {
-	thread_id_t CThread::GetCurThreadId()
+	namespace thread
 	{
+		thread_id_t CThread::GetCurThreadId()
+		{
 #ifdef _WIN32
-		return (thread_id_t)GetCurrentThreadId();
+			return (thread_id_t)GetCurrentThreadId();
 #else
-		return (thread_id_t)pthread_self();
+			return (thread_id_t)pthread_self();
 #endif 
+		}
 	}
 }

@@ -18,69 +18,69 @@ namespace CommonLib
 		static wstr WStrDouble(double val);
 
 
-		static wstr WStrTo(const wchar_t *ptrStr)
+		static wstr WStrFrom(const wchar_t *ptrStr)
 		{
 			return wstr(ptrStr);
 		}
 
-		static wstr WStrTo(const wstr& val)
+		static wstr WStrFrom(const wstr& val)
 		{
 			return val;
 		}
 
-		static  wstr WStrTo(const int8_t& val)
+		static  wstr WStrFrom(const int8_t& val)
 		{
 			return WStrInt8(val);
 		}
 
 
-		static  wstr WStrTo(const uint8_t& val)
+		static  wstr WStrFrom(const uint8_t& val)
 		{
 			return WStrUint8(val);
 		}
 
 
-		static  wstr WStrTo(const int16_t& val)
+		static  wstr WStrFrom(const int16_t& val)
 		{
 			return WStrInt16(val);
 		}
 
-		static  wstr WStrTo(const uint16_t& val)
+		static  wstr WStrFrom(const uint16_t& val)
 		{
 			return WStrUint16(val);
 		}
 
 
-		static  wstr WStrTo(const int32_t& val)
+		static  wstr WStrFrom(const int32_t& val)
 		{
 			return WStrInt32(val);
 		}
 
 
-		static  wstr WStrTo(const uint32_t& val)
+		static  wstr WStrFrom(const uint32_t& val)
 		{
 			return WStrUint32(val);
 		}
 
 
-		static  wstr WStrTo(const int64_t& val)
+		static  wstr WStrFrom(const int64_t& val)
 		{
 			return WStrInt64(val);
 		}
 
 
-		static  wstr WStrTo(const uint64_t& val)
+		static  wstr WStrFrom(const uint64_t& val)
 		{
 			return WStrUint64(val);
 		}
 
 
-		static wstr WStrTo(const float& val)
+		static wstr WStrFrom(const float& val)
 		{
 			return WStrFloat(val);
 		}
 
-		static  wstr WStrTo(const double& val)
+		static  wstr WStrFrom(const double& val)
 		{
 			return WStrDouble(val);
 		}
@@ -96,64 +96,64 @@ namespace CommonLib
 		static astr AStrUint64(uint64_t val);
 		static astr AStrFloat(float val);
 		static astr AStrDouble(double val);
-		static astr AStrTo(const wchar_t *ptrStr);
-		static astr AStrTo(const wstr& val);
+		static astr AStrFrom(const wchar_t *ptrStr);
+		static astr AStrFrom(const wstr& val);
 
 		//template<class TVal>
 		//static astr AStrTo(const TVal& val) {}
 
-		static astr AStrTo(const astr& val)
+		static astr AStrFrom(const astr& val)
 		{
 			return val;
 		}
 
-		static  astr AStrTo(const int8_t& val)
+		static  astr AStrFrom(const int8_t& val)
 		{
 			return AStrInt8(val);
 		}
 
-		static  astr AStrTo(const uint8_t& val)
+		static  astr AStrFrom(const uint8_t& val)
 		{
 			return AStrUint8(val);
 		}
 
 
-		static  astr AStrTo(const int16_t& val)
+		static  astr AStrFrom(const int16_t& val)
 		{
 			return AStrInt16(val);
 		}
 
-		static  astr AStrTo(const uint16_t& val)
+		static  astr AStrFrom(const uint16_t& val)
 		{
 			return AStrUint16(val);
 		}
 
-		static  astr AStrTo(const int32_t& val)
+		static  astr AStrFrom(const int32_t& val)
 		{
 			return AStrInt32(val);
 		}
 
-		static  astr AStrTo(const uint32_t& val)
+		static  astr AStrFrom(const uint32_t& val)
 		{
 			return AStrUint32(val);
 		}
 
-		static  astr AStrTo(const int64_t& val)
+		static  astr AStrFrom(const int64_t& val)
 		{
 			return AStrInt64(val);
 		}
 
-		static  astr AStrTo(const uint64_t& val)
+		static  astr AStrFrom(const uint64_t& val)
 		{
 			return AStrUint64(val);
 		}
 
-		static astr AStrTo(const float& val)
+		static astr AStrFrom(const float& val)
 		{
 			return AStrFloat(val);
 		}
 
-		static  astr AStrTo(const double& val)
+		static  astr AStrFrom(const double& val)
 		{
 			return AStrDouble(val);
 		}
