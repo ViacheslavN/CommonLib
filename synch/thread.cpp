@@ -1,0 +1,110 @@
+#include "stdafx.h"
+#include "../exception/exc_base.h"
+#include "thread.h"
+
+namespace CommonLib
+{
+	namespace synch
+	{
+		thread_id_t CThread::GetCurThreadId()
+		{
+#ifdef _WIN32
+			return (thread_id_t)GetCurrentThreadId();
+#else
+			return (thread_id_t)pthread_self();
+#endif 
+		}
+
+		void  CThread::SetDescriptionForCurrThread(const astr& threadName)
+		{
+			CThreadImpl::SetDescriptionForCurrThread(threadName);
+		}
+
+
+		CThread::CThread(std::function<void()>&& threadFunk, astr&& threadName) : m_threadFunk(threadFunk), m_name(threadName)
+		{
+			try
+			{
+			
+				m_thread.reset(new CThreadImpl([this]() {
+				
+					RunThread(m_threadFunk, m_name);
+				}				
+				));
+			}
+			catch (std::exception& ex)
+			{
+				m_exeption = CExcBase::CloneFromExc(ex);
+				m_exeption->AddMsgT("Failed to create thread %1", (uint64_t)GetCurrentThreadId());				 
+			}
+		}
+
+		CThread::~CThread()
+		{
+
+		}
+
+		void CThread::RunThread(std::function<void()> threadFunk, astr threadName)
+		{
+			try
+			{
+				SetDescriptionForCurrThread(m_name);
+				threadFunk();
+			}
+			catch (std::exception& ex)
+			{
+				m_exeption = CExcBase::CloneFromExc(ex);
+				m_exeption->AddMsgT("Failed in thread %1", (uint64_t)GetCurrentThreadId());
+			}
+		}
+
+		bool CThread::IsActive() const
+		{
+			ThrowException();
+			
+			if (m_thread.get() == nullptr)
+				return false;
+			
+			return m_thread->Wait(0);
+		}
+
+		bool CThread::IsHaveException() const
+		{
+			return m_exeption.get() != nullptr;
+		}
+
+		astr CThread::GetExceptionMsg() const
+		{
+			if (m_exeption.get() == nullptr)
+				return astr();
+
+			return m_exeption->what();
+		
+		}
+		void CThread::ThrowException() const
+		{
+			if (m_exeption.get() != nullptr)
+				m_exeption->Throw();
+		}
+
+		void CThread::Join()
+		{
+			Join(-1);
+		}
+
+		bool CThread::Join(int timeoutms)
+		{
+			ThrowException();
+			if (m_thread.get() == nullptr)
+				return false;
+
+			if (timeoutms < 0)
+			{
+				m_thread->Wait();
+				return true;
+			}
+
+			return m_thread->Wait(timeoutms);
+		}
+	}
+}

@@ -1,5 +1,5 @@
 #pragma once
-#include "../thread/thread.h"
+#include "../synch/thread.h"
 #include "../str/StringEncoding.h"
 #include "../str/str.h"
 
@@ -15,44 +15,44 @@ public:
 	CExcBase(const wstr& msg);
 
 	template<class TArg>
-	CExcBase(const astr& format, const TArg& arg) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const astr& format, const TArg& arg) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg);
 	}
 
 	template<class TArg1, class TArg2>
-	CExcBase(const astr& format, const TArg1& arg1, const TArg2& arg2) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const astr& format, const TArg1& arg1, const TArg2& arg2) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg1, arg2);
 	}
 
 	template<class TArg1, class TArg2, class TArg3>
-	CExcBase(const astr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const astr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg1, arg2, arg3);
 	}
 
 	template<class TArg1, class TArg2, class TArg3, class TArg4>
-	CExcBase(const astr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3, const TArg4& arg4) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const astr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3, const TArg4& arg4) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg1, arg2, arg3, arg4);
 	}
 	
 
 	template<class TArg>
-	CExcBase(const wstr& format, const TArg& arg) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const wstr& format, const TArg& arg) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg);
 	}
 
 	template<class TArg1, class TArg2>
-	CExcBase(const wstr& format, const TArg1& arg1, const TArg2& arg2) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const wstr& format, const TArg1& arg1, const TArg2& arg2) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg1, arg2);
 	}
 
 	template<class TArg1, class TArg2, class TArg3>
-	CExcBase(const wstr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase(const wstr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsgT(format, arg1, arg2, arg3);
 	}
@@ -62,7 +62,7 @@ public:
 
 	virtual std::shared_ptr<CExcBase> Clone() const;
 	virtual const char*  what() const;
-	virtual void Throw();
+	virtual void Throw() const;
 	
 	const astrvec& GetChain() const;
 
@@ -166,7 +166,7 @@ public:
 	static void RegenExc(const astr& format, const astr& msg1, const astr& msg2, const astr& msg3, std::exception& exc_src);
 	static void RegenExc(const astr& format, const astr& msg1, const astr& msg2, const astr& msg3, const astr& msg4, std::exception& exc_src);
 	static astr GetErrorDesc(const std::exception& exc);
-
+	static std::shared_ptr<CExcBase> CloneFromExc(const std::exception& exc);
 	
 protected:
 	astrvec m_msgChain;

@@ -7,17 +7,16 @@
 namespace CommonLib
 {
 
-	class ILogger
+	class CLogger
 	{
 	public:
+				
+		virtual  void MessageStr(const astr& msg);
+		
+		CLogger();
+		virtual  ~CLogger();
 
-		
-		
-		
-		virtual  void MessageStr(const char *pMsg) = 0;
-		
-		ILogger(std::shared_ptr<IlogLineFormat>& pLogLineFormat);
-		virtual  ~ILogger();
+		void InnitLog(std::shared_ptr<IlogLineFormat>& pLogLineFormat,  std::shared_ptr<IlogWriter>& pLogWriter);
 
 		virtual void Msg(eMsgType type, const astr& msg);
 		virtual void Msg(eMsgType type, const astr& format, const astr& msg);
@@ -253,11 +252,14 @@ namespace CommonLib
 		{
 			Exc(format, str_utils::AStrFrom(arg1), str_utils::AStrFrom(arg2), str_utils::AStrFrom(arg3), str_utils::AStrFrom(arg4), exc);
 		}
- 
+		protected:
+			void ChangeCurrentLogFile();
+
 		protected:
 			int m_logLevel;
+				
 			std::shared_ptr<IlogLineFormat> m_pLogLineFormat;
-
+			std::shared_ptr<IlogWriter> m_pLogWriter;
 	};
 
 }

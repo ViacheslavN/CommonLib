@@ -332,7 +332,10 @@
     <ClInclude Include="filesystem\File.h" />
     <ClInclude Include="filesystem\filesystem.h" />
     <ClInclude Include="filesystem\FileWin.h" />
+    <ClInclude Include="filesystem\PathUtils.h" />
+    <ClInclude Include="log\FileAsyncLogger.h" />
     <ClInclude Include="log\log.h" />
+    <ClInclude Include="log\LogFileWriterBase.h" />
     <ClInclude Include="log\logger.h" />
     <ClInclude Include="log\LogLinePerformer.h" />
     <ClInclude Include="stdafx.h" />
@@ -345,15 +348,26 @@
     <ClInclude Include="str\str.h" />
     <ClInclude Include="str\StringEncoding.h" />
     <ClInclude Include="str\StringTemplateArg.h" />
+    <ClInclude Include="str\StrUtils.h" />
+    <ClInclude Include="synch\PosixThread.h" />
+    <ClInclude Include="synch\SyncQueue.h" />
+    <ClInclude Include="synch\thread.h" />
+    <ClInclude Include="synch\WinThread.h" />
+    <ClInclude Include="system\win\DynamicLib.h" />
+    <ClInclude Include="system\win\DynamicLibWin.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="thread\thread.h" />
+    <ClInclude Include="utils\ObjHolder.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="alloc\simpleAlloc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
     <ClCompile Include="exception\WinExc.cpp" />
     <ClCompile Include="filesystem\File.cpp" />
+    <ClCompile Include="filesystem\filesystemWin.cpp" />
     <ClCompile Include="filesystem\FileWin.cpp" />
+    <ClCompile Include="filesystem\PathUtils.cpp" />
+    <ClCompile Include="log\FileAsyncLogger.cpp" />
+    <ClCompile Include="log\LogFileWriterBase.cpp" />
     <ClCompile Include="log\logger.cpp" />
     <ClCompile Include="log\LogLinePerformer.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -373,7 +387,11 @@
     <ClCompile Include="str\multibyte.cpp" />
     <ClCompile Include="str\str.cpp" />
     <ClCompile Include="str\StringEncoding.cpp" />
-    <ClCompile Include="thread\thread.cpp" />
+    <ClCompile Include="str\StrUtils.cpp" />
+    <ClCompile Include="synch\PosixThread.cpp" />
+    <ClCompile Include="synch\thread.cpp" />
+    <ClCompile Include="synch\WinThread.cpp" />
+    <ClCompile Include="system\win\DynamicLibWin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

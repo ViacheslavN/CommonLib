@@ -61,8 +61,8 @@ namespace CommonLib
 			virtual uint64_t GetFilePos() const = 0;
 			virtual void SetFileEnd() = 0;
 			virtual void SetFileBegin() = 0;
-			virtual uint32_t WriteFile(const void* pData, uint32_t nSize) = 0;
-			virtual uint32_t ReadFile(void* pData, uint32_t nSize) = 0;
+			virtual uint32_t Write(const void* pData, uint32_t nSize) = 0;
+			virtual uint32_t Read(void* pData, uint32_t nSize) = 0;
 			virtual void CloseFile() = 0;
 			virtual bool IsValid() const = 0;
 			virtual void Flush() = 0;

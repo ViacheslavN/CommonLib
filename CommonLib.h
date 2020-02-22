@@ -5,6 +5,8 @@
 
 #include <windows.h>
 #include <wininet.h>
+#include <process.h>
+
 #endif
 
 #include <stdint.h>
@@ -16,6 +18,11 @@
 #include <set>
 #include <sstream>
 #include <time.h>
+#include <functional>
+#include <queue>
+#include <thread>
+#include <condition_variable>
+#include <atomic>
 
 
 typedef std::string astr;

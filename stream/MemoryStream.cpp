@@ -59,10 +59,15 @@ namespace CommonLib
 				return;
 
 			m_nSize = nSize;
-			if (m_pBuffer)
-				this->m_pAlloc->Free(m_pBuffer);
+			byte_t* buffer = (byte_t*)this->m_pAlloc->Alloc(sizeof(byte_t) * m_nSize);
+			 if (this->m_pBuffer)
+			 {
+				 memcpy(buffer, m_pBuffer, m_nSize);
+				 this->m_pAlloc->Free(m_pBuffer);
+				 m_pBuffer = buffer;
+			 }
+			 
 
-			this->m_pBuffer = (byte_t*)this->m_pAlloc->Alloc(sizeof(byte_t) * m_nSize);
 			if (m_nPos > m_nSize)
 				m_nPos = m_nSize;
 		}

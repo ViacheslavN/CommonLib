@@ -168,8 +168,8 @@ namespace CommonLib
 
 			void CFileWin32::SetFileEnd()
 			{
-				BOOL bRet = ::SetEndOfFile(m_FileHandle);
-				if (bRet == FALSE)
+				DWORD bRet = SetFilePointer(m_FileHandle, 0, NULL, FILE_END);
+				if (bRet == INVALID_SET_FILE_POINTER)
 					throw CWinExc(L"Error set end file");
 			}
 
@@ -186,7 +186,7 @@ namespace CommonLib
 				}
 			}
 
-			uint32_t CFileWin32::WriteFile(const void* pData, uint32_t nSize)
+			uint32_t CFileWin32::Write(const void* pData, uint32_t nSize)
 			{
 				DWORD dww = 0;
 				BOOL bRet = ::WriteFile(m_FileHandle, pData, nSize, &dww, NULL);
@@ -196,7 +196,7 @@ namespace CommonLib
 				return dww;
 			}
 
-			uint32_t CFileWin32::ReadFile(void* pData, uint32_t nSize)
+			uint32_t CFileWin32::Read(void* pData, uint32_t nSize)
 			{
 				DWORD dwr = 0;
 				BOOL bRet = ::ReadFile(m_FileHandle, pData, nSize, &dwr, NULL);

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LogLinePerformer.h"
-#include "../thread/thread.h"
+#include "../synch/thread.h"
 #include "../str/str.h"
 
 #define  TracePrefix	 "tr "
@@ -57,13 +57,13 @@ namespace CommonLib
 
 		msg += str_utils::AStrFrom(currTm.tm_sec);
 		msg += ":";
-		msg = "]";
+		msg += "]";
 	}
 
 	void CLogFilePerformer::AddThreadID(astr& msg)
 	{
 		msg += "<";
-		msg += str_utils::AStrFrom(thread::CThread::GetCurThreadId());
+		msg += str_utils::AStrFrom(synch::CThread::GetCurThreadId());
 		msg += ">";
 
 	}
@@ -95,7 +95,7 @@ namespace CommonLib
 		{
 			outMsg += " ";
 			outMsg += msg;
-			outMsg += "\n";
+			outMsg += "\r\n";
 		}
 	}
 

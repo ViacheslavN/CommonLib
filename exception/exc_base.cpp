@@ -4,7 +4,7 @@
 
 namespace CommonLib
 {
-	CExcBase::CExcBase() : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase::CExcBase() : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{}
 
 	CExcBase::CExcBase(const CExcBase& exc) : m_srcThreadId(exc.m_srcThreadId), m_msgChain(exc.m_msgChain)
@@ -12,12 +12,12 @@ namespace CommonLib
 
 	}
 
-	CExcBase::CExcBase(const astr& msg) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase::CExcBase(const astr& msg) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsg(msg);
 	}
 
-	CExcBase::CExcBase(const wstr& msg) : m_srcThreadId(thread::CThread::GetCurThreadId())
+	CExcBase::CExcBase(const wstr& msg) : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsg(StringEncoding::str_w2utf8_safe(msg));
 	}
@@ -33,7 +33,7 @@ namespace CommonLib
 		return ptrExc;
 	}
 
-	void CExcBase::Throw()
+	void CExcBase::Throw() const
 	{
 		throw *this;
 	}
@@ -153,6 +153,16 @@ namespace CommonLib
 
 		return exc.what() ? exc.what() : "Unknown exception";
 
+	}
+
+	std::shared_ptr<CExcBase> CExcBase::CloneFromExc(const std::exception& exc)
+	{
+		const CExcBase* pExcBase = dynamic_cast<const CExcBase*>(&exc);
+		if (pExcBase != NULL)
+			return pExcBase->Clone();
+
+		std::shared_ptr<CExcBase> ptrExc(new CExcBase(GetErrorDesc(exc)));
+		return ptrExc;
 	}
 
 }
