@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../stream/stream.h"
+#include "../stream/io.h"
 
 namespace CommonLib
 {
@@ -45,7 +46,7 @@ namespace CommonLib
 		class IFile;
 		typedef std::shared_ptr<IFile> TFilePtr;
 
-		class IFile
+		class IFile : public io::IWrite, public io::IRead
 		{
 		public:
 			IFile() {};
@@ -61,8 +62,8 @@ namespace CommonLib
 			virtual uint64_t GetFilePos() const = 0;
 			virtual void SetFileEnd() = 0;
 			virtual void SetFileBegin() = 0;
-			virtual uint32_t Write(const void* pData, uint32_t nSize) = 0;
-			virtual uint32_t Read(void* pData, uint32_t nSize) = 0;
+			virtual std::streamsize Write(const  byte_t* pData, size_t nSize) = 0;
+			virtual std::streamsize Read(byte_t* pData, size_t nSize) = 0;
 			virtual void CloseFile() = 0;
 			virtual bool IsValid() const = 0;
 			virtual void Flush() = 0;

@@ -25,8 +25,8 @@ namespace CommonLib
 				virtual uint64_t GetFilePos() const;
 				virtual void SetFileEnd();
 				virtual void SetFileBegin();
-				virtual uint32_t Write(const void* pData, uint32_t nSize);
-				virtual uint32_t Read(void* pData, uint32_t nSize);
+				virtual std::streamsize Write(const byte_t* pData, size_t nSize);
+				virtual std::streamsize Read(byte_t* pData, size_t nSize);
 				virtual void CloseFile();
 				virtual bool IsValid() const;
 				virtual void Flush();

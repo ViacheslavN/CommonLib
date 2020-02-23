@@ -52,6 +52,12 @@
     <Filter Include="utils">
       <UniqueIdentifier>{f3cc36cb-4729-4464-9663-e8c40ae6b465}</UniqueIdentifier>
     </Filter>
+    <Filter Include="compress">
+      <UniqueIdentifier>{8248e3cc-dcbc-477e-86fd-64c6f8c2de54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="compress\zlib">
+      <UniqueIdentifier>{2a2ace47-ffac-4090-97d0-0ec70801c63a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -159,6 +165,45 @@
     <ClInclude Include="str\StrUtils.h">
       <Filter>str</Filter>
     </ClInclude>
+    <ClInclude Include="stream\io.h">
+      <Filter>stream</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\crc32.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\deflate.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\gzguts.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\inffast.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\inffixed.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\inflate.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\inftrees.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\trees.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\zconf.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\zlib.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\zutil.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\ZlibUtil.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -232,6 +277,54 @@
     </ClCompile>
     <ClCompile Include="str\StrUtils.cpp">
       <Filter>str</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\adler32.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\compress.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\crc32.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\deflate.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\gzclose.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\gzlib.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\gzread.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\gzwrite.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\infback.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\inffast.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\inflate.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\inftrees.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\trees.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\uncompr.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\zutil.c">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\ZlibUtil.cpp">
+      <Filter>compress\zlib</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

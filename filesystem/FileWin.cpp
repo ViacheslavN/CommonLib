@@ -186,20 +186,20 @@ namespace CommonLib
 				}
 			}
 
-			uint32_t CFileWin32::Write(const void* pData, uint32_t nSize)
+			std::streamsize CFileWin32::Write(const byte_t* pData, size_t nSize)
 			{
 				DWORD dww = 0;
-				BOOL bRet = ::WriteFile(m_FileHandle, pData, nSize, &dww, NULL);
+				BOOL bRet = ::WriteFile(m_FileHandle, pData, (DWORD)nSize, &dww, NULL);
 				if (bRet == FALSE)
 					throw CWinExc(L"Error write file, data size %1", nSize);
 
 				return dww;
 			}
 
-			uint32_t CFileWin32::Read(void* pData, uint32_t nSize)
+			std::streamsize CFileWin32::Read(byte_t* pData, size_t nSize)
 			{
 				DWORD dwr = 0;
-				BOOL bRet = ::ReadFile(m_FileHandle, pData, nSize, &dwr, NULL);
+				BOOL bRet = ::ReadFile(m_FileHandle, pData, (DWORD)nSize, &dwr, NULL);
 				if (bRet == FALSE)
 					throw CWinExc(L"Error read file, data size %1", nSize);
 

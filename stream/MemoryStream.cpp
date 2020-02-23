@@ -15,7 +15,7 @@ namespace CommonLib
 
 	}
 
-	void CWriteMemoryStream::WriteBytes(const byte_t* buffer, uint32_t size)
+	void CWriteMemoryStream::WriteBytes(const byte_t* buffer, size_t size)
 	{
 		try
 		{
@@ -33,7 +33,7 @@ namespace CommonLib
 		}
 	}
 
-	void CWriteMemoryStream::WriteInverse(const byte_t* buffer, uint32_t size)
+	void CWriteMemoryStream::WriteInverse(const byte_t* buffer, size_t size)
 	{
 		try
 		{
@@ -48,7 +48,7 @@ namespace CommonLib
 		}
 	}
 
-	void  CWriteMemoryStream::Resize(uint32_t nSize)
+	void  CWriteMemoryStream::Resize(size_t nSize)
 	{
 		try
 		{
@@ -78,13 +78,13 @@ namespace CommonLib
 		}
 	
 	}
-	void CWriteMemoryStream::WriteStream(IStream *pStream, int32_t nPos, int32_t nSize)
+	void CWriteMemoryStream::WriteStream(IStream *pStream, int64_t nPos, int64_t nSize)
 	{
 		IMemoryStream *pMemStream = dynamic_cast<IMemoryStream *>(pStream);
 		if (pMemStream)
 		{
-			uint32_t _nPos = (nPos != -1 ? nPos : 0);
-			uint32_t _nSize = (nSize != -1 ? nSize : pStream->Size());
+			size_t _nPos = (nPos != -1 ? nPos : 0);
+			size_t _nSize = (nSize != -1 ? nSize : pStream->Size());
 
 			Write(_nSize);
 			Write(pMemStream->Buffer() + _nPos, _nSize);
@@ -92,7 +92,7 @@ namespace CommonLib
 
 	}
 
-	void  CWriteMemoryStream::ResizeWithCapacity(uint32_t nSize)
+	void  CWriteMemoryStream::ResizeWithCapacity(size_t nSize)
 	{
 
 		try
@@ -100,9 +100,9 @@ namespace CommonLib
 			if (m_bAttach)
 				throw CExcBase(L"Stream is attached");
 
-			uint32_t newSize = m_nSize;
+			size_t newSize = m_nSize;
 			while (m_nPos + nSize > newSize)
-				newSize = uint32_t(newSize * 1.5) + 1;
+				newSize = size_t(newSize * 1.5) + 1;
 
 			if (newSize > m_nSize)
 			{
@@ -136,7 +136,7 @@ namespace CommonLib
 	CReadMemoryStream::~CReadMemoryStream()
 	{}
 
-	void CReadMemoryStream::ReadBytes(byte_t* dst, uint32_t size)
+	void CReadMemoryStream::ReadBytes(byte_t* dst, size_t size)
 	{
 		if ((this->m_nPos + size) > m_nSize)
 			throw CExcBase(L"ReadMemoryStream: out of range pos: %1, read size: %2", m_nPos, size);
@@ -146,12 +146,12 @@ namespace CommonLib
  
 	}
 
-	void CReadMemoryStream::ReadInverse(byte_t* buffer, uint32_t size)
+	void CReadMemoryStream::ReadInverse(byte_t* buffer, size_t size)
 	{
 		if ((this->m_nPos + size) > m_nSize)
 			throw CExcBase(L"ReadMemoryStream: out of range pos: %1, read size: %2", m_nPos, size);
 
-		for (uint32_t i = 0; i < size; m_nPos++, i++)
+		for (size_t i = 0; i < size; m_nPos++, i++)
 			buffer[i] = this->m_pBuffer[m_nPos + size - i - 1];
 
 		this->m_nPos += size;	 
@@ -180,7 +180,7 @@ namespace CommonLib
 		}
 	}
 
-	bool CReadMemoryStream::ReadBytesSafe(byte_t* dst, uint32_t size)
+	bool CReadMemoryStream::ReadBytesSafe(byte_t* dst, size_t size)
 	{
 		if ((this->m_nPos + size) > m_nSize)
 			return false;
@@ -191,12 +191,12 @@ namespace CommonLib
 		return true;
 	}
 
-	bool CReadMemoryStream::ReadInverseSafe(byte_t* buffer, uint32_t size)
+	bool CReadMemoryStream::ReadInverseSafe(byte_t* buffer, size_t size)
 	{
 		if ((this->m_nPos + size) > m_nSize)
 			return false;
 
-		for (uint32_t i = 0; i < size; m_nPos++, i++)
+		for (size_t i = 0; i < size; m_nPos++, i++)
 			buffer[i] = this->m_pBuffer[m_nPos + size - i - 1];
 
 		this->m_nPos += size;

@@ -20,13 +20,13 @@ namespace CommonLib
 		typedef TMemoryStreamBase<IWriteStreamBase> TBase;
 
 
-		virtual void WriteBytes(const byte_t* buffer, uint32_t size);
-		virtual void WriteInverse(const byte_t* buffer, uint32_t size);
-		virtual void WriteStream(IStream *pStream, int32_t nPos = -1, int32_t nSize = -1);
-		virtual void Resize(uint32_t nSize);
+		virtual void WriteBytes(const byte_t* buffer, size_t size);
+		virtual void WriteInverse(const byte_t* buffer, size_t size);
+		virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
+		virtual void Resize(size_t nSize);
 
 	private:
-		void  ResizeWithCapacity(uint32_t nSize);
+		void  ResizeWithCapacity(size_t nSize);
 	};
 
 
@@ -44,13 +44,13 @@ namespace CommonLib
 		typedef TMemoryStreamBase<IReadStreamBase> TBase;
 
 
-		virtual void ReadBytes(byte_t* dst, uint32_t size);
-		virtual void ReadInverse(byte_t* buffer, uint32_t size);
+		virtual void ReadBytes(byte_t* dst, size_t size);
+		virtual void ReadInverse(byte_t* buffer, size_t size);
 		virtual void ReadStream(IStream *pStream, bool bAttach);
 
 
-		virtual bool ReadBytesSafe(byte_t* dst, uint32_t size);
-		virtual bool ReadInverseSafe(byte_t* buffer, uint32_t size);
+		virtual bool ReadBytesSafe(byte_t* dst, size_t size);
+		virtual bool ReadInverseSafe(byte_t* buffer, size_t size);
 		virtual bool ReadStreamSafe(IStream *pStream, bool bAttach);
 
 	};

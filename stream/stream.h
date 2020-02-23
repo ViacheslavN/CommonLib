@@ -1,5 +1,6 @@
 #pragma once
 #include "../exception/exc_base.h"
+#include "io.h"
 
 namespace CommonLib
 {
@@ -19,16 +20,12 @@ typedef std::shared_ptr<IStream> TStreamPtr;
 class IStream
 {
 public:
-	virtual uint32_t Size() const = 0;
-	virtual uint64_t Size64() const = 0;
-	virtual void Seek(int32_t position, enSeekOffset offset) = 0;
-	virtual void Seek64(int64_t position, enSeekOffset offset) = 0;
-	virtual uint32_t Pos() const = 0;
-	virtual uint64_t Pos64() const = 0;
+	virtual size_t Size() const = 0;
+	virtual void Seek(size_t position, enSeekOffset offset) = 0;
+	virtual size_t Pos() const = 0;
 	virtual void Reset() = 0;
 	virtual void Close() = 0;
-	virtual void Attach(TStreamPtr pStream, int32_t nPos = -1, int32_t nSize = -1, bool bSeekPos = false) = 0;
-	virtual void Attach64(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeekPos = false) = 0;
+	virtual void Attach(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeekPos = false) = 0;
 	virtual TStreamPtr Deattach() = 0;
 
 	static bool IsBigEndian()
@@ -40,27 +37,27 @@ public:
 };
 
 
-class IMemoryStream
+class IMemoryStream 
 {
 public:
-	virtual void AttachBuffer(byte_t* pBuffer, uint32_t nSize, bool bCopy = false) = 0;
+	virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false) = 0;
 	virtual byte_t* DeattachBuffer() = 0;
 
 	virtual byte_t* Buffer() = 0;
 	virtual const byte_t* Buffer() const = 0;
-	virtual void Create(uint32_t nSize) = 0;
-	virtual void Resize(uint32_t nSize) = 0;
+	virtual void Create(size_t nSize) = 0;
+	virtual void Resize(size_t nSize) = 0;
 };
 
 
-class IWriteStream : public IStream
+class IWriteStream : public IStream, public io::IWrite
 {
 public:
 	
 	IWriteStream(){}
 	virtual ~IWriteStream() {}
 
-	virtual void Write(const byte_t* pBuffer, uint32_t bufLen) = 0;
+	virtual std::streamsize Write(const byte_t* pBuffer, size_t bufLen) = 0;
 	virtual void Write(bool value) = 0;
 	virtual void Write(uint8_t value) = 0;
 	virtual void Write(char value) = 0;
@@ -74,19 +71,19 @@ public:
 	virtual void Write(double value) = 0;
 	virtual void Write(const astr& str) = 0;
 	virtual void Write(const wstr& str) = 0;
-	virtual void Write(IStream *pStream, int32_t nPos = -1, int32_t nSize = -1) = 0;
+	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
 };
 
 typedef std::shared_ptr<IWriteStream> WriteStreamPtr;
 
 
-class IReadStream : public IStream
+class IReadStream : public IStream, public io::IRead
 {
 public:
 
 	virtual ~IReadStream() {}
 	IReadStream() {}
-	virtual void Read(byte_t* pBuffer, uint32_t bufLen) = 0;
+	virtual std::streamsize Read(byte_t* pBuffer, size_t bufLen) = 0;
 	virtual void Read(bool& value) = 0;
 	virtual void Read(char& value) = 0;
 	virtual void Read(byte_t& value) = 0;
@@ -155,11 +152,11 @@ public:
 	}
 
 
-	virtual void WriteBytes(const byte_t* buffer, uint32_t size) = 0;
-	virtual void WriteInverse(const byte_t* buffer, uint32_t size) = 0;
-	virtual void WriteStream(IStream *pStream, int32_t nPos = -1, int32_t nSize = -1) = 0;
+	virtual void WriteBytes(const byte_t* buffer, size_t size) = 0;
+	virtual void WriteInverse(const byte_t* buffer, size_t size) = 0;
+	virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
 
-	virtual void Write(const byte_t* pBuffer, uint32_t bufLen);
+	virtual std::streamsize Write(const byte_t* pBuffer, size_t bufLen);
 	virtual void Write(bool value);
 	virtual void Write(uint8_t value);
 	virtual void Write(char value);
@@ -173,7 +170,7 @@ public:
 	virtual void Write(double value);
 	virtual void Write(const astr& str);
 	virtual void Write(const wstr& str);
-	virtual void Write(IStream *pStream, int32_t nPos = -1, int32_t nSize = -1);
+	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
 };
 
 template<class I>
@@ -206,24 +203,19 @@ public:
 	}
 
 	//IStream
-	virtual uint32_t Size() const
+	virtual size_t Size() const
 	{
 		return m_nSize;
 	}
 
-	virtual uint64_t Size64() const
-	{
-		return (uint64_t)m_nSize;
-	}
-
-	virtual void Seek(int32_t position, enSeekOffset offset)
+	virtual void Seek(size_t position, enSeekOffset offset)
 	{
 		try
 		{
 			if (!m_pBuffer)
 				throw CExcBase(L"buffer is null", position);
 
-			uint32_t newpos = 0;
+			size_t newpos = 0;
 			switch (offset)
 			{
 			case soFromBegin:
@@ -237,11 +229,11 @@ public:
 				break;
 			}
 			if (newpos > m_nSize && m_bAttach)
-				throw CExcBase(L"out of range  and buffer is attached", position, m_nSize);
+				throw CExcBase(L"out of range  and buffer is attached pos %1 size %2", position, m_nSize);
 
 			if (newpos > m_nSize && !m_bAttach)
 			{
-				Resize(newpos - m_nSize);
+				Resize(newpos);
 			}
 			m_nPos = newpos;
 		}
@@ -251,23 +243,18 @@ public:
 			throw;
 		}
 	}
-	virtual void Seek64(int64_t position, enSeekOffset offset)
-	{
-		 Seek((int32_t)position, offset);
-	}
-	virtual uint32_t Pos() const
+	
+	virtual size_t Pos() const
 	{
 		return m_nPos;
 	}
-	virtual uint64_t Pos64() const
-	{
-		return (uint64_t)m_nPos;
-	}
+	
 	virtual void Reset()
 	{
 		m_nPos = 0;
 	}
-	virtual void Attach(TStreamPtr pStream, int32_t nPos = -1, int32_t nSize = -1, bool bSeekPos = false)
+
+	virtual void Attach(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeekPos = false)
 	{
 		try
 		{
@@ -275,8 +262,8 @@ public:
 			if (!pMemStream)
 				throw CExcBase(L"IStream isn't memstream");
 
-			uint32_t _nPos = (nPos != -1 ? nPos : 0);
-			uint32_t _nSize = (nSize != -1 ? nSize : pStream->Size());
+			size_t _nPos = (nPos != -1 ? nPos : 0);
+			size_t _nSize = (nSize != -1 ? nSize : pStream->Size());
 
 			if ((pStream->Size() - _nPos) < _nSize)
 			{
@@ -295,10 +282,7 @@ public:
 			throw;
 		}		
 	}
-	virtual void Attach64(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeek = false)
-	{
-		Attach(pStream, int32_t(nPos), int32_t(nSize), bSeek);
-	}
+	 
 	virtual TStreamPtr Deattach()
 	{
 		if (!m_pAttachStream.get())
@@ -337,7 +321,7 @@ public:
 
 
 	//IMemoryStream
-	virtual void AttachBuffer(byte_t* pBuffer, uint32_t nSize, bool bCopy = false)
+	virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false)
 	{
 		try
 		{
@@ -375,15 +359,18 @@ public:
 		m_bAttach = false;
 		return tmp;
 	}
+
 	virtual byte_t* Buffer()
 	{
 		return m_pBuffer;
 	}
+
 	virtual const byte_t* Buffer() const
 	{
 		return m_pBuffer;
 	}
-	virtual void Create(uint32_t nSize)
+
+	virtual void Create(size_t nSize)
 	{
 		try
 		{
@@ -409,12 +396,12 @@ public:
 		}
 	}
 
-	virtual void Resize(uint32_t nSize) { throw CExcBase(L"TMemoryStreamBase: resize isn't implemented"); }
+	virtual void Resize(size_t nSize) { throw CExcBase(L"TMemoryStreamBase: resize isn't implemented"); }
 protected:
 
 	byte_t * m_pBuffer;
-	uint32_t  m_nPos;
-	uint32_t   m_nSize;
+	size_t  m_nPos;
+	size_t   m_nSize;
 	bool m_bIsBigEndian;
 	std::shared_ptr<IAlloc> m_pAlloc;
 	bool m_bAttach;
@@ -464,18 +451,18 @@ protected:
 			 return ReadInverseSafe((byte_t*)&val, sizeof(T));
 	 }
 
-	 virtual void ReadBytes(byte_t* dst, uint32_t size) = 0;
-	 virtual void ReadInverse(byte_t* buffer, uint32_t size) = 0;
+	 virtual void ReadBytes(byte_t* dst, size_t size) = 0;
+	 virtual void ReadInverse(byte_t* buffer, size_t size) = 0;
 	 virtual void ReadStream(IStream *pStream, bool bAttach) = 0;
 
 
-	 virtual bool ReadBytesSafe(byte_t* dst, uint32_t size) = 0;
-	 virtual bool ReadInverseSafe(byte_t* buffer, uint32_t size) = 0;
+	 virtual bool ReadBytesSafe(byte_t* dst, size_t size) = 0;
+	 virtual bool ReadInverseSafe(byte_t* buffer, size_t size) = 0;
 	 virtual bool ReadStreamSafe(IStream *pStream, bool bAttach) = 0;
 
 
 
-	 virtual void Read(byte_t* pBuffer, uint32_t bufLen);
+	 virtual std::streamsize Read(byte_t* pBuffer, size_t bufLen);
 	 virtual void Read(bool& value);
 	 virtual void Read(char& value);
 	 virtual void Read(byte_t& value) ;

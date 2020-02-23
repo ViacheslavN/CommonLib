@@ -1,18 +1,14 @@
 // TestLog.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-#include "../../../CommonLib/CommonLib.h"
-#include "../../../CommonLib/CommonLib_lib.h"
-#include "../../../CommonLib/str/str.h"
-#include "../../../CommonLib/str/StrUtils.h"
-#include "../../../CommonLib/filesystem/filesystem.h"
-#include "../../../CommonLib/filesystem/PathUtils.h"
-#include "../../../CommonLib/log/logger.h"
-#include "../../../CommonLib/log/FileAsyncLogger.h"
+
+#include "stdafx.h"
+void TestZlib();
 
 int main()
 {
+	TestZlib();
+	return 0;
 	astr path = "C:\\dir1\\dir2\\file.ttt\\";
 	wstr pathw = L"C:\\dir1\\dir2\\file.ttt\\";
 

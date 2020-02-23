@@ -107,7 +107,7 @@ namespace CommonLib
 			m_currSize = 0;
 		}
 
-		m_file->Write(msg.c_str(), (uint32_t)msg.size());
+		m_file->Write((const byte_t*)msg.c_str(), (uint32_t)msg.size());
 		
 	}
 }

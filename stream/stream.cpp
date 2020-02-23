@@ -4,29 +4,36 @@
 namespace CommonLib
 {
 
-	void  IWriteStreamBase::Write(const byte_t* pBuffer, uint32_t bufLen)
+	std::streamsize  IWriteStreamBase::Write(const byte_t* pBuffer, size_t bufLen)
 	{
 		if (IStream::IsBigEndian())
 			WriteInverse(pBuffer, bufLen);
 		else
 			WriteBytes(pBuffer, bufLen);
+
+		return bufLen;
 	}
+
 	void IWriteStreamBase::Write(bool value)
 	{
 		WriteT<byte_t>(value ? (byte_t)1 : (byte_t)0);
 	}
+
 	void IWriteStreamBase::Write(byte_t value)
 	{
 		WriteT<byte_t>(value);
 	}
+
 	void IWriteStreamBase::Write(char value)
 	{
 		WriteT<char>(value);
 	}
+
 	void IWriteStreamBase::Write(int16_t value)
 	{
 		WriteT<int16_t>(value);
 	}
+
 	void IWriteStreamBase::Write(uint16_t value)
 	{
 		WriteT<uint16_t>(value);
@@ -74,19 +81,21 @@ namespace CommonLib
 		Write((byte_t*)str.c_str(), sizeof(wchar_t) * length);
 	}
 
-	void IWriteStreamBase::Write(IStream *pStream, int32_t nPos, int32_t nSize)
+	void IWriteStreamBase::Write(IStream *pStream, int64_t nPos, int64_t nSize)
 	{
 		WriteStream(pStream, nPos, nSize);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void IReadStreamBase::Read(byte_t* pBuffer, uint32_t bufLen)
+	std::streamsize IReadStreamBase::Read(byte_t* pBuffer, size_t bufLen)
 	{
 		if (IStream::IsBigEndian())
 			ReadInverse((byte_t*)&pBuffer, bufLen);
 		else
 			ReadBytes((byte_t*)&pBuffer, bufLen);
+
+		return bufLen;
 	}
 
 	void IReadStreamBase::Read(bool& value)

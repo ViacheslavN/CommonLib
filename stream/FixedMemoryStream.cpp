@@ -16,7 +16,7 @@ namespace CommonLib
 
 	}
 		
-	void CFxMemoryWriteStream::WriteBytes(const byte_t* buffer, uint32_t size)
+	void CFxMemoryWriteStream::WriteBytes(const byte_t* buffer, size_t size)
 	{
 		if (size > 0)
 		{
@@ -28,7 +28,7 @@ namespace CommonLib
 		}
 	}
 
-	void CFxMemoryWriteStream::WriteInverse(const byte_t* buffer, uint32_t size)
+	void CFxMemoryWriteStream::WriteInverse(const byte_t* buffer, size_t size)
 	{
 		if (size > 0)
 		{
@@ -40,13 +40,13 @@ namespace CommonLib
 		}
 	}
 
-	void CFxMemoryWriteStream::WriteStream(IStream *pStream, int32_t nPos, int32_t nSize)
+	void CFxMemoryWriteStream::WriteStream(IStream *pStream, int64_t nPos, int64_t nSize)
 	{
 		IMemoryStream *pMemStream = dynamic_cast<IMemoryStream *>(pStream);
 		if (pMemStream)
 		{
-			uint32_t _nPos = (nPos != -1 ? nPos : 0);
-			uint32_t _nSize = (nSize != -1 ? nSize : pStream->Size());
+			size_t _nPos = (nPos != -1 ? nPos : 0);
+			size_t _nSize = (nSize != -1 ? nSize : pStream->Size());
 
 			Write(_nSize);
 			Write(pMemStream->Buffer() + _nPos, _nSize);
