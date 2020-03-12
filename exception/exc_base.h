@@ -167,7 +167,7 @@ public:
 	static void RegenExc(const astr& format, const astr& msg1, const astr& msg2, const astr& msg3, const astr& msg4, std::exception& exc_src);
 	static astr GetErrorDesc(const std::exception& exc);
 	static std::shared_ptr<CExcBase> CloneFromExc(const std::exception& exc);
-	
+	static astrvec GetChainFromExc(const std::exception& exc);
 protected:
 	astrvec m_msgChain;
 	thread_id_t m_srcThreadId;

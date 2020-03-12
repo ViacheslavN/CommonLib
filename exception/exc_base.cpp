@@ -53,6 +53,11 @@ namespace CommonLib
 		return m_what.c_str();
 	}
 
+	const astrvec& CExcBase::GetChain() const
+	{
+		return m_msgChain;
+	}
+
 	void CExcBase::AddMsg(const astr& msg)
 	{
 		m_msgChain.push_back(msg);
@@ -163,6 +168,18 @@ namespace CommonLib
 
 		std::shared_ptr<CExcBase> ptrExc(new CExcBase(GetErrorDesc(exc)));
 		return ptrExc;
+	}
+
+	astrvec CExcBase::GetChainFromExc(const std::exception& exc)
+	{
+		
+		const CExcBase* pExcBase = dynamic_cast<const CExcBase*>(&exc);
+		if (pExcBase != NULL)
+			return pExcBase->GetChain();
+
+		astrvec vec;
+		vec.push_back(exc.what() ? exc.what() : "Unknown exception");
+		return vec;
 	}
 
 }

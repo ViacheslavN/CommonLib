@@ -23,6 +23,7 @@
 #include <thread>
 #include <condition_variable>
 #include <atomic>
+#include <iterator>
 
 
 typedef std::string astr;
