@@ -15,6 +15,11 @@ namespace CommonLib
 	{
 
 	}
+
+	bool CFxMemoryWriteStream::IsEnoughSpace(size_t size) const
+	{
+		return !((m_nPos + size) > m_nSize);
+	}
 		
 	void CFxMemoryWriteStream::WriteBytes(const byte_t* buffer, size_t size)
 	{

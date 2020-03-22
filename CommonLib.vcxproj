@@ -327,6 +327,9 @@
     <ClInclude Include="alloc\stl_alloc.h" />
     <ClInclude Include="CommonLib.h" />
     <ClInclude Include="CommonLib_lib.h" />
+    <ClInclude Include="compress\EntropyCoders\ArithmeticCoder.h" />
+    <ClInclude Include="compress\EntropyCoders\BaseACCoder.h" />
+    <ClInclude Include="compress\EntropyCoders\RangeCoder.h" />
     <ClInclude Include="compress\zlib\crc32.h" />
     <ClInclude Include="compress\zlib\deflate.h" />
     <ClInclude Include="compress\zlib\gzguts.h" />
@@ -335,10 +338,15 @@
     <ClInclude Include="compress\zlib\inflate.h" />
     <ClInclude Include="compress\zlib\inftrees.h" />
     <ClInclude Include="compress\zlib\trees.h" />
+    <ClInclude Include="compress\zlib\ZCompressStream.h" />
     <ClInclude Include="compress\zlib\zconf.h" />
+    <ClInclude Include="compress\zlib\ZDecompressStream.h" />
     <ClInclude Include="compress\zlib\zlib.h" />
     <ClInclude Include="compress\zlib\ZlibUtil.h" />
+    <ClInclude Include="compress\zlib\ZStream.h" />
     <ClInclude Include="compress\zlib\zutil.h" />
+    <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
+    <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
     <ClInclude Include="exception\exc_base.h" />
     <ClInclude Include="exception\WinExc.h" />
     <ClInclude Include="filesystem\File.h" />
@@ -350,6 +358,9 @@
     <ClInclude Include="log\LogFileWriterBase.h" />
     <ClInclude Include="log\logger.h" />
     <ClInclude Include="log\LogLinePerformer.h" />
+    <ClInclude Include="perf\lin\PerformanceTimer.h" />
+    <ClInclude Include="perf\PerfCount.h" />
+    <ClInclude Include="perf\win\PerformanceTimer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stream\FixedMemoryStream.h" />
     <ClInclude Include="stream\io.h" />
@@ -521,7 +532,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="compress\zlib\ZCompressStream.cpp" />
+    <ClCompile Include="compress\zlib\ZDecompressStream.cpp" />
     <ClCompile Include="compress\zlib\ZlibUtil.cpp" />
+    <ClCompile Include="compress\zlib\ZStream.cpp" />
     <ClCompile Include="compress\zlib\zutil.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">NotUsing</PrecompiledHeader>
@@ -532,6 +546,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
+    <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
     <ClCompile Include="exception\WinExc.cpp" />
     <ClCompile Include="filesystem\File.cpp" />
@@ -542,6 +558,18 @@
     <ClCompile Include="log\LogFileWriterBase.cpp" />
     <ClCompile Include="log\logger.cpp" />
     <ClCompile Include="log\LogLinePerformer.cpp" />
+    <ClCompile Include="perf\lin\PerformanceTimer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="perf\PerfCount.cpp" />
+    <ClCompile Include="perf\win\PerformanceTimer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">Create</PrecompiledHeader>

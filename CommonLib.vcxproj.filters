@@ -58,6 +58,21 @@
     <Filter Include="compress\zlib">
       <UniqueIdentifier>{2a2ace47-ffac-4090-97d0-0ec70801c63a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="perf">
+      <UniqueIdentifier>{768f421a-ccd9-4ec7-a719-d79c0f4c2714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="compress\EntropyCoders">
+      <UniqueIdentifier>{96e45132-c0c5-4a99-9757-8331bcc41725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="compress\zstd">
+      <UniqueIdentifier>{4655726a-dfdf-4717-81e4-bc4613a609e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="perf\win">
+      <UniqueIdentifier>{a39aaa7a-4248-4465-b9d0-e9b0596fc727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="perf\lin">
+      <UniqueIdentifier>{8bd36497-dab2-49f2-9437-4338269c7aab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -204,6 +219,39 @@
     <ClInclude Include="compress\zlib\ZlibUtil.h">
       <Filter>compress\zlib</Filter>
     </ClInclude>
+    <ClInclude Include="perf\PerfCount.h">
+      <Filter>perf</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\ZStream.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\EntropyCoders\BaseACCoder.h">
+      <Filter>compress\EntropyCoders</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\EntropyCoders\ArithmeticCoder.h">
+      <Filter>compress\EntropyCoders</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\EntropyCoders\RangeCoder.h">
+      <Filter>compress\EntropyCoders</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zstd\ZstdCompressionStream.h">
+      <Filter>compress\zstd</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zstd\ZstdDecompressionStream.h">
+      <Filter>compress\zstd</Filter>
+    </ClInclude>
+    <ClInclude Include="perf\win\PerformanceTimer.h">
+      <Filter>perf\win</Filter>
+    </ClInclude>
+    <ClInclude Include="perf\lin\PerformanceTimer.h">
+      <Filter>perf\lin</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\ZCompressStream.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="compress\zlib\ZDecompressStream.h">
+      <Filter>compress\zlib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -324,6 +372,30 @@
       <Filter>compress\zlib</Filter>
     </ClCompile>
     <ClCompile Include="compress\zlib\ZlibUtil.cpp">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\ZStream.cpp">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp">
+      <Filter>compress\zstd</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp">
+      <Filter>compress\zstd</Filter>
+    </ClCompile>
+    <ClCompile Include="perf\PerfCount.cpp">
+      <Filter>perf</Filter>
+    </ClCompile>
+    <ClCompile Include="perf\win\PerformanceTimer.cpp">
+      <Filter>perf\win</Filter>
+    </ClCompile>
+    <ClCompile Include="perf\lin\PerformanceTimer.cpp">
+      <Filter>perf\lin</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\ZDecompressStream.cpp">
+      <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="compress\zlib\ZCompressStream.cpp">
       <Filter>compress\zlib</Filter>
     </ClCompile>
   </ItemGroup>

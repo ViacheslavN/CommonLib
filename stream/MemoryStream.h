@@ -24,6 +24,7 @@ namespace CommonLib
 		virtual void WriteInverse(const byte_t* buffer, size_t size);
 		virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
 		virtual void Resize(size_t nSize);
+		virtual bool IsEnoughSpace(size_t size) const { return true; }
 
 	private:
 		void  ResizeWithCapacity(size_t nSize);

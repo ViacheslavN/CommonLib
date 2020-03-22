@@ -72,6 +72,21 @@ public:
 	virtual void Write(const astr& str) = 0;
 	virtual void Write(const wstr& str) = 0;
 	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
+
+	virtual std::streamsize WriteSafe(const byte_t* pBuffer, size_t bufLen) = 0;
+	virtual bool WriteSafe(bool value) = 0;
+	virtual bool WriteSafe(uint8_t value) = 0;
+	virtual bool WriteSafe(char value) = 0;
+	virtual bool WriteSafe(int16_t value) = 0;
+	virtual bool WriteSafe(uint16_t value) = 0;
+	virtual bool WriteSafe(uint32_t value) = 0;
+	virtual bool WriteSafe(int32_t value) = 0;
+	virtual bool WriteSafe(int64_t value) = 0;
+	virtual bool WriteSafe(uint64_t value) = 0;
+	virtual bool WriteSafe(float value) = 0;
+	virtual bool WriteSafe(double value) = 0;
+	virtual bool WriteSafe(const astr& str) = 0;
+	virtual bool WriteSafe(const wstr& str) = 0;
 };
 
 typedef std::shared_ptr<IWriteStream> WriteStreamPtr;
@@ -151,10 +166,25 @@ public:
 			WriteBytes((byte_t*)&value, sizeof(T));
 	}
 
+	template <typename T>
+	bool WriteTSafe(const T& value)
+	{
+		if (!IsEnoughSpace(sizeof(T)))
+			return false;
+
+		if (IStream::IsBigEndian())
+			WriteInverse((byte_t*)&value, sizeof(T));
+		else
+			WriteBytes((byte_t*)&value, sizeof(T));
+
+		return true;
+	}
+
 
 	virtual void WriteBytes(const byte_t* buffer, size_t size) = 0;
 	virtual void WriteInverse(const byte_t* buffer, size_t size) = 0;
 	virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
+	virtual bool IsEnoughSpace(size_t size) const = 0;
 
 	virtual std::streamsize Write(const byte_t* pBuffer, size_t bufLen);
 	virtual void Write(bool value);
@@ -171,6 +201,21 @@ public:
 	virtual void Write(const astr& str);
 	virtual void Write(const wstr& str);
 	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
+
+	virtual std::streamsize WriteSafe(const byte_t* pBuffer, size_t bufLen);
+	virtual bool WriteSafe(bool value);
+	virtual bool WriteSafe(uint8_t value);
+	virtual bool WriteSafe(char value);
+	virtual bool WriteSafe(int16_t value);
+	virtual bool WriteSafe(uint16_t value);
+	virtual bool WriteSafe(uint32_t value);
+	virtual bool WriteSafe(int32_t value);
+	virtual bool WriteSafe(int64_t value);
+	virtual bool WriteSafe(uint64_t value);
+	virtual bool WriteSafe(float value);
+	virtual bool WriteSafe(double value);
+	virtual bool WriteSafe(const astr& str);
+	virtual bool WriteSafe(const wstr& str);
 };
 
 template<class I>

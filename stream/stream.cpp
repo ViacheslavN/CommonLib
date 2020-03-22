@@ -86,6 +86,101 @@ namespace CommonLib
 		WriteStream(pStream, nPos, nSize);
 	}
 
+
+	std::streamsize IWriteStreamBase::WriteSafe(const byte_t* pBuffer, size_t bufLen)
+	{
+		if (!IsEnoughSpace(bufLen))
+			return 0;
+
+		if (IStream::IsBigEndian())
+			WriteInverse(pBuffer, bufLen);
+		else
+			WriteBytes(pBuffer, bufLen);
+
+		return bufLen;
+	}
+
+	bool IWriteStreamBase::WriteSafe(bool value)
+	{
+		return WriteTSafe<bool>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(uint8_t value)
+	{
+		return WriteTSafe<uint8_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(char value)
+	{
+		return WriteTSafe<char>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(int16_t value)
+	{
+		return WriteTSafe<int16_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(uint16_t value)
+	{
+		return WriteTSafe<uint16_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(uint32_t value)
+	{
+		return WriteTSafe<uint32_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(int32_t value)
+	{
+		return WriteTSafe<int32_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(int64_t value)
+	{
+		return WriteTSafe<int64_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(uint64_t value)
+	{
+		return WriteTSafe<uint64_t>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(float value)
+	{
+		return WriteTSafe<float>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(double value)
+	{
+		return WriteTSafe<double>(value);
+	}
+
+	bool IWriteStreamBase::WriteSafe(const astr& str)
+	{
+		uint32_t length = (uint32_t)str.length();
+
+		if (!IsEnoughSpace(sizeof(uint32_t) + length))
+			return false;
+
+		Write(length);
+		Write((byte_t*)str.c_str(), length);
+
+		return true;
+	}
+
+	bool IWriteStreamBase::WriteSafe(const wstr& str)
+	{
+		uint32_t length = (uint32_t)str.length();
+
+		if (!IsEnoughSpace(sizeof(uint32_t) + (sizeof(wchar_t) *length)))
+			return false;
+
+		Write(length);
+		Write((byte_t*)str.c_str(), sizeof(wchar_t) * length);
+
+		return true;
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
 	std::streamsize IReadStreamBase::Read(byte_t* pBuffer, size_t bufLen)

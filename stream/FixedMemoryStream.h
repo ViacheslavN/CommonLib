@@ -23,6 +23,6 @@ namespace CommonLib
 		virtual void WriteBytes(const byte_t* buffer, size_t size);
 		virtual void WriteInverse(const byte_t* buffer, size_t size);
 		virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
-
+		virtual bool IsEnoughSpace(size_t size) const;
 	};
 }
