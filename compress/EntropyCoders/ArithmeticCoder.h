@@ -16,15 +16,13 @@ namespace CommonLib
 		static const TCodeValue  _ThirdQuarter = (3 * _FirstQuarter);
 		static const _TCodeValue MaxRange = _FirstQuarter - 1;
 
-		TACEncoder(IWriteStream* pStream = NULL, uint32 nMaxSize = 0)
-
-
+		TACEncoder(IWriteStream* pStream)
 		{
 			Reset(pStream, nMaxSize);
 		}
 
 
-		void Reset(IWriteStream* pStream = NULL, uint32 nMaxSize = 0)
+		void Reset(IWriteStream* pStream)
 		{
 			m_pStream = pStream;
 			m_nLow = 0;
@@ -32,22 +30,12 @@ namespace CommonLib
 			m_nScale = 0;
 			m_nBitsBuf = 0;
 			m_nCurrBit = 0;
-			m_nMaxSize = nMaxSize;
-#ifdef _DEBUG
-			m_nBitsWrite = 0;
-#endif
-
 		}
-
-
 
 		void SetStream(IWriteStream* pStream)
 		{
 			m_pStream = pStream;
-			//	if(pStream)
-			//		m_nBeginPos = pStream->pos();
 		}
-
 
 		bool BitsPlusFollow(bool bBit)
 		{
@@ -111,10 +99,10 @@ namespace CommonLib
 
 			if (m_nCurrBit != 0)
 			{
-				if (m_pStream->size() - m_pStream->pos() < 1)
+
+				if (!m_pStream->WriteSafe(m_nBitsBuf))
 					return false;
 
-				m_pStream->write(m_nBitsBuf);
 				m_nCurrBit = 0;
 			}
 			return true;
@@ -125,19 +113,17 @@ namespace CommonLib
 		{
 			if (m_nCurrBit > 7)
 			{
-				if (m_pStream->size() - m_pStream->pos() < 1)
+
+				if (!m_pStream->WriteSafe(m_nBitsBuf))
 					return false;
 
-				m_pStream->write(m_nBitsBuf);
 				m_nBitsBuf = 0;
 				m_nCurrBit = 0;
 			}
 			if (bBit)
 				m_nBitsBuf |= (1 << m_nCurrBit);
 			m_nCurrBit++;
-#ifdef _DEBUG
-			m_nBitsWrite++;
-#endif
+
 			return true;
 		}
 
@@ -145,17 +131,12 @@ namespace CommonLib
 		IWriteStream* m_pStream;
 		TCodeValue m_nLow;
 		TCodeValue m_nHigh;
-		uint32	   m_nScale;
-#ifdef _DEBUG
-		uint32	   m_nBitsWrite;
-#endif
-		byte	   m_nBitsBuf;
-		uint32	   m_nCurrBit;
-		uint32	   m_nMaxSize;
-		//uint32	   m_nBeginPos;
+		uint32_t	   m_nScale;
+		byte_t	   m_nBitsBuf;
+		uint32_t	   m_nCurrBit;
 	};
 
-	template<class _TCodeValue, uint16 _nValueBits>
+	template<class _TCodeValue, uint16_t _nValueBits>
 	class TACDecoder : public BaseACDecoder<_TCodeValue>
 	{
 	public:
@@ -193,7 +174,9 @@ namespace CommonLib
 			if (m_nCurrBit > 7)
 			{
 				m_nCurrBit = 0;
-				m_nBitsBuf = m_pStream->readByte();
+
+				if (!m_pStream->ReadSafe(m_nBitsBuf))
+					return false;			
 			}
 
 			TCodeValue nBit = (m_nBitsBuf & (1 << m_nCurrBit)) ? 1 : 0;
@@ -214,7 +197,6 @@ namespace CommonLib
 			{
 
 				TCodeValue nBit = GetBit();
-				assert(nBit == 0 || nBit == 1);
 				m_nValue = (m_nValue << 1) | nBit;
 			}
 		}
@@ -262,17 +244,17 @@ namespace CommonLib
 		IReadStream* m_pStream;
 		TCodeValue m_nLow;
 		TCodeValue m_nHigh;
-		uint32	   m_nBitsRead;
+		uint32_t	   m_nBitsRead;
 		TCodeValue m_nValue;
-		byte	   m_nBitsBuf;
-		uint32	   m_nCurrBit;
+		byte_t	   m_nBitsBuf;
+		uint32_t   m_nCurrBit;
 	};
 
 
-	typedef TACEncoder<uint64, 32> TACEncoder64;
-	typedef TACDecoder<uint64, 32> TACDecoder64;
+	typedef TACEncoder<uint64_t, 32> TACEncoder64;
+	typedef TACDecoder<uint64_t, 32> TACDecoder64;
 
-	typedef TACEncoder<uint32, 16> TACEncoder32;
-	typedef TACDecoder<uint32, 16> TACDecoder32;
+	typedef TACEncoder<uint32_t, 16> TACEncoder32;
+	typedef TACDecoder<uint32_t, 16> TACDecoder32;
 }
 

@@ -64,9 +64,9 @@ namespace CommonLib
 			 {
 				 memcpy(buffer, m_pBuffer, m_nSize);
 				 this->m_pAlloc->Free(m_pBuffer);
-				 m_pBuffer = buffer;
+				 
 			 }
-			 
+			 m_pBuffer = buffer;
 
 			if (m_nPos > m_nSize)
 				m_nPos = m_nSize;

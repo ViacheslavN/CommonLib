@@ -29,6 +29,6 @@ namespace CommonLib
 		const uint64_t m_maxBlockAllocSize;
 	};
 
-	typedef std::shared_ptr<CommonLib::IAlloc> IAllocPtr;
+	typedef std::shared_ptr<IAlloc> IAllocPtr;
 }
 

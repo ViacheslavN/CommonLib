@@ -3,7 +3,7 @@
 #include "BaseACCoder.h"
 namespace CommonLib
 {
-	template<class _TCodeValue, uint16 _nValueBits>
+	template<class _TCodeValue, uint16_t _nValueBits>
 	class TRangeEncoder : public BaseACEncoder<_TCodeValue>
 	{
 
@@ -15,7 +15,7 @@ namespace CommonLib
 	public:
 
 		static const _TCodeValue MaxRange = Bottom;
-		TRangeEncoder(IWriteStream* pStream = NULL, TCodeValue nMaxSize = 0) :
+		TRangeEncoder(IWriteStream* pStream, TCodeValue nMaxSize = 0) :
 			m_pStream(pStream), Low(0), Range((_TCodeValue)-1), m_nMaxSize(nMaxSize), m_WriteSize(0)
 		{
 			//assert(m_pStream);
@@ -52,10 +52,12 @@ namespace CommonLib
 				}
 
 				m_WriteSize += 1;
-				if (m_nMaxSize != 0 && m_WriteSize > m_nMaxSize)
+				/*if (m_nMaxSize != 0 && m_WriteSize > m_nMaxSize)
+					return false;*/
+
+				if (!m_pStream->WriteSafe(byte((Low >> nValueBits) & 0xFF)))
 					return false;
 
-				m_pStream->write(byte((Low >> nValueBits) & 0xFF));
 				Range <<= 8;
 				Low <<= 8;
 			}
@@ -72,7 +74,9 @@ namespace CommonLib
 				m_WriteSize++;
 				if (m_nMaxSize != 0 && m_WriteSize > m_nMaxSize)
 					return false;
-				m_pStream->write((byte)((Low >> nValueBits) & 0xFF));
+				if (!m_pStream->WriteSafe((byte)((Low >> nValueBits) & 0xFF)))
+					return false
+
 				Low <<= 8;
 			}
 			return true;
@@ -85,11 +89,11 @@ namespace CommonLib
 
 
 
-	template<class _TCodeValue, uint16 _nValueBits>
+	template<class _TCodeValue, uint16_t _nValueBits>
 	class TRangeDecoder : public BaseACDecoder<_TCodeValue>
 	{
 
-		static const uint16 nValueBits = _nValueBits - 8;
+		static const uint16_t  nValueBits = _nValueBits - 8;
 		static const _TCodeValue Top = (_TCodeValue)1 << nValueBits;
 		static const _TCodeValue Bottom = (_TCodeValue)1 << (nValueBits - 8);
 	public:
@@ -97,7 +101,7 @@ namespace CommonLib
 		static const _TCodeValue MaxRange = Bottom;
 		typedef _TCodeValue TCodeValue;
 
-		TRangeDecoder(IReadStream* pStream = NULL) : m_pStream(pStream), Low(0), Range((_TCodeValue)-1), m_nValue(0)
+		TRangeDecoder(IReadStream* pStream) : m_pStream(pStream), Low(0), Range((_TCodeValue)-1), m_nValue(0)
 		{
 
 		}
@@ -109,7 +113,7 @@ namespace CommonLib
 		{
 			for (int i = 0; i < _nValueBits / 8; i++)
 			{
-				m_nValue = (m_nValue << 8) | m_pStream->readByte();
+				m_nValue = (m_nValue << 8) | m_pStream->ReadByte();
 			}
 		}
 
@@ -120,7 +124,7 @@ namespace CommonLib
 
 			while ((Low ^ Low + Range) < Top || Range < Bottom && ((Range = -Low & Bottom - 1), 1))
 			{
-				m_nValue = m_nValue << 8 | m_pStream->readByte(), Range <<= 8, Low <<= 8;
+				m_nValue = m_nValue << 8 | m_pStream->ReadByte(), Range <<= 8, Low <<= 8;
 			}
 		}
 
@@ -132,7 +136,7 @@ namespace CommonLib
 		byte ReadByte()
 		{
 			byte b = 0;
-			m_pStream->save_read(b);
+			m_pStream->ReadSafe(b);
 			return b;
 		}
 	private:
@@ -144,11 +148,11 @@ namespace CommonLib
 	};
 
 
-	typedef TRangeEncoder<uint64, 64> TRangeEncoder64;
-	typedef TRangeDecoder<uint64, 64> TRangeDecoder64;
+	typedef TRangeEncoder<uint64_t, 64> TRangeEncoder64;
+	typedef TRangeDecoder<uint64_t, 64> TRangeDecoder64;
 
-	typedef TRangeEncoder<uint32, 32> TRangeEncoder32;
-	typedef TRangeDecoder<uint32, 32> TRangeDecoder32;
+	typedef TRangeEncoder<uint32_t, 32> TRangeEncoder32;
+	typedef TRangeDecoder<uint32_t, 32> TRangeDecoder32;
 
 
 }

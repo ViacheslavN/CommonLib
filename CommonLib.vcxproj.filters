@@ -252,6 +252,15 @@
     <ClInclude Include="compress\zlib\ZDecompressStream.h">
       <Filter>compress\zlib</Filter>
     </ClInclude>
+    <ClInclude Include="stream\BitStream.h">
+      <Filter>stream</Filter>
+    </ClInclude>
+    <ClInclude Include="stream\FixedBitStream.h">
+      <Filter>stream</Filter>
+    </ClInclude>
+    <ClInclude Include="stream\WriteBitStream.h">
+      <Filter>stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -397,6 +406,15 @@
     </ClCompile>
     <ClCompile Include="compress\zlib\ZCompressStream.cpp">
       <Filter>compress\zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="stream\BitStream.cpp">
+      <Filter>stream</Filter>
+    </ClCompile>
+    <ClCompile Include="stream\FixedBitStream.cpp">
+      <Filter>stream</Filter>
+    </ClCompile>
+    <ClCompile Include="stream\WriteBitStream.cpp">
+      <Filter>stream</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

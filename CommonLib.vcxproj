@@ -362,11 +362,14 @@
     <ClInclude Include="perf\PerfCount.h" />
     <ClInclude Include="perf\win\PerformanceTimer.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="stream\BitStream.h" />
+    <ClInclude Include="stream\FixedBitStream.h" />
     <ClInclude Include="stream\FixedMemoryStream.h" />
     <ClInclude Include="stream\io.h" />
     <ClInclude Include="stream\MemoryStream.h" />
     <ClInclude Include="stream\stream.h" />
     <ClInclude Include="stream\StreamBaseEmpty.h" />
+    <ClInclude Include="stream\WriteBitStream.h" />
     <ClInclude Include="str\convertToString.h" />
     <ClInclude Include="str\multibyte.h" />
     <ClInclude Include="str\str.h" />
@@ -580,9 +583,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="stream\BitStream.cpp" />
+    <ClCompile Include="stream\FixedBitStream.cpp" />
     <ClCompile Include="stream\FixedMemoryStream.cpp" />
     <ClCompile Include="stream\MemoryStream.cpp" />
     <ClCompile Include="stream\stream.cpp" />
+    <ClCompile Include="stream\WriteBitStream.cpp" />
     <ClCompile Include="str\convertToString.cpp" />
     <ClCompile Include="str\multibyte.cpp" />
     <ClCompile Include="str\str.cpp" />
