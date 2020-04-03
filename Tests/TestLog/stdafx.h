@@ -9,3 +9,4 @@
 #include "../../../CommonLib/filesystem/PathUtils.h"
 #include "../../../CommonLib/log/logger.h"
 #include "../../../CommonLib/log/FileAsyncLogger.h"
+#include "../../../CommonLib/log/LogInfo.h"

@@ -7,7 +7,7 @@ void TestZlib();
 
 int main()
 {
-	TestZlib();
+/*	TestZlib();
 	return 0;
 	astr path = "C:\\dir1\\dir2\\file.ttt\\";
 	wstr pathw = L"C:\\dir1\\dir2\\file.ttt\\";
@@ -24,14 +24,15 @@ int main()
 	wstr FileExtensionW = CommonLib::CPathUtils::FindFileExtension(pathw);
 	wstr FileNameW = CommonLib::CPathUtils::FindFileName(pathw);
 	wstr OnlyFileNameW = CommonLib::CPathUtils::FindOnlyFileName(pathw);
-	wstr PathW = CommonLib::CPathUtils::FindFilePath(pathw);
+	wstr PathW = CommonLib::CPathUtils::FindFilePath(pathw);*/
 
 	std::shared_ptr<CommonLib::IlogLineFormat> plogLineFormat;
 	std::shared_ptr<CommonLib::IlogRetention> plogRetention;
 
-	std::shared_ptr<CommonLib::IlogWriter> fileLogger(new CommonLib::CFileAsyncLogger(1000, plogRetention));
+	std::shared_ptr<CommonLib::IlogWriter> fileLogger(new CommonLib::CFileAsyncLogger(10000000, plogRetention));
 	fileLogger->Open("D:\\backup.log");
 
+	//printf("Width trick: %0*I64d \n", 30, (__int64)10 * 10000000);
 
 	CommonLib::CLogger log;
 
@@ -40,15 +41,17 @@ int main()
 	for (size_t i = 0; i < 100; ++i)
 	{
 		log.InfoT("Message %1", i);
+		CommonLib::CLogInfo logInfo(log, "%1, %2, %3", i, i + 1, 3.154);
+	//	logInfo.Ok();
 	}
 
-	fileLogger->Close();
+	/*fileLogger->Close();
 	for (size_t i = 0; i < 100; ++i)
 	{
 		log.InfoT("Message %1", i);
 	}
 
-	fileLogger->Open("D:\\backup.log");
+	fileLogger->Open("D:\\backup.log");*/
 
 	
 	::Sleep(2000);

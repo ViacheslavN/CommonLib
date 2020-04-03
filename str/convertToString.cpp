@@ -91,6 +91,27 @@ namespace CommonLib
 		return AStrUint32(uint32_t(val));
 	}
 
+
+	astr str_utils::AStrInt8(int8_t val, uint32_t nZero)
+	{
+		return AStrInt32(int32_t(val), nZero);
+	}
+
+	astr str_utils::AStrUint8(uint8_t val, uint32_t nZero)
+	{
+		return AStrUint32(uint32_t(val), nZero);
+	}
+
+	astr str_utils::AStrInt16(int16_t val, uint32_t nZero)
+	{
+		return AStrInt32(int32_t(val), nZero);
+	}
+
+	astr str_utils::AStrUint16(uint16_t val, uint32_t nZero)
+	{
+		return AStrUint32(uint32_t(val), nZero);
+	}
+
 	astr str_utils::AStrInt32(int32_t val)
 	{
 		char  buf[32];
@@ -98,10 +119,31 @@ namespace CommonLib
 		return buf;
 	}
 
+	astr str_utils::AStrInt32(int32_t val, uint32_t nZero)
+	{
+		char  buf[32];
+		sprintf_s(buf, sizeof(buf), "%0*d", nZero, val);
+		return buf;
+	}
+
 	astr str_utils::AStrUint32(uint32_t val)
 	{
 		char  buf[32];
 		sprintf_s(buf, sizeof(buf), "%u", val);
+		return buf;
+	}
+
+	astr str_utils::AStrUint32(uint32_t val, uint32_t nZero)
+	{
+		char  buf[32];
+		sprintf_s(buf, sizeof(buf), "%0*u", nZero, val);
+		return buf;
+	}
+
+	astr str_utils::AStrInt64(int64_t val, uint32_t nZero)
+	{
+		char  buf[32];
+		sprintf_s(buf, sizeof(buf), "%0*I64d", nZero, val);
 		return buf;
 	}
 
@@ -116,6 +158,13 @@ namespace CommonLib
 	{
 		char  buf[32];
 		sprintf_s(buf, sizeof(buf), "%I64u", val);
+		return buf;
+	}
+
+	astr str_utils::AStrUint64(uint64_t val, uint32_t nZero)
+	{
+		char  buf[32];
+		sprintf_s(buf, sizeof(buf), "%0*I64u", nZero, val);
 		return buf;
 	}
 

@@ -186,9 +186,9 @@ namespace CommonLib
 	std::streamsize IReadStreamBase::Read(byte_t* pBuffer, size_t bufLen)
 	{
 		if (IStream::IsBigEndian())
-			ReadInverse((byte_t*)&pBuffer, bufLen);
+			ReadInverse(pBuffer, bufLen);
 		else
-			ReadBytes((byte_t*)&pBuffer, bufLen);
+			ReadBytes(pBuffer, bufLen);
 
 		return bufLen;
 	}
@@ -256,7 +256,7 @@ namespace CommonLib
 		if (nLen != 0)
 		{
 			str.resize(nLen);
-			Read((byte_t*)&str[0], sizeof(char)*nLen);
+			Read((byte_t*)str.data(), sizeof(char)*nLen);
 		}
 	}
 
@@ -266,7 +266,7 @@ namespace CommonLib
 		if (nLen != 0)
 		{
 			str.resize(nLen);
-			Read((byte_t*)&str[0], sizeof(wchar_t)*nLen);
+			Read((byte_t*)str.data(), sizeof(wchar_t)*nLen);
 		}
 	}
 

@@ -71,10 +71,11 @@ namespace CommonLib
 
 			for (int i = 0; i < _nValueBits / 8; i++)
 			{
-				m_WriteSize++;
+			/*	m_WriteSize++;
 				if (m_nMaxSize != 0 && m_WriteSize > m_nMaxSize)
-					return false;
-				if (!m_pStream->WriteSafe((byte)((Low >> nValueBits) & 0xFF)))
+					return false;*/
+
+				if (!m_pStream->WriteSafe((byte_t)((Low >> nValueBits) & 0xFF)))
 					return false
 
 				Low <<= 8;

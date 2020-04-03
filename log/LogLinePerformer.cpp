@@ -3,10 +3,10 @@
 #include "../synch/thread.h"
 #include "../str/str.h"
 
-#define  TracePrefix	 "tr "
+#define  TracePrefix	 "tr   "
 #define  InfoPrefix		 "info "
 #define  WarningPrefix	 "warn "
-#define  ErrorPrefix	 "err "
+#define  ErrorPrefix	 "err  "
 
 namespace CommonLib
 {
@@ -40,23 +40,22 @@ namespace CommonLib
 
 		msg += "[";
 
-		msg += str_utils::AStrFrom(currTm.tm_mday);
+		msg += str_utils::AStrFrom(currTm.tm_mday, 2);
 		msg += ".";
 
-		msg += str_utils::AStrFrom(currTm.tm_mon);
+		msg += str_utils::AStrFrom((currTm.tm_mon + 1), 2);
 		msg += ".";
 
-		msg += str_utils::AStrFrom(currTm.tm_year);
+		msg += str_utils::AStrFrom((1900 + currTm.tm_year), 4);
 		msg += " ";
 
-		msg += str_utils::AStrFrom(currTm.tm_hour);
+		msg += str_utils::AStrFrom(currTm.tm_hour, 2);
 		msg += ":";
 
-		msg += str_utils::AStrFrom(currTm.tm_min);
+		msg += str_utils::AStrFrom(currTm.tm_min, 2);
 		msg += ":";
 
-		msg += str_utils::AStrFrom(currTm.tm_sec);
-		msg += ":";
+		msg += str_utils::AStrFrom(currTm.tm_sec, 2);
 		msg += "]";
 	}
 

@@ -357,6 +357,7 @@
     <ClInclude Include="log\log.h" />
     <ClInclude Include="log\LogFileWriterBase.h" />
     <ClInclude Include="log\logger.h" />
+    <ClInclude Include="log\LogInfo.h" />
     <ClInclude Include="log\LogLinePerformer.h" />
     <ClInclude Include="perf\lin\PerformanceTimer.h" />
     <ClInclude Include="perf\PerfCount.h" />

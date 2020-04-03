@@ -94,6 +94,18 @@ namespace CommonLib
 		static astr AStrUint32(uint32_t val);
 		static astr AStrInt64(int64_t val);
 		static astr AStrUint64(uint64_t val);
+
+		static astr AStrInt8(int8_t val, uint32_t nZero);
+		static astr AStrUint8(uint8_t val, uint32_t nZero);
+		static astr AStrInt16(int16_t val, uint32_t nZero);
+		static astr AStrUint16(uint16_t val, uint32_t nZero);
+		static astr AStrInt32(int32_t val, uint32_t nZero);
+		static astr AStrUint32(uint32_t val, uint32_t nZero);
+		static astr AStrInt64(int64_t val, uint32_t nZero);
+		static astr AStrUint64(uint64_t val, uint32_t nZero);
+
+
+
 		static astr AStrFloat(float val);
 		static astr AStrDouble(double val);
 		static astr AStrFrom(const wchar_t *ptrStr);
@@ -133,9 +145,19 @@ namespace CommonLib
 			return AStrInt32(val);
 		}
 
+		static  astr AStrFrom(const int32_t& val, uint32_t nZero)
+		{
+			return AStrInt32(val, nZero);
+		}
+
 		static  astr AStrFrom(const uint32_t& val)
 		{
 			return AStrUint32(val);
+		}
+
+		static  astr AStrFrom(const uint32_t& val, uint32_t nZero)
+		{
+			return AStrUint32(val, nZero);
 		}
 
 		static  astr AStrFrom(const int64_t& val)
