@@ -4,8 +4,8 @@
 
 namespace CommonLib
 {
-	namespace lin
-	{
+//	namespace lin
+//	{
 		CPerformanceTimer::CPerformanceTimer()
 		{
 			struct timespec ts;
@@ -54,5 +54,5 @@ namespace CommonLib
 		{
 			return MeasureInterval();
 		}
-	}
+//	}
 }

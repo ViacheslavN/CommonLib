@@ -4,25 +4,25 @@
 
 namespace CommonLib
 {
-	CExcBase::CExcBase() : m_srcThreadId(synch::CThread::GetCurThreadId())
+	CExcBase::CExcBase() noexcept  : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{}
 
-	CExcBase::CExcBase(const CExcBase& exc) : m_srcThreadId(exc.m_srcThreadId), m_msgChain(exc.m_msgChain)
+	CExcBase::CExcBase(const CExcBase& exc) noexcept : m_srcThreadId(exc.m_srcThreadId), m_msgChain(exc.m_msgChain)
 	{
 
 	}
 
-	CExcBase::CExcBase(const astr& msg) : m_srcThreadId(synch::CThread::GetCurThreadId())
+	CExcBase::CExcBase(const astr& msg) noexcept : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsg(msg);
 	}
 
-	CExcBase::CExcBase(const wstr& msg) : m_srcThreadId(synch::CThread::GetCurThreadId())
+	CExcBase::CExcBase(const wstr& msg) noexcept : m_srcThreadId(synch::CThread::GetCurThreadId())
 	{
 		AddMsg(StringEncoding::str_w2utf8_safe(msg));
 	}
 
-	CExcBase::~CExcBase()
+	CExcBase::~CExcBase() noexcept
 	{
 
 	}
@@ -38,7 +38,7 @@ namespace CommonLib
 		throw *this;
 	}
 
-	const char*  CExcBase::what() const
+	const char*  CExcBase::what() const noexcept
 	{
 		m_what.clear();
 

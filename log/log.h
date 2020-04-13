@@ -37,11 +37,11 @@ namespace CommonLib
 		IlogWriter(const IlogWriter&) = delete;
 		IlogWriter& operator=(const IlogWriter&) = delete;
 
-		virtual void Open(const astr& path) = 0;
-		virtual void Close() = 0;
+	//	virtual void Open(const astr& path) = 0;
+	//	virtual void Close() = 0;
 		virtual void Write(const astr& msg) = 0;
-		virtual const astr& GetPath() const = 0;
-		virtual const astr& GetName() const = 0;
-		virtual size_t GetSize() const = 0;
+		//virtual const astr& GetPath() const = 0;
+		//virtual const astr& GetName() const = 0;
+		//virtual size_t GetSize() const = 0;
 	};
 }

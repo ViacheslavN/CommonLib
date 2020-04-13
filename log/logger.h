@@ -16,7 +16,7 @@ namespace CommonLib
 		CLogger();
 		virtual  ~CLogger();
 
-		void InnitLog(std::shared_ptr<IlogLineFormat>& pLogLineFormat,  std::shared_ptr<IlogWriter>& pLogWriter);
+		void InnitLog(std::shared_ptr<IlogLineFormat> pLogLineFormat,  std::shared_ptr<IlogWriter> pLogWriter);
 
 		virtual void Msg(eMsgType type, const astr& msg);
 		virtual void Msg(eMsgType type, const astr& format, const astr& msg);
@@ -216,7 +216,7 @@ namespace CommonLib
 		virtual void Exc(const std::exception& exc);
  
 
-
+		/*
 		template<class TArg>
 		void ExcT(std::exception& exc)
 		{
@@ -251,7 +251,7 @@ namespace CommonLib
 		void ExcT(const astr& format, const TArg1& arg1, const TArg2& arg2, const TArg3& arg3, const TArg4& arg4, std::exception& exc)
 		{
 			Exc(format, str_utils::AStrFrom(arg1), str_utils::AStrFrom(arg2), str_utils::AStrFrom(arg3), str_utils::AStrFrom(arg4), exc);
-		}
+		}*/
 		protected:
 			void ChangeCurrentLogFile();
 

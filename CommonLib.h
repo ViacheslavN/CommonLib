@@ -3,10 +3,22 @@
 
 #ifdef _WIN32
 
-#include <windows.h>
-#include <wininet.h>
-#include <process.h>
-
+	#include <windows.h>
+	#include <wininet.h>
+	#include <process.h>
+#else
+	#include <stdio.h>
+	#include <dirent.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+	#include <fcntl.h>
+	#include <unistd.h>
+	#include <time.h>
+	#include <wchar.h>
+	#include <pthread.h>
+	#include <mutex>
+	#include <sys/ioctl.h>
+	#include <sys/time.h>
 #endif
 
 #include <stdint.h>
@@ -24,7 +36,8 @@
 #include <condition_variable>
 #include <atomic>
 #include <iterator>
-
+#include <cstring>
+#include <algorithm>
 
 typedef std::string astr;
 typedef std::wstring wstr;

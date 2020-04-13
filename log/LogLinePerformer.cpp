@@ -36,7 +36,11 @@ namespace CommonLib
 		time(&currTime);
 
 		tm currTm;
+#ifdef _WIN32
 		localtime_s(&currTm, &currTime);
+#else
+		localtime_r(&currTime, &currTm);
+#endif
 
 		msg += "[";
 

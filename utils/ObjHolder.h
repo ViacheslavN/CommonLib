@@ -29,7 +29,7 @@ namespace CommonLib
 	class TObjHolderSafe
 	{
 	public:
-		TObjHolderSafe(TObj& obj, std::function<void(TObj&)> funcDest) : m_obj(obj), funcDest(funcDest)
+		TObjHolderSafe(TObj& obj, std::function<void(TObj&)> funcDest) : m_obj(obj), m_funcDest(funcDest)
 		{
 
 		}

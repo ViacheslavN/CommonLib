@@ -44,7 +44,7 @@ namespace CommonLib
 
 	
 
-	void CLogger::InnitLog(std::shared_ptr<IlogLineFormat>& pLogLineFormat,std::shared_ptr<IlogWriter>& pLogWriter)
+	void CLogger::InnitLog(std::shared_ptr<IlogLineFormat> pLogLineFormat,std::shared_ptr<IlogWriter> pLogWriter)
 	{
 
 		m_pLogLineFormat = pLogLineFormat;

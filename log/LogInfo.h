@@ -14,10 +14,15 @@ namespace CommonLib
 			m_log.Info(m_msg);
 		}
 
+		CLogInfo(CLogger log, const astr& msg) : m_log(log), m_complete(false)
+		{
+			m_msg = msg;
+			m_log.Info(m_msg); 
+		}
 
 		void Complete()
 		{
-			m_log.Info(m_msg + "  ok");
+			Complete(m_msg + "  ok");
 		}
 
 		void Complete(const astr& msg)
@@ -30,7 +35,7 @@ namespace CommonLib
 		void Complete(const astr& format, Types... args)
 		{
 			astr msg = str_format::AStrFormatSafeT(format, args...);
-			m_log.Info(msg);
+			Complete(msg);
 		}
 
 
@@ -60,6 +65,12 @@ namespace CommonLib
 			m_log.Trace(m_msg);
 		}
 
+
+		CLogTrace(CLogger log, const astr& msg) : m_log(log), m_complete(false)
+		{
+			m_msg = msg;
+			m_log.Trace(m_msg);
+		}
 
 		void Complete()
 		{

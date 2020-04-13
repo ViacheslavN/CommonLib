@@ -29,6 +29,14 @@ namespace CommonLib
 
 	}
 
+	std::shared_ptr<CommonLib::IlogWriter> CFileAsyncLogger::Create(const astr& path, size_t maxLogSize, std::shared_ptr<IlogRetention>& pLogRetention)
+	{
+		std::shared_ptr<CommonLib::IlogWriter> fileLogger(new CommonLib::CFileAsyncLogger(maxLogSize, pLogRetention));
+		((CommonLib::CFileAsyncLogger*)fileLogger.get())->Open(path);
+
+		return fileLogger;
+	}
+
 	void CFileAsyncLogger::Write(const astr& msg)
 	{
 		m_queue.Push(msg);

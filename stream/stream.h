@@ -1,4 +1,5 @@
 #pragma once
+#include "../alloc/alloc.h"
 #include "../exception/exc_base.h"
 #include "io.h"
 

@@ -1,11 +1,10 @@
-#pragma once
 #include "stdafx.h"
 #include "File.h"
 
 #ifdef _WIN32
 	#include "FileWin.h"
 #elif __linux__
- 
+	#include "FilePosix.h"
 #endif
 
 

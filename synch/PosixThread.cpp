@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "PosixThread.h"
-
-#ifndef WIN32 
+#include <linux/version.h>
+#include <sys/prctl.h>
+ 
 namespace CommonLib
 {
 	namespace synch
@@ -10,7 +11,7 @@ namespace CommonLib
 		extern "C"
 		{
 
-			unsigned __stdcall thread_func(void* param)
+			static void * thread_func(void* param)
 			{
 
 				std::function<void()>* threadFunc = reinterpret_cast<std::function<void()>*>(param);
@@ -59,5 +60,4 @@ namespace CommonLib
 		}
 	}
 }
-
-#endif
+ 

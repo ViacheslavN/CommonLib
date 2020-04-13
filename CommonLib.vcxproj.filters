@@ -264,6 +264,15 @@
     <ClInclude Include="log\LogInfo.h">
       <Filter>log</Filter>
     </ClInclude>
+    <ClInclude Include="log\ConsoleLogWriter.h">
+      <Filter>log</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\FilePosix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\PosixExc.h">
+      <Filter>exception\posix</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -419,5 +428,20 @@
     <ClCompile Include="stream\WriteBitStream.cpp">
       <Filter>stream</Filter>
     </ClCompile>
+    <ClCompile Include="log\ConsoleLogWriter.cpp">
+      <Filter>log</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\PosixExc.cpp">
+      <Filter>exception\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\FilePosix.cpp">
+      <Filter>filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="filesystem\filesystemPosix.cpp">
+      <Filter>filesystem</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

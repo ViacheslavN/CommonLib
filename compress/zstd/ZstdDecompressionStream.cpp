@@ -21,7 +21,7 @@ namespace CommonLib
 #pragma comment ( lib, "../ThirdParty/zstd/build/VS2010/bin/Win32_Release/libzstd_static.lib" )
 #endif
 
-#endif _WIN64
+#endif// _WIN64
 
 
 	class ZDeStdHolder

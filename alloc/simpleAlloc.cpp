@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "simpleAlloc.h"
 #include "../exception/exc_base.h"
 

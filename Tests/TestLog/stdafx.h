@@ -2,7 +2,11 @@
 
 #include <iostream>
 #include "../../../CommonLib/CommonLib.h"
-#include "../../../CommonLib/CommonLib_lib.h"
+
+#ifdef _WIN32
+	#include "../../../CommonLib/CommonLib_lib.h"
+#endif
+
 #include "../../../CommonLib/str/str.h"
 #include "../../../CommonLib/str/StrUtils.h"
 #include "../../../CommonLib/filesystem/filesystem.h"

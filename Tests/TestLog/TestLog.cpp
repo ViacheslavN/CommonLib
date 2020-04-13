@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 void TestZlib();
-
+#include "../../../CommonLib/exception/PosixExc.h"
 int main()
 {
 /*	TestZlib();
@@ -26,11 +26,20 @@ int main()
 	wstr OnlyFileNameW = CommonLib::CPathUtils::FindOnlyFileName(pathw);
 	wstr PathW = CommonLib::CPathUtils::FindFilePath(pathw);*/
 
+	bool bCycle = true;
+	while (bCycle)
+	{
+		sleep(1);
+	}
+
+	CommonLib::CPosixExc posizExc(12, "%1, %2", 34, 45.5);
+
+	astr msg = posizExc.GetErrorMessageA(45);
+
 	std::shared_ptr<CommonLib::IlogLineFormat> plogLineFormat;
 	std::shared_ptr<CommonLib::IlogRetention> plogRetention;
 
-	std::shared_ptr<CommonLib::IlogWriter> fileLogger(new CommonLib::CFileAsyncLogger(10000000, plogRetention));
-	fileLogger->Open("D:\\backup.log");
+	std::shared_ptr<CommonLib::IlogWriter> fileLogger = CommonLib::CFileAsyncLogger::Create("D:\\backup.log", 10000000, plogRetention);
 
 	//printf("Width trick: %0*I64d \n", 30, (__int64)10 * 10000000);
 
@@ -53,8 +62,11 @@ int main()
 
 	fileLogger->Open("D:\\backup.log");*/
 
-	
+#ifdef _WIN32
 	::Sleep(2000);
+#else
+	sleep(2);
+#endif
 	return 0;
 }
 

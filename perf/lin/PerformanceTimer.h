@@ -2,8 +2,8 @@
 #pragma once
 namespace CommonLib
 {
-	namespace lin
-	{
+	//namespace lin
+	//{CLOCK_MONOTONIC_RAW
 		class CPerformanceTimer
 		{
 		public:
@@ -20,5 +20,5 @@ namespace CommonLib
 		private:
 			uint64_t m_startNS{ 0 };
 		};
-	}
+	//}
 }

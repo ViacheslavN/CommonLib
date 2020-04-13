@@ -1,4 +1,5 @@
 #pragma once
+#include <exception>
 #include "../synch/thread.h"
 #include "../str/StringEncoding.h"
 #include "../str/str.h"
@@ -9,10 +10,10 @@ namespace CommonLib
 class CExcBase : public std::exception
 {
 public:
-	CExcBase();
-	CExcBase(const CExcBase& value);
-	CExcBase(const astr& msg);
-	CExcBase(const wstr& msg);
+	CExcBase() noexcept;
+	CExcBase(const CExcBase& value) noexcept;
+	CExcBase(const astr& msg) noexcept;
+	CExcBase(const wstr& msg) noexcept;
 
 	template<class TArg>
 	CExcBase(const astr& format, const TArg& arg) : m_srcThreadId(synch::CThread::GetCurThreadId())
@@ -58,10 +59,10 @@ public:
 	}
 
 
-	virtual ~CExcBase();
+	virtual ~CExcBase() noexcept;
 
 	virtual std::shared_ptr<CExcBase> Clone() const;
-	virtual const char*  what() const;
+	virtual const char*  what() const noexcept;
 	virtual void Throw() const;
 	
 	const astrvec& GetChain() const;

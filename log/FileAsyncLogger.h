@@ -25,6 +25,8 @@ namespace CommonLib
 		CFileAsyncLogger& operator=(const CFileAsyncLogger&) = delete;
 
 
+		static std::shared_ptr<CommonLib::IlogWriter> Create(const astr& path, size_t maxLogSize, std::shared_ptr<IlogRetention>& pLogRetention);
+
 
 		virtual void Write(const astr& msg);
 

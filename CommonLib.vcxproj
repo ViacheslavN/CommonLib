@@ -348,11 +348,14 @@
     <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
     <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
     <ClInclude Include="exception\exc_base.h" />
+    <ClInclude Include="exception\PosixExc.h" />
     <ClInclude Include="exception\WinExc.h" />
     <ClInclude Include="filesystem\File.h" />
+    <ClInclude Include="filesystem\FilePosix.h" />
     <ClInclude Include="filesystem\filesystem.h" />
     <ClInclude Include="filesystem\FileWin.h" />
     <ClInclude Include="filesystem\PathUtils.h" />
+    <ClInclude Include="log\ConsoleLogWriter.h" />
     <ClInclude Include="log\FileAsyncLogger.h" />
     <ClInclude Include="log\log.h" />
     <ClInclude Include="log\LogFileWriterBase.h" />
@@ -553,11 +556,42 @@
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
+    <ClCompile Include="exception\PosixExc.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="exception\WinExc.cpp" />
     <ClCompile Include="filesystem\File.cpp" />
+    <ClCompile Include="filesystem\FilePosix.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="filesystem\filesystemPosix.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="filesystem\filesystemWin.cpp" />
     <ClCompile Include="filesystem\FileWin.cpp" />
     <ClCompile Include="filesystem\PathUtils.cpp" />
+    <ClCompile Include="log\ConsoleLogWriter.cpp" />
     <ClCompile Include="log\FileAsyncLogger.cpp" />
     <ClCompile Include="log\LogFileWriterBase.cpp" />
     <ClCompile Include="log\logger.cpp" />
@@ -595,10 +629,22 @@
     <ClCompile Include="str\str.cpp" />
     <ClCompile Include="str\StringEncoding.cpp" />
     <ClCompile Include="str\StrUtils.cpp" />
-    <ClCompile Include="synch\PosixThread.cpp" />
+    <ClCompile Include="synch\PosixThread.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="synch\thread.cpp" />
     <ClCompile Include="synch\WinThread.cpp" />
     <ClCompile Include="system\win\DynamicLibWin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
