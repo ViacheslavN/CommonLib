@@ -273,6 +273,9 @@
     <ClInclude Include="exception\PosixExc.h">
       <Filter>exception\posix</Filter>
     </ClInclude>
+    <ClInclude Include="exception\ComExc.h">
+      <Filter>exception\win</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -439,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="filesystem\filesystemPosix.cpp">
       <Filter>filesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\ComExc.cpp">
+      <Filter>exception\win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

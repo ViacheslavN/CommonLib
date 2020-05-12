@@ -347,6 +347,7 @@
     <ClInclude Include="compress\zlib\zutil.h" />
     <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
     <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
+    <ClInclude Include="exception\ComExc.h" />
     <ClInclude Include="exception\exc_base.h" />
     <ClInclude Include="exception\PosixExc.h" />
     <ClInclude Include="exception\WinExc.h" />
@@ -555,6 +556,7 @@
     </ClCompile>
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
+    <ClCompile Include="exception\ComExc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
     <ClCompile Include="exception\PosixExc.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
