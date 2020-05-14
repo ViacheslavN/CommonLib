@@ -8,8 +8,13 @@
 #include "../filesystem/filesystem.h"
  
 
+//CommonLib::CLogger& Log = *(new CommonLib::CLogger());
+
+CommonLib::CLogger Log;
+
 namespace CommonLib
-{
+{	   
+
 	CLogger::CLogger() 
   	{}
 

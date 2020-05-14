@@ -26,11 +26,11 @@ int main()
 	wstr OnlyFileNameW = CommonLib::CPathUtils::FindOnlyFileName(pathw);
 	wstr PathW = CommonLib::CPathUtils::FindFilePath(pathw);*/
 
-	bool bCycle = true;
+	/*bool bCycle = true;
 	while (bCycle)
 	{
 		sleep(1);
-	}
+	}*/
 
 	CommonLib::CPosixExc posizExc(12, "%1, %2", 34, 45.5);
 
@@ -43,14 +43,14 @@ int main()
 
 	//printf("Width trick: %0*I64d \n", 30, (__int64)10 * 10000000);
 
-	CommonLib::CLogger log;
+	//CommonLib::CLogger log;
 
-	log.InnitLog(plogLineFormat, fileLogger);
+	Log.InnitLog(plogLineFormat, fileLogger);
 
 	for (size_t i = 0; i < 100; ++i)
 	{
-		log.InfoT("Message %1", i);
-		CommonLib::CLogInfo logInfo(log, "%1, %2, %3", i, i + 1, 3.154);
+		Log.InfoT("Message %1", i);
+		CommonLib::CLogInfo logInfo(Log, "%1, %2, %3", i, i + 1, 3.154);
 	//	logInfo.Ok();
 	}
 

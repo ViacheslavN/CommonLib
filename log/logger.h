@@ -263,3 +263,6 @@ namespace CommonLib
 	};
 
 }
+
+
+extern CommonLib::CLogger Log;
