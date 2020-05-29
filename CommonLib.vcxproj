@@ -347,10 +347,12 @@
     <ClInclude Include="compress\zlib\zutil.h" />
     <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
     <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
+    <ClInclude Include="crypto\IDataCipher.h" />
     <ClInclude Include="exception\ComExc.h" />
     <ClInclude Include="exception\exc_base.h" />
     <ClInclude Include="exception\PosixExc.h" />
     <ClInclude Include="exception\WinExc.h" />
+    <ClInclude Include="exception\WinSockExc.h" />
     <ClInclude Include="filesystem\File.h" />
     <ClInclude Include="filesystem\FilePosix.h" />
     <ClInclude Include="filesystem\filesystem.h" />
@@ -363,6 +365,15 @@
     <ClInclude Include="log\logger.h" />
     <ClInclude Include="log\LogInfo.h" />
     <ClInclude Include="log\LogLinePerformer.h" />
+    <ClInclude Include="network\AcceptedSocket.h" />
+    <ClInclude Include="network\AddrInfo.h" />
+    <ClInclude Include="network\BaseSocketIP.h" />
+    <ClInclude Include="network\ClientSocket.h" />
+    <ClInclude Include="network\CloseConnectionExc.h" />
+    <ClInclude Include="network\OperationTimeoutExc.h" />
+    <ClInclude Include="network\ServerSocket.h" />
+    <ClInclude Include="network\SocketAddr.h" />
+    <ClInclude Include="network\SocketUtil.h" />
     <ClInclude Include="perf\lin\PerformanceTimer.h" />
     <ClInclude Include="perf\PerfCount.h" />
     <ClInclude Include="perf\win\PerformanceTimer.h" />
@@ -569,6 +580,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="exception\WinExc.cpp" />
+    <ClCompile Include="exception\WinSockExc.cpp" />
     <ClCompile Include="filesystem\File.cpp" />
     <ClCompile Include="filesystem\FilePosix.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -598,6 +610,13 @@
     <ClCompile Include="log\LogFileWriterBase.cpp" />
     <ClCompile Include="log\logger.cpp" />
     <ClCompile Include="log\LogLinePerformer.cpp" />
+    <ClCompile Include="network\AcceptedSocket.cpp" />
+    <ClCompile Include="network\AddrInfo.cpp" />
+    <ClCompile Include="network\BaseSocketIP.cpp" />
+    <ClCompile Include="network\ClientSocket.cpp" />
+    <ClCompile Include="network\ServerSocket.cpp" />
+    <ClCompile Include="network\SocketAddr.cpp" />
+    <ClCompile Include="network\SocketUtil.cpp" />
     <ClCompile Include="perf\lin\PerformanceTimer.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">true</ExcludedFromBuild>

@@ -73,6 +73,15 @@
     <Filter Include="perf\lin">
       <UniqueIdentifier>{8bd36497-dab2-49f2-9437-4338269c7aab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{0674de45-1b03-421f-abc5-4a2f7499594c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto">
+      <UniqueIdentifier>{d47db752-4248-46f1-a863-12ce1c12b6b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network\exeption">
+      <UniqueIdentifier>{eb1a7869-540f-4ca5-8c1a-3288019ca099}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -276,6 +285,39 @@
     <ClInclude Include="exception\ComExc.h">
       <Filter>exception\win</Filter>
     </ClInclude>
+    <ClInclude Include="crypto\IDataCipher.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\WinSockExc.h">
+      <Filter>exception\win</Filter>
+    </ClInclude>
+    <ClInclude Include="network\BaseSocketIP.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\SocketAddr.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\ServerSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\ClientSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\AddrInfo.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\AcceptedSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\SocketUtil.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\CloseConnectionExc.h">
+      <Filter>network\exeption</Filter>
+    </ClInclude>
+    <ClInclude Include="network\OperationTimeoutExc.h">
+      <Filter>network\exeption</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -445,6 +487,30 @@
     </ClCompile>
     <ClCompile Include="exception\ComExc.cpp">
       <Filter>exception\win</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\WinSockExc.cpp">
+      <Filter>exception\win</Filter>
+    </ClCompile>
+    <ClCompile Include="network\BaseSocketIP.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ServerSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\ClientSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\SocketAddr.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\AddrInfo.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\AcceptedSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="network\SocketUtil.cpp">
+      <Filter>network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

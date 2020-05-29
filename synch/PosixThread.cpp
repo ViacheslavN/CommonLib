@@ -2,6 +2,7 @@
 #include "PosixThread.h"
 #include <linux/version.h>
 #include <sys/prctl.h>
+#include "../exception/PosixExc.h"
  
 namespace CommonLib
 {
@@ -27,18 +28,18 @@ namespace CommonLib
 			pthread_attr_t threadAttr;
 			if (pthread_attr_init(&threadAttr) == -1)
 			{
-				 // TO DO POSIX EXC
+				throw CPosixExc("pthread_attr_init", errno);
 			}
 
 			int ret = pthread_create(&m_tid, &threadAttr,	thread_func, &threadFunk);
 			if (ret != 0) {
 
-				// TO DO POSIX EXC
+				throw CPosixExc("pthread_create", errno);
 			}
 
 			if (pthread_attr_destroy(&threadAttr) == -1)
 			{
-				// TO DO POSIX EXC
+				throw CPosixExc("pthread_attr_destroy", errno);
 			}
 		}
 

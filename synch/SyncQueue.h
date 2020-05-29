@@ -13,7 +13,15 @@ namespace CommonLib
 
 			}
 
-			void Push(TItem ptrItem)
+			void Push(const TItem& ptrItem)
+			{
+				std::lock_guard<std::recursive_mutex> locker(m_mutex);
+				m_queue.push(ptrItem);
+				m_condChanged.notify_all();
+
+			}
+
+			void Push(TItem&& ptrItem)
 			{
 				std::lock_guard<std::recursive_mutex> locker(m_mutex);
 				m_queue.push(ptrItem);

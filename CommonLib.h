@@ -2,10 +2,12 @@
 
 
 #ifdef _WIN32
-
+	#include <Winsock2.h>
+	#include <ws2tcpip.h>
 	#include <windows.h>
 	#include <wininet.h>
 	#include <process.h>
+
 #else
 	#include <stdio.h>
 	#include <dirent.h>
@@ -19,6 +21,12 @@
 	#include <mutex>
 	#include <sys/ioctl.h>
 	#include <sys/time.h>
+	#include <sys/ioctl.h>
+	#include <sys/types.h>
+	#include <netdb.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
 #endif
 
 #include <stdint.h>

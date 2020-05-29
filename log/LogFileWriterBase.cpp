@@ -23,7 +23,7 @@ namespace CommonLib
 		{
 			Close();
 
-			m_file = file::CFileCreator::OpenFileA(path.c_str(),  file::ofmOpenAlways, file::arWrite, file::smNoMode, file::oftBinary);
+			m_file = file::CFileCreator::OpenFileA(path.c_str(),  file::ofmOpenAlways, file::arWrite, file::smRead, file::oftBinary);
 			m_file->SetFileEnd();
 
 			m_logName = CPathUtils::FindFileName(path);

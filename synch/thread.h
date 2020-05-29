@@ -14,6 +14,8 @@ namespace CommonLib
 
 	namespace synch
 	{
+		typedef std::shared_ptr<class CThread> ThreadPtr;
+
 		class CThread
 		{
 			public:
@@ -36,7 +38,7 @@ namespace CommonLib
 				
 				static void SetDescriptionForCurrThread(const astr& threadName);
 				static thread_id_t GetCurThreadId();
-
+				static void Sleep(uint32_t msec);
 
 
 			private:

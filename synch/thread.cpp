@@ -106,5 +106,17 @@ namespace CommonLib
 
 			return m_thread->Wait(timeoutms);
 		}
+
+		void CThread::Sleep(uint32_t msec)
+		{
+#ifdef _WIN32
+			::Sleep(msec);
+#else
+			struct timespec ts;
+			ts.tv_sec = msec / 1000;
+			ts.tv_nsec = (msec % 1000) * 1000000;
+			nanosleep(&ts, NULL);
+#endif
+		}
 	}
 }
