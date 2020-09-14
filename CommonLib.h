@@ -57,6 +57,8 @@ typedef std::set<astr> astrset;
 typedef std::set<wstr> wstrset;
 typedef uint8_t byte_t;
 
+
+
 #ifdef _WIN32
 	typedef int thread_id_t;
 #else

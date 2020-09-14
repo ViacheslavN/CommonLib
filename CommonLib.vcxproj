@@ -347,7 +347,9 @@
     <ClInclude Include="compress\zlib\zutil.h" />
     <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
     <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
+    <ClInclude Include="crypto\EmptyDataCipher.h" />
     <ClInclude Include="crypto\IDataCipher.h" />
+    <ClInclude Include="data\ByteArray.h" />
     <ClInclude Include="exception\ComExc.h" />
     <ClInclude Include="exception\exc_base.h" />
     <ClInclude Include="exception\PosixExc.h" />
@@ -370,7 +372,9 @@
     <ClInclude Include="network\BaseSocketIP.h" />
     <ClInclude Include="network\ClientSocket.h" />
     <ClInclude Include="network\CloseConnectionExc.h" />
+    <ClInclude Include="network\NetworkStreamIoDev.h" />
     <ClInclude Include="network\OperationTimeoutExc.h" />
+    <ClInclude Include="network\portable_endian.h" />
     <ClInclude Include="network\ServerSocket.h" />
     <ClInclude Include="network\SocketAddr.h" />
     <ClInclude Include="network\SocketUtil.h" />
@@ -567,6 +571,8 @@
     </ClCompile>
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
+    <ClCompile Include="crypto\EmptyDataCipher.cpp" />
+    <ClCompile Include="data\ByteArray.cpp" />
     <ClCompile Include="exception\ComExc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
     <ClCompile Include="exception\PosixExc.cpp">
@@ -614,6 +620,7 @@
     <ClCompile Include="network\AddrInfo.cpp" />
     <ClCompile Include="network\BaseSocketIP.cpp" />
     <ClCompile Include="network\ClientSocket.cpp" />
+    <ClCompile Include="network\NetworkStreamIoDev.cpp" />
     <ClCompile Include="network\ServerSocket.cpp" />
     <ClCompile Include="network\SocketAddr.cpp" />
     <ClCompile Include="network\SocketUtil.cpp" />

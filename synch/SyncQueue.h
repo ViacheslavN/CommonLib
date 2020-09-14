@@ -29,7 +29,7 @@ namespace CommonLib
 
 			}
 
-			TItem TryPop()
+			TItem Pop()
 			{
 				std::unique_lock<std::recursive_mutex> locker(m_mutex);
 				while (m_queue.empty() && !m_bAbort)

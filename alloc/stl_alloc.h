@@ -53,7 +53,7 @@ public:
 	inline const_pointer address(const_reference r) { return &r; }
 
 	//    memory allocation
-	inline pointer allocate(size_type cnt, typename std::allocator<void>::const_pointer = 0)
+	inline pointer allocate(size_type cnt, const_pointer = 0)
 	{
 
 		//new (m_pAlloc->alloc(cnt * sizeof(T))) TTreeNode(key, val);

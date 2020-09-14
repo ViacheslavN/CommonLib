@@ -85,7 +85,7 @@ namespace CommonLib
 
 			while (true)
 			{
-				astr msg = m_queue.TryPop();
+				astr msg = m_queue.Pop();
 				
 				if (msg.empty() && m_queue.IsAborted())
 				{

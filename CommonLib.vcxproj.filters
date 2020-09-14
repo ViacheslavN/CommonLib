@@ -82,6 +82,9 @@
     <Filter Include="network\exeption">
       <UniqueIdentifier>{eb1a7869-540f-4ca5-8c1a-3288019ca099}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{ffc9d62f-2830-466f-b3c9-3053391e231e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -318,6 +321,18 @@
     <ClInclude Include="network\OperationTimeoutExc.h">
       <Filter>network\exeption</Filter>
     </ClInclude>
+    <ClInclude Include="data\ByteArray.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="network\NetworkStreamIoDev.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="network\portable_endian.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\EmptyDataCipher.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -511,6 +526,15 @@
     </ClCompile>
     <ClCompile Include="network\SocketUtil.cpp">
       <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="data\ByteArray.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="network\NetworkStreamIoDev.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\EmptyDataCipher.cpp">
+      <Filter>crypto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
