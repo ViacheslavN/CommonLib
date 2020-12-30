@@ -45,6 +45,7 @@
 #include <atomic>
 #include <iterator>
 #include <cstring>
+#include <stack>
 #include <algorithm>
 
 typedef std::string astr;
