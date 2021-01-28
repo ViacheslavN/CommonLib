@@ -12,6 +12,7 @@ namespace CommonLib
 
 		virtual bool EncodeSymbol(TCodeValue nLowCount, TCodeValue nHightCount, TCodeValue nTotalCount) = 0;
 		virtual bool EncodeFinish() = 0;
+		virtual uint32_t GetAdditionalSize() const = 0 ;
 	};
 
 	template<class TCodeValue>

@@ -84,6 +84,16 @@ namespace CommonLib
 		virtual void WriteBits(int32_t  nBits, size_t nCntBits);
 		virtual void WriteBits(int64_t  nBits, size_t nCntBits);
 
+		virtual bool WriteBitSafe(bool  nBit) = 0;
+		virtual bool WriteBitSafe(byte_t  nBit);
+		virtual bool WriteBitsSafe(byte_t  nBits, size_t nCntBits);
+		virtual bool WriteBitsSafe(uint16_t  nBits, size_t nCntBits);
+		virtual bool WriteBitsSafe(uint32_t  nBits, size_t nCntBits);
+		virtual bool WriteBitsSafe(uint64_t  nBits, size_t nCntBits);
+		virtual bool WriteBitsSafe(int16_t  nBits, size_t nCntBits);
+		virtual bool WriteBitsSafe(int32_t  nBits, size_t nCntBits);
+		virtual bool WriteBitsSafe(int64_t  nBits, size_t nCntBits);
+
 	protected:
 
 		template <class TVal>
@@ -94,6 +104,19 @@ namespace CommonLib
 				bool bBit = (bits & ((TVal)0x01 << i)) ? true : false;
 				WriteBit(bBit);
 			}
+		}
+
+		template <class TVal>
+		bool _writeBitsSafe(TVal bits, size_t nCount)
+		{
+			for (size_t i = 0; i < nCount; ++i) //TO DO write bytes at frist
+			{
+				bool bBit = (bits & ((TVal)0x01 << i)) ? true : false;
+				if (!WriteBitSafe(bBit))
+					return false;
+			}
+
+			return true;
 		}
 	};
 

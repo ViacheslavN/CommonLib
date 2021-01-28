@@ -492,9 +492,9 @@ protected:
 	 bool SafeReadT(T& val)
 	 {
 		 if (IStream::IsBigEndian())
-			 return ReadBytesSafe((byte_t*)&val, sizeof(T));
+			 return ReadInverseSafe((byte_t*)&val, sizeof(T)); 
 		 else
-			 return ReadInverseSafe((byte_t*)&val, sizeof(T));
+			 return ReadBytesSafe((byte_t*)&val, sizeof(T));
 	 }
 
 	 virtual void ReadBytes(byte_t* dst, size_t size) = 0;

@@ -68,15 +68,18 @@ namespace CommonLib
 
 	}
 
+
 	void IWriteBitStreamBase::WriteBits(byte_t nBits, size_t nCntBits)
 	{
 		assert(nCntBits < 9);
-		_writeBits<byte_t>(nBits, nCntBits);
+		 _writeBits<byte_t>(nBits, nCntBits);
 	}
+
 	void IWriteBitStreamBase::WriteBits(uint16_t nBits, size_t nCntBits)
 	{
 		assert(nCntBits < 17);
 		_writeBits<uint16_t>(nBits, nCntBits);
+
 
 	}
 	void IWriteBitStreamBase::WriteBits(uint32_t nBits, size_t nCntBits)
@@ -84,11 +87,13 @@ namespace CommonLib
 		assert(nCntBits < 33);
 		_writeBits<uint32_t>(nBits, nCntBits);
 	}
+
 	void IWriteBitStreamBase::WriteBits(uint64_t nBits, size_t nCntBits)
 	{
 		assert(nCntBits < 65);
 		_writeBits<uint64_t>(nBits, nCntBits);
 	}
+
 	void IWriteBitStreamBase::WriteBits(int16_t nBits, size_t nCntBits)
 	{
 		assert(nCntBits < 17);
@@ -104,6 +109,59 @@ namespace CommonLib
 	{
 		assert(nCntBits < 65);
 		_writeBits<int64_t>(nBits, nCntBits);
+	}
+
+
+
+
+	bool IWriteBitStreamBase::WriteBitSafe(byte_t nBit)
+	{
+
+		bool bitValue = (nBit & 0x01) ? true : false;
+		return WriteBitSafe(bitValue);
+
+	}
+
+	bool IWriteBitStreamBase::WriteBitsSafe(byte_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 9);
+		return _writeBitsSafe<byte_t>(nBits, nCntBits);
+	}
+
+	bool IWriteBitStreamBase::WriteBitsSafe(uint16_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 17);
+		return _writeBitsSafe<uint16_t>(nBits, nCntBits);
+
+	
+	}
+	bool IWriteBitStreamBase::WriteBitsSafe(uint32_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 33);
+		return _writeBitsSafe<uint32_t>(nBits, nCntBits);
+	}
+
+	bool IWriteBitStreamBase::WriteBitsSafe(uint64_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 65);
+		return _writeBitsSafe<uint64_t>(nBits, nCntBits);
+	}
+
+	bool IWriteBitStreamBase::WriteBitsSafe(int16_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 17);
+		return _writeBitsSafe<int16_t>(nBits, nCntBits);
+
+	}
+	bool IWriteBitStreamBase::WriteBitsSafe(int32_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 33);
+		return _writeBitsSafe<int32_t>(nBits, nCntBits);
+	}
+	bool IWriteBitStreamBase::WriteBitsSafe(int64_t nBits, size_t nCntBits)
+	{
+		assert(nCntBits < 65);
+		return _writeBitsSafe<int64_t>(nBits, nCntBits);
 	}
 
 }

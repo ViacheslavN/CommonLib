@@ -16,13 +16,13 @@ namespace CommonLib
 		static const TCodeValue  _ThirdQuarter = (3 * _FirstQuarter);
 		static const _TCodeValue MaxRange = _FirstQuarter - 1;
 
-		TACEncoder(IWriteStream* pStream)
+		TACEncoder( )
 		{
-			Reset(pStream, nMaxSize);
+ 
 		}
 
-
-		void Reset(IWriteStream* pStream)
+		
+		void SetStream(IWriteStream* pStream)
 		{
 			m_pStream = pStream;
 			m_nLow = 0;
@@ -32,11 +32,7 @@ namespace CommonLib
 			m_nCurrBit = 0;
 		}
 
-		void SetStream(IWriteStream* pStream)
-		{
-			m_pStream = pStream;
-		}
-
+ 
 		bool BitsPlusFollow(bool bBit)
 		{
 			if (!writeBit(bBit))
@@ -50,6 +46,7 @@ namespace CommonLib
 
 			return true;
 		}
+
 		virtual bool EncodeSymbol(TCodeValue nLowCount, TCodeValue nHightCount, TCodeValue nTotalCount)
 		{
 			TCodeValue range = m_nHigh - m_nLow + 1;
@@ -85,14 +82,10 @@ namespace CommonLib
 			}
 			return true;
 		}
+
 		virtual bool EncodeFinish()
 		{
 			m_nScale += 1;
-			/*	if (m_nLow < _FirstQuarter)
-					BitsPlusFollow(false);
-
-				else BitsPlusFollow(true);   */
-
 			if (!BitsPlusFollow(m_nLow < _FirstQuarter ? false : true))
 				return false;
 
@@ -127,6 +120,12 @@ namespace CommonLib
 			return true;
 		}
 
+		virtual uint32_t GetAdditionalSize() const
+		{
+			return sizeof(uint32_t) + sizeof(byte_t);
+		}
+
+
 	private:
 		IWriteStream* m_pStream;
 		TCodeValue m_nLow;
@@ -148,13 +147,12 @@ namespace CommonLib
 		static const TCodeValue  _ThirdQuarter = (3 * _FirstQuarter);
 		static const _TCodeValue MaxRange = _FirstQuarter - 1;
 
-		TACDecoder(IReadStream* pStream = NULL)
+		TACDecoder()
 		{
-			Reset(pStream);
 		}
 
 
-		void Reset(IReadStream* pStream = NULL)
+		void SetStream(IReadStream* pStream)
 		{
 			m_pStream = pStream;
 			m_nLow = 0;
@@ -168,7 +166,7 @@ namespace CommonLib
 		TCodeValue GetBit()
 		{
 
-			if (m_nCurrBit > 7 && (m_pStream->pos() == m_pStream->size()))
+			if (m_nCurrBit > 7 && (m_pStream->Pos() == m_pStream->Size()))
 				return 0;
 
 			if (m_nCurrBit > 7)
@@ -182,13 +180,6 @@ namespace CommonLib
 			TCodeValue nBit = (m_nBitsBuf & (1 << m_nCurrBit)) ? 1 : 0;
 			m_nCurrBit++;
 			return nBit;
-		}
-
-
-		void SetStream(IReadStream* pStream)
-		{
-			m_pStream = pStream;
-
 		}
 
 		virtual void StartDecode()

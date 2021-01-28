@@ -5,13 +5,13 @@ namespace CommonLib
 {
 
 
-	FxBitWriteStream::FxBitWriteStream(CommonLib::IAllocPtr pAlloc) : TBase(pAlloc)
+	CFxBitWriteStream::CFxBitWriteStream() : TBase(IAllocPtr())
 	{}
 
-	FxBitWriteStream::~FxBitWriteStream()
+	CFxBitWriteStream::~CFxBitWriteStream()
 	{}
 
-	void FxBitWriteStream::WriteBit(bool bBit)
+	void CFxBitWriteStream::WriteBit(bool bBit)
 	{
 	
 		if (m_nCurrBit > m_nBitBase)
@@ -30,7 +30,30 @@ namespace CommonLib
 		m_nCurrBit++;
 
 	}
-	void FxBitWriteStream::Attach(TStreamPtr pStream, int32_t nPos, int32_t nSize, bool bSeek)
+
+
+	bool CFxBitWriteStream::WriteBitSafe(bool bBit)
+	{
+		if (m_nCurrBit > m_nBitBase)
+		{
+			if (m_nPos == m_nSize)
+				return false;
+
+			m_nPos++;
+			m_nCurrBit = 0;
+			m_pBuffer[m_nPos] = 0;
+		}
+
+		if (bBit)
+			m_pBuffer[m_nPos] |= (1 << m_nCurrBit);
+
+		m_nCurrBit++;
+
+		return true;
+	}
+
+
+	void CFxBitWriteStream::Attach(TStreamPtr pStream, int32_t nPos, int32_t nSize, bool bSeek)
 	{
 		TBase::Attach(pStream, nPos, nSize, bSeek);
 
@@ -38,14 +61,14 @@ namespace CommonLib
 		m_nCurrBit = 0;
 	}
 	
-	FxBitReadStream::FxBitReadStream(CommonLib::IAllocPtr pAlloc) : TBase(pAlloc)
+	CFxBitReadStream::CFxBitReadStream( ) : TBase(IAllocPtr())
 	{
 
 	}
 
-	FxBitReadStream::~FxBitReadStream() {}
+	CFxBitReadStream::~CFxBitReadStream() {}
 
-	bool FxBitReadStream::ReadBit()
+	bool CFxBitReadStream::ReadBit()
 	{
 
 
