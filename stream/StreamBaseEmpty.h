@@ -33,6 +33,11 @@ namespace CommonLib
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: Seek isn't implemented");
 		}
+
+		virtual bool  SeekSafe(size_t position, enSeekOffset offset)
+		{
+			throw CExcBase("TMemoryStreamBaseEmpty: Seek isn't implemented");
+		}
 		
 		virtual size_t Pos() const
 		{

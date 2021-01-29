@@ -23,6 +23,7 @@ class IStream
 public:
 	virtual size_t Size() const = 0;
 	virtual void Seek(size_t position, enSeekOffset offset) = 0;
+	virtual bool SeekSafe(size_t position, enSeekOffset offset) = 0;
 	virtual size_t Pos() const = 0;
 	virtual void Reset() = 0;
 	virtual void Close() = 0;
@@ -288,6 +289,20 @@ public:
 			exc.AddMsgT(L"Can't seek stream pos: %1", position);
 			throw;
 		}
+	}
+
+	bool  SeekSafe(size_t position, enSeekOffset offset)
+	{
+		try
+		{
+			Seek( position,  offset);
+		}
+		catch (...)
+		{
+			return false;
+		}
+
+		return true;
 	}
 	
 	virtual size_t Pos() const

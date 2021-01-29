@@ -174,7 +174,7 @@ namespace CommonLib
 				m_nCurrBit = 0;
 
 				if (!m_pStream->ReadSafe(m_nBitsBuf))
-					return false;			
+					return 0;			
 			}
 
 			TCodeValue nBit = (m_nBitsBuf & (1 << m_nCurrBit)) ? 1 : 0;
