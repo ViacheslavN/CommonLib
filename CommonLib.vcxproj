@@ -360,6 +360,9 @@
     <ClInclude Include="filesystem\filesystem.h" />
     <ClInclude Include="filesystem\FileWin.h" />
     <ClInclude Include="filesystem\PathUtils.h" />
+    <ClInclude Include="guid\guid.h" />
+    <ClInclude Include="guid\GuidLin.h" />
+    <ClInclude Include="guid\GuidWin.h" />
     <ClInclude Include="log\ConsoleLogWriter.h" />
     <ClInclude Include="log\FileAsyncLogger.h" />
     <ClInclude Include="log\log.h" />
@@ -400,8 +403,10 @@
     <ClInclude Include="synch\SyncQueue.h" />
     <ClInclude Include="synch\thread.h" />
     <ClInclude Include="synch\WinThread.h" />
-    <ClInclude Include="system\win\DynamicLib.h" />
+    <ClInclude Include="system\DynamicLib.h" />
     <ClInclude Include="system\win\DynamicLibWin.h" />
+    <ClInclude Include="system\win\Handle.h" />
+    <ClInclude Include="system\win\Process.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="utils\ObjHolder.h" />
   </ItemGroup>
@@ -611,6 +616,17 @@
     <ClCompile Include="filesystem\filesystemWin.cpp" />
     <ClCompile Include="filesystem\FileWin.cpp" />
     <ClCompile Include="filesystem\PathUtils.cpp" />
+    <ClCompile Include="guid\GuidLin.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="guid\GuidWin.cpp" />
     <ClCompile Include="log\ConsoleLogWriter.cpp" />
     <ClCompile Include="log\FileAsyncLogger.cpp" />
     <ClCompile Include="log\LogFileWriterBase.cpp" />
@@ -670,6 +686,8 @@
     <ClCompile Include="synch\thread.cpp" />
     <ClCompile Include="synch\WinThread.cpp" />
     <ClCompile Include="system\win\DynamicLibWin.cpp" />
+    <ClCompile Include="system\win\Handle.cpp" />
+    <ClCompile Include="system\win\Process.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

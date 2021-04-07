@@ -47,6 +47,9 @@ public:
 
 	virtual byte_t* Buffer() = 0;
 	virtual const byte_t* Buffer() const = 0;
+	virtual byte_t* BufferFromCurPos() = 0;
+	virtual const byte_t* BufferFromCurPos() const = 0;
+
 	virtual void Create(size_t nSize) = 0;
 	virtual void Resize(size_t nSize) = 0;
 };
@@ -429,6 +432,16 @@ public:
 	virtual const byte_t* Buffer() const
 	{
 		return m_pBuffer;
+	}
+
+	virtual byte_t* BufferFromCurPos()
+	{
+		return m_pBuffer + m_nPos; 
+	}
+
+	virtual const byte_t* BufferFromCurPos() const
+	{
+		return m_pBuffer + m_nPos;
 	}
 
 	virtual void Create(size_t nSize)

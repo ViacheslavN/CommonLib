@@ -7,6 +7,8 @@
 	#include <windows.h>
 	#include <wininet.h>
 	#include <process.h>
+	#include <rpc.h>
+	#include <Objbase.h>
 
 #else
 	#include <stdio.h>
@@ -27,6 +29,7 @@
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
+	#include <uuid/uuid.h>
 #endif
 
 #include <stdint.h>

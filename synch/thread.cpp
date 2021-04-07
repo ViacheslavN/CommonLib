@@ -118,5 +118,15 @@ namespace CommonLib
 			nanosleep(&ts, NULL);
 #endif
 		}
+
+		int32_t CThread::GetExitCodeThread()
+		{
+			return m_thread->GetExitCodeThread();
+		}
+ 
+		void CThread::TerminateThread(int32_t code)
+		{
+			m_thread->TerminateThread(code);
+		}
 	}
 }

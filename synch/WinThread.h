@@ -12,6 +12,10 @@ namespace CommonLib
 
 			bool Wait(const int Timeout = 0xFFFFFFFF) const;
 			static void SetDescriptionForCurrThread(const astr& threadName);
+			int32_t GetExitCodeThread();
+			void  TerminateThread(int32_t code);
+
+
 		private:
 			HANDLE m_hThread;
 			std::function<void()> m_threadFunk;

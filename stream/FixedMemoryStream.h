@@ -25,4 +25,6 @@ namespace CommonLib
 		virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
 		virtual bool IsEnoughSpace(size_t size) const;
 	};
+
+	typedef std::shared_ptr<CFxMemoryWriteStream> CFxMemoryWriteStreamPtr;
 }

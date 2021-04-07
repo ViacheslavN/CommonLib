@@ -74,14 +74,27 @@ namespace CommonLib
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: DeattachBuffer isn't implemented");
 		}
+		
 		virtual byte_t* Buffer()
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: Buffer isn't implemented");
 		}
+
 		virtual const byte_t* Buffer() const
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: Buffer isn't implemented");
 		}
+		
+		virtual byte_t* BufferFromCurPos()
+		{
+			throw CExcBase("TMemoryStreamBaseEmpty: BufferFromCurPos isn't implemented");
+		}
+
+		virtual const byte_t* BufferFromCurPos() const 
+		{
+			throw CExcBase("TMemoryStreamBaseEmpty: BufferFromCurPos isn't implemented");
+		}
+
 		virtual void Create(size_t nSize)
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: Create isn't implemented");

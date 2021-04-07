@@ -41,13 +41,9 @@ namespace win
 		
 	};
 
-
-
-
-
-
-
-
+	typedef std::shared_ptr<CDynamicLibraryWin> TDynamicLibPtr;
 }
+
+
 }
 }

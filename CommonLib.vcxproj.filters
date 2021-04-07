@@ -85,6 +85,9 @@
     <Filter Include="data">
       <UniqueIdentifier>{ffc9d62f-2830-466f-b3c9-3053391e231e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="guid">
+      <UniqueIdentifier>{23c50883-aa84-4707-ac93-191488b270f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -170,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="system\win\DynamicLibWin.h">
       <Filter>system\win</Filter>
-    </ClInclude>
-    <ClInclude Include="system\win\DynamicLib.h">
-      <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="log\FileAsyncLogger.h">
       <Filter>log</Filter>
@@ -332,6 +332,24 @@
     </ClInclude>
     <ClInclude Include="crypto\EmptyDataCipher.h">
       <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="system\DynamicLib.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="system\win\Handle.h">
+      <Filter>system\win</Filter>
+    </ClInclude>
+    <ClInclude Include="system\win\Process.h">
+      <Filter>system\win</Filter>
+    </ClInclude>
+    <ClInclude Include="guid\guid.h">
+      <Filter>guid</Filter>
+    </ClInclude>
+    <ClInclude Include="guid\GuidWin.h">
+      <Filter>guid</Filter>
+    </ClInclude>
+    <ClInclude Include="guid\GuidLin.h">
+      <Filter>guid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -535,6 +553,18 @@
     </ClCompile>
     <ClCompile Include="crypto\EmptyDataCipher.cpp">
       <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="system\win\Handle.cpp">
+      <Filter>system\win</Filter>
+    </ClCompile>
+    <ClCompile Include="system\win\Process.cpp">
+      <Filter>system\win</Filter>
+    </ClCompile>
+    <ClCompile Include="guid\GuidWin.cpp">
+      <Filter>guid</Filter>
+    </ClCompile>
+    <ClCompile Include="guid\GuidLin.cpp">
+      <Filter>guid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

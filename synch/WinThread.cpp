@@ -49,5 +49,18 @@ namespace CommonLib
 			if (setThreadDescription)
 				setThreadDescription(GetCurrentThread(), StringEncoding::str_a2w_safe(threadName).c_str());
 		}
+
+		int32_t CThreadWinImpl::GetExitCodeThread()
+		{
+			DWORD code;
+			::GetExitCodeThread(m_hThread, &code);
+
+			return code;
+		}
+
+		void CThreadWinImpl::TerminateThread(int32_t code)
+		{
+			::TerminateThread(m_hThread, code);
+		}
 	}
 }

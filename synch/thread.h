@@ -26,14 +26,17 @@ namespace CommonLib
 				CThread& operator=(const CThread&) = delete;
 
 				thread_id_t GetThreadId() const;
-				bool IsActive() const;
+ 				bool IsActive() const;
 				const astr& GetName() const;
 				void Join();
 				bool Join(int timeoutms);
+				void TerminateThread(int32_t code = 1);
 
 				bool IsHaveException() const;
 				astr GetExceptionMsg() const;
 				void ThrowException() const;
+
+				int32_t GetExitCodeThread();
 				
 				
 				static void SetDescriptionForCurrThread(const astr& threadName);
