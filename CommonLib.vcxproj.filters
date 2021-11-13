@@ -88,6 +88,18 @@
     <Filter Include="guid">
       <UniqueIdentifier>{23c50883-aa84-4707-ac93-191488b270f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sqlitelib">
+      <UniqueIdentifier>{3b69ba05-98a3-4ac0-8ffe-350839872017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlitelib\sqlite">
+      <UniqueIdentifier>{36b27408-657b-478c-94ee-0481749f1b90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlitelib\sqlite\db">
+      <UniqueIdentifier>{b65c1278-d21d-4956-b6eb-b45dc937963e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sqlitelib\sqlite\filesys">
+      <UniqueIdentifier>{c9654562-e2c8-44bf-936b-ce8077ee9347}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -351,6 +363,24 @@
     <ClInclude Include="guid\GuidLin.h">
       <Filter>guid</Filter>
     </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\Database.h">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\SqliteExc.h">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\Statement.h">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\Database.h">
+      <Filter>sqlitelib</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\db\sqlite3.h">
+      <Filter>sqlitelib\sqlite\db</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\db\sqlite3ext.h">
+      <Filter>sqlitelib\sqlite\db</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -565,6 +595,18 @@
     </ClCompile>
     <ClCompile Include="guid\GuidLin.cpp">
       <Filter>guid</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\Database.cpp">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\SqliteExc.cpp">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\Statement.cpp">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\db\sqlite3.c">
+      <Filter>sqlitelib\sqlite\db</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

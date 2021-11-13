@@ -384,6 +384,12 @@
     <ClInclude Include="perf\lin\PerformanceTimer.h" />
     <ClInclude Include="perf\PerfCount.h" />
     <ClInclude Include="perf\win\PerformanceTimer.h" />
+    <ClInclude Include="sqlitelib\Database.h" />
+    <ClInclude Include="sqlitelib\sqlite\Database.h" />
+    <ClInclude Include="sqlitelib\sqlite\db\sqlite3.h" />
+    <ClInclude Include="sqlitelib\sqlite\db\sqlite3ext.h" />
+    <ClInclude Include="sqlitelib\sqlite\SqliteExc.h" />
+    <ClInclude Include="sqlitelib\sqlite\Statement.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stream\BitStream.h" />
     <ClInclude Include="stream\FixedBitStream.h" />
@@ -652,6 +658,19 @@
     </ClCompile>
     <ClCompile Include="perf\PerfCount.cpp" />
     <ClCompile Include="perf\win\PerformanceTimer.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\Database.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\db\sqlite3.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\SqliteExc.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\Statement.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">Create</PrecompiledHeader>

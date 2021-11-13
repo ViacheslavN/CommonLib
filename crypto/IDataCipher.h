@@ -3,8 +3,6 @@ namespace CommonLib
 {
 	namespace crypto
 	{
-
-
 		typedef std::shared_ptr<class IDataCipher> IDataCipherPtr;
 
 		class IDataCipher

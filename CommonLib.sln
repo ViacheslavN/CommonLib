@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLog", "Tests\TestLog\Te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Build", "Build\Build.vcxproj", "{DC8B8BA2-C0F4-47E5-89A8-6EBEB0D83BB1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestSQlite", "Tests\TestSQlite\TestSQlite.vcxproj", "{D3A5B379-97D7-4448-8B43-106AE8797655}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -89,6 +91,22 @@ Global
 		{DC8B8BA2-C0F4-47E5-89A8-6EBEB0D83BB1}.ReleaseStatic|x64.Build.0 = Release|x64
 		{DC8B8BA2-C0F4-47E5-89A8-6EBEB0D83BB1}.ReleaseStatic|x86.ActiveCfg = Release|Win32
 		{DC8B8BA2-C0F4-47E5-89A8-6EBEB0D83BB1}.ReleaseStatic|x86.Build.0 = Release|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Debug|x64.ActiveCfg = Debug|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Debug|x64.Build.0 = Debug|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Debug|x86.ActiveCfg = Debug|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Debug|x86.Build.0 = Debug|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.DebugStatic|x64.ActiveCfg = Debug|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.DebugStatic|x64.Build.0 = Debug|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.DebugStatic|x86.ActiveCfg = Debug|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.DebugStatic|x86.Build.0 = Debug|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Release|x64.ActiveCfg = Release|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Release|x64.Build.0 = Release|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Release|x86.ActiveCfg = Release|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.Release|x86.Build.0 = Release|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.ReleaseStatic|x64.ActiveCfg = Release|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.ReleaseStatic|x64.Build.0 = Release|x64
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.ReleaseStatic|x86.ActiveCfg = Release|Win32
+		{D3A5B379-97D7-4448-8B43-106AE8797655}.ReleaseStatic|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +114,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{99349AEA-145F-4879-88F1-40E4B300915C} = {9FE777E3-B4E8-4834-B3C9-B2A67E7705DD}
 		{60E7D80A-624C-494D-BE2B-8AA9C2908659} = {9FE777E3-B4E8-4834-B3C9-B2A67E7705DD}
+		{D3A5B379-97D7-4448-8B43-106AE8797655} = {9FE777E3-B4E8-4834-B3C9-B2A67E7705DD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {117A30B1-8310-487E-8159-5D95690A1179}
