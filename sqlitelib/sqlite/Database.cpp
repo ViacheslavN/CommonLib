@@ -4,6 +4,7 @@
 #include "Statement.h"
 #include "db/sqlite3.h"
 #include "filesys/SqliteVfs.h"
+#include "../../str/str.h"
 
 namespace CommonLib
 {
@@ -57,7 +58,7 @@ namespace CommonLib
 				sqlite3_close(m_pDB);
 			}
 		 
-			IStatmentPtr CDatabase::PrepareQuery(const char *pszQuery)
+			IStatmentPtr CDatabase::PrepareQuery(const char *pszQuery) const
 			{
 				sqlite3_stmt* pStmt = 0;
 				const int nRetVal = sqlite3_prepare_v2(m_pDB, pszQuery, -1, &pStmt, 0);
@@ -88,6 +89,21 @@ namespace CommonLib
 			bool CDatabase::IsReadOnly() const noexcept
 			{
 				return m_readOnly;
+			}
+
+			bool CDatabase::IsTableExists(const char *pszTable) const
+			{
+				if (pszTable == nullptr)
+					throw CExcBase("Invalid argument, table name is null");
+
+				astr stm = str_format::StrFormatSafe("SELECT name FROM sqlite_master WHERE type = 'table' AND name = '%1'", pszTable);
+				IStatmentPtr ptrStatemnt = PrepareQuery(stm.c_str());
+				return ptrStatemnt->Next();
+			}
+
+			void CDatabase::SetBusyTimeout(int ms) noexcept
+			{
+				sqlite3_busy_timeout(m_pDB, ms);
 			}
 		}
 

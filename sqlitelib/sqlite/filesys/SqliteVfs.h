@@ -18,6 +18,7 @@ struct sqlite3En_file
 {
 	sqlite3_file base;
 	sqlite3_file *pFile;
+	sqlite3_int64 offset;
 	CommonLib::sqlite::impl::CVfsIO *pFileSystem;
 	const char* zFileName;        
 	int openFlags;              

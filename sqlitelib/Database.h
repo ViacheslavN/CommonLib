@@ -34,11 +34,13 @@ namespace CommonLib
 			IDatabase() = default;
 			virtual ~IDatabase(){}
 
-			virtual IStatmentPtr PrepareQuery(const char *pszQuery) = 0;
+			virtual IStatmentPtr PrepareQuery(const char *pszQuery) const = 0;
 			virtual void Execute(const char *pszQuery) = 0;
 			virtual int32_t GetChanges() const noexcept  = 0;
 			virtual int64_t GetLastInsertRowID() const noexcept  = 0;
 			virtual bool IsReadOnly() const noexcept = 0;
+			virtual bool IsTableExists(const char *pszTable) const = 0;
+			virtual void SetBusyTimeout(int ms) noexcept = 0;
 			
 			static IDatabasePtr Create(const char *pszFile, DatabaseFlags flags, crypto::IDataCipherPtr ptrDataCipher);
 

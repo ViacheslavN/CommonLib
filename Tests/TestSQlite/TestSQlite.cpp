@@ -12,6 +12,29 @@ int main()
 	{
 		std::shared_ptr<CommonLib::crypto::IDataCipher> ptrDataCipher(new CommonLib::crypto::CEmptyDataCipher());
 		CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create("test.db", CommonLib::sqlite::CreateDatabase, ptrDataCipher);
+		ptrDatabase->SetBusyTimeout(1000);
+	
+
+		if (ptrDatabase->IsTableExists("testTable"))
+		{
+			{
+				CommonLib::sqlite::IStatmentPtr ptrStatment = ptrDatabase->PrepareQuery("SELECT contact_id, first_name, last_name, email, phone from testTable");
+				if (ptrStatment->Next())
+				{
+					std::cout << ptrStatment->ReadInt32(1) << "\n";
+					std::cout << ptrStatment->ReadText(2) << "\n";
+					std::cout << ptrStatment->ReadText(3) << "\n";
+					std::cout << ptrStatment->ReadText(4) << "\n";
+					std::cout << ptrStatment->ReadText(5) << "\n";
+				}
+			}
+
+			CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
+			ptrTran->Begin();
+			ptrDatabase->Execute("drop table testTable");
+			ptrTran->Commit();
+		}
+
 		CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
 		ptrTran->Begin();
 
@@ -22,12 +45,19 @@ int main()
 			" email TEXT NOT NULL UNIQUE, "
 			" phone TEXT NOT NULL UNIQUE) ");
 
+		CommonLib::sqlite::IStatmentPtr ptrStatment = ptrDatabase->PrepareQuery("INSERT INTO testTable(contact_id, first_name, last_name, email, phone) VALUES(?,?,?,?,?)");
+		ptrStatment->BindInt32(1, 1);
+		ptrStatment->BindText(2, "first_name", true);
+		ptrStatment->BindText(3, "last_name", true);
+		ptrStatment->BindText(4, "email", true);
+		ptrStatment->BindText(5, "phone", true);
 
+		ptrStatment->Next();
 		ptrTran->Commit();
 	}
 	catch (std::exception& exc )
 	{
-		std::cout << exc.what();
+		std::cout << "Error: " << exc.what();
 	}
 
 	return 0;

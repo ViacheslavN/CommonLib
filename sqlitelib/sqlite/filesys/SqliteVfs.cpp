@@ -148,6 +148,7 @@ namespace CommonLib
 				enFile->pFile = (sqlite3_file*)&enFile[1];
 				enFile->openFlags = flags;
 				enFile->zFileName = zName;
+				enFile->offset = 0;
 
 				rc = REALVFS(pVfs)->xOpen(REALVFS(pVfs), zName, enFile->pFile, flags, pOutFlags);
 
@@ -155,6 +156,14 @@ namespace CommonLib
 				{
 					pFile->pMethods = &mcIoMethodsGlobal;
 					enFile->pFileSystem = new CommonLib::sqlite::impl::CVfsIO();
+
+					rc = enFile->pFileSystem->ValidatePwd(enFile);
+					if (rc != SQLITE_OK)
+					{
+						pFile->pMethods->xClose(pFile);
+						return rc;
+					}
+
 
 				}
 				return rc;

@@ -20,6 +20,32 @@ namespace CommonLib
 
 			}
 
+			int CVfsIO::ValidatePwd(sqlite3En_file *pFile)
+			{
+				sqlite3_int64 fileSize = 0;
+				int retVal = SQLITE_OK;
+				retVal = IoFileSize(pFile, &fileSize);
+				if (retVal != SQLITE_OK)
+					return retVal;
+
+				std::vector<byte_t> data(8192);
+				if (fileSize == 0)
+				{
+	
+					IoWrite(pFile, &data[0], data.size(), 0);
+					//Init salt
+				}
+				else
+				{
+					IoRead(pFile, &data[0], data.size(), 0);
+				}
+
+				pFile->offset = 8192;
+				//retVal = SQLITE_AUTH;
+				return retVal;
+
+			}
+
 			int CVfsIO::IoClose(sqlite3En_file *pFile)
 			{
 				return REALFILE(pFile)->pMethods->xClose(REALFILE(pFile));
@@ -27,12 +53,12 @@ namespace CommonLib
 
 			int CVfsIO::IoRead(sqlite3En_file* pFile, void* pBuf, int iAmt, sqlite3_int64 iOfst)
 			{
-				return REALFILE(pFile)->pMethods->xRead(REALFILE(pFile), pBuf, iAmt, iOfst);
+				return REALFILE(pFile)->pMethods->xRead(REALFILE(pFile), pBuf, iAmt, iOfst + pFile->offset);
 			}
 
 			int CVfsIO::IoWrite(sqlite3En_file* pFile, const void* pBuf, int iAmt, sqlite3_int64 iOfst)
 			{
-				return REALFILE(pFile)->pMethods->xWrite(REALFILE(pFile), pBuf, iAmt, iOfst);
+				return REALFILE(pFile)->pMethods->xWrite(REALFILE(pFile), pBuf, iAmt, iOfst + pFile->offset);
 			}
 			
 			int CVfsIO::IoTruncate(sqlite3En_file* pFile, sqlite3_int64 size)
@@ -47,7 +73,13 @@ namespace CommonLib
 
 			int CVfsIO::IoFileSize(sqlite3En_file* pFile, sqlite3_int64* pSize)
 			{
-				return REALFILE(pFile)->pMethods->xFileSize(REALFILE(pFile), pSize);
+				int retVal  =  REALFILE(pFile)->pMethods->xFileSize(REALFILE(pFile), pSize);
+				if (retVal == SQLITE_OK)
+				{
+					*pSize -= pFile->offset;
+				}
+
+				return retVal;
 			}
 
 			int CVfsIO::IoLock(sqlite3En_file* pFile, int lock)

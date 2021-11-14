@@ -18,6 +18,8 @@ namespace CommonLib
 				~CVfsIO();
 				CVfsIO();
 
+				int ValidatePwd(sqlite3En_file *pFile);
+
 				int IoClose(sqlite3En_file *pFile);
 				int IoRead(sqlite3En_file* pFile, void* pBuf, int iAmt, sqlite3_int64 iOfst);
 				int IoWrite(sqlite3En_file* pFile, const void* pBuf, int iAmt, sqlite3_int64 iOfst);
@@ -37,9 +39,6 @@ namespace CommonLib
 				int IoFetch(sqlite3En_file* pFile, sqlite3_int64 iOfst, int iAmt, void** pp);
 				int IoUnfetch(sqlite3En_file* pFile, sqlite3_int64 iOfst, void* p);
 
-			private:
-
-			
 			};
 		}
 	}
