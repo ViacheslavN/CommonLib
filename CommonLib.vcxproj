@@ -388,6 +388,10 @@
     <ClInclude Include="sqlitelib\sqlite\Database.h" />
     <ClInclude Include="sqlitelib\sqlite\db\sqlite3.h" />
     <ClInclude Include="sqlitelib\sqlite\db\sqlite3ext.h" />
+    <ClInclude Include="sqlitelib\sqlite\filesys\VfsIO.h" />
+    <ClInclude Include="sqlitelib\sqlite\filesys\SqliteVfs.h" />
+    <ClInclude Include="sqlitelib\sqlite\filesys\VfsProxyIo.h" />
+    <ClInclude Include="sqlitelib\sqlite\Transaction.h" />
     <ClInclude Include="sqlitelib\sqlite\SqliteExc.h" />
     <ClInclude Include="sqlitelib\sqlite\Statement.h" />
     <ClInclude Include="stdafx.h" />
@@ -669,8 +673,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\filesys\VfsIO.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\filesys\VfsProxyIo.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\filesys\SqliteVfs.cpp" />
     <ClCompile Include="sqlitelib\sqlite\SqliteExc.cpp" />
     <ClCompile Include="sqlitelib\sqlite\Statement.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\Transaction.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugStatic|Win32'">Create</PrecompiledHeader>

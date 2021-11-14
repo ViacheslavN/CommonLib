@@ -4,12 +4,26 @@
 #include <iostream>
 #include "../../CommonLib.h"
 #include "../../sqlitelib/Database.h"
+#include "../../crypto/EmptyDataCipher.h"
 
 int main()
 {
 	try
 	{
-		CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create("F:\\test.db", CommonLib::sqlite::CreateDatabase, CommonLib::crypto::IDataCipherPtr());
+		std::shared_ptr<CommonLib::crypto::IDataCipher> ptrDataCipher(new CommonLib::crypto::CEmptyDataCipher());
+		CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create("test.db", CommonLib::sqlite::CreateDatabase, ptrDataCipher);
+		CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
+		ptrTran->Begin();
+
+		ptrDatabase->Execute("CREATE TABLE testTable ( "
+			" contact_id INTEGER PRIMARY KEY, "
+			" first_name TEXT NOT NULL, "
+			" last_name TEXT NOT NULL, "
+			" email TEXT NOT NULL UNIQUE, "
+			" phone TEXT NOT NULL UNIQUE) ");
+
+
+		ptrTran->Commit();
 	}
 	catch (std::exception& exc )
 	{

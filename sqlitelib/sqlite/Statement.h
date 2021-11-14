@@ -7,7 +7,7 @@ namespace CommonLib
 {
 	namespace sqlite
 	{
-		namespace imp
+		namespace impl
 		{
 
 			class CStatement : public IStatment

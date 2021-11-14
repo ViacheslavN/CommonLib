@@ -381,6 +381,18 @@
     <ClInclude Include="sqlitelib\sqlite\db\sqlite3ext.h">
       <Filter>sqlitelib\sqlite\db</Filter>
     </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\Transaction.h">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\filesys\VfsProxyIo.h">
+      <Filter>sqlitelib\sqlite\filesys</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\filesys\VfsIO.h">
+      <Filter>sqlitelib\sqlite\filesys</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\filesys\SqliteVfs.h">
+      <Filter>sqlitelib\sqlite\filesys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -607,6 +619,18 @@
     </ClCompile>
     <ClCompile Include="sqlitelib\sqlite\db\sqlite3.c">
       <Filter>sqlitelib\sqlite\db</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\Transaction.cpp">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\filesys\VfsProxyIo.cpp">
+      <Filter>sqlitelib\sqlite\filesys</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\filesys\VfsIO.cpp">
+      <Filter>sqlitelib\sqlite\filesys</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\filesys\SqliteVfs.cpp">
+      <Filter>sqlitelib\sqlite\filesys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

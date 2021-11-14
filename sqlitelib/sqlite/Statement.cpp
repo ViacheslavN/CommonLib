@@ -7,7 +7,7 @@ namespace CommonLib
 {
 	namespace sqlite
 	{
-		namespace imp
+		namespace impl
 		{
 			CStatement::CStatement(sqlite3_stmt *pStmt) : m_pStmt(pStmt)
 			{}
@@ -20,14 +20,14 @@ namespace CommonLib
 			void CStatement::ThrowError() const
 			{
 				sqlite3* pDb = sqlite3_db_handle(m_pStmt);
-				throw CSqlitExc(sqlite3_errcode(pDb));
+				throw CSqlitExc(pDb, sqlite3_errcode(pDb));
 			}
 
 			bool CStatement::Next()
 			{
 				int nRetVal = sqlite3_step(m_pStmt);
 				if (nRetVal != SQLITE_ROW && nRetVal != SQLITE_DONE)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 
 				return nRetVal == SQLITE_ROW;
 			}
@@ -36,7 +36,7 @@ namespace CommonLib
 			{
 				int nRetVal = sqlite3_reset(m_pStmt);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			int  CStatement::ColumnCount() const
@@ -159,70 +159,70 @@ namespace CommonLib
 			{
 				int nRetVal = sqlite3_bind_int(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindUInt16(int32_t col, uint16_t val)
 			{
 				int nRetVal = sqlite3_bind_int(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindInt32(int32_t col, int32_t val)
 			{
 				int nRetVal = sqlite3_bind_int(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindUInt32(int32_t col, uint32_t val)
 			{
 				int nRetVal = sqlite3_bind_int(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindInt64(int32_t col, int64_t val)
 			{
 				int nRetVal = sqlite3_bind_int64(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindUInt64(int32_t col, uint64_t val)
 			{
 				int nRetVal = sqlite3_bind_int64(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindFloat(int32_t col, float val)
 			{
 				int nRetVal = sqlite3_bind_double(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindDouble(int32_t col, double val)
 			{
 				int nRetVal = sqlite3_bind_double(m_pStmt, col, val);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindText(int32_t col, const astr& text, bool copy)
 			{
 				int nRetVal = sqlite3_bind_text(m_pStmt, col, text.c_str(), text.size(), copy ? SQLITE_TRANSIENT : SQLITE_STATIC);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 
 			void CStatement::BindBlob(int32_t col, const byte_t *pBuf, int32_t size, bool copy)
 			{
 				int nRetVal = sqlite3_bind_blob(m_pStmt, col, pBuf, size, copy ? SQLITE_TRANSIENT : SQLITE_STATIC);
 				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(nRetVal);
+					throw CSqlitExc(m_pStmt, nRetVal);
 			}
 		}
 	}

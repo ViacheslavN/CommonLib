@@ -10,6 +10,7 @@ namespace CommonLib
 		typedef std::shared_ptr<class IDatabase> IDatabasePtr;
 		typedef std::shared_ptr<class IStatment> IStatmentPtr;
 		typedef std::shared_ptr<class IInsertCursor> IInsertCursorPtr;
+		typedef std::shared_ptr<class ITransaction> ITransactionPtr;
 
 		enum DatabaseFlags
 		{
@@ -37,10 +38,25 @@ namespace CommonLib
 			virtual void Execute(const char *pszQuery) = 0;
 			virtual int32_t GetChanges() const noexcept  = 0;
 			virtual int64_t GetLastInsertRowID() const noexcept  = 0;
+			virtual bool IsReadOnly() const noexcept = 0;
 			
 			static IDatabasePtr Create(const char *pszFile, DatabaseFlags flags, crypto::IDataCipherPtr ptrDataCipher);
 
 		};
+
+		class ITransaction
+		{
+		public:
+			ITransaction() = default;
+			virtual ~ITransaction() {}
+
+			virtual void Begin() = 0;
+			virtual void Commit() = 0;
+			virtual void Rollback() = 0;
+
+			static ITransactionPtr CreateTransaction(IDatabasePtr ptrDatabase);
+		};
+
 
 		class IStatment
 		{
