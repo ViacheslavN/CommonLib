@@ -11,6 +11,8 @@ namespace CommonLib
 		typedef std::shared_ptr<class IStatment> IStatmentPtr;
 		typedef std::shared_ptr<class IInsertCursor> IInsertCursorPtr;
 		typedef std::shared_ptr<class ITransaction> ITransactionPtr;
+		typedef std::shared_ptr<class ICryptoContext> ICryptoContextPtr;
+		
 
 		enum DatabaseFlags
 		{
@@ -28,6 +30,22 @@ namespace CommonLib
 			SqliteNull
 		};
 
+		class ICryptoContext
+		{
+		public:
+			ICryptoContext() = default;
+			virtual ~ICryptoContext() {}
+
+			virtual crypto::IDataCipherPtr GetDataCipher() = 0;
+			virtual size_t GetInitBlockSize() const = 0;
+			virtual void CreateInitBlock(byte_t *pBuf, size_t size) = 0;
+			virtual bool ValidateInitBlock(byte_t *pBuf, size_t size) = 0;
+
+
+			static void AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrCryptoContex);
+			static void RemoveCryptoContext(const astr& databaseName, ICryptoContextPtr ptrCryptoContex);
+		};
+
 		class IDatabase
 		{
 		public:
@@ -42,7 +60,7 @@ namespace CommonLib
 			virtual bool IsTableExists(const char *pszTable) const = 0;
 			virtual void SetBusyTimeout(int ms) noexcept = 0;
 			
-			static IDatabasePtr Create(const char *pszFile, DatabaseFlags flags, crypto::IDataCipherPtr ptrDataCipher);
+			static IDatabasePtr Create(const char *pszFile, DatabaseFlags flags);
 
 		};
 

@@ -393,6 +393,9 @@
     <ClInclude Include="sqlitelib\sqlite\filesys\SqliteVfs.h">
       <Filter>sqlitelib\sqlite\filesys</Filter>
     </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\CryptoContextHolder.h">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -631,6 +634,9 @@
     </ClCompile>
     <ClCompile Include="sqlitelib\sqlite\filesys\SqliteVfs.cpp">
       <Filter>sqlitelib\sqlite\filesys</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\CryptoContextHolder.cpp">
+      <Filter>sqlitelib\sqlite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

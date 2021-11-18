@@ -10,7 +10,7 @@ namespace CommonLib
 		namespace impl
 		{
 		
-			CVfsIO::CVfsIO()
+			CVfsIO::CVfsIO(ICryptoContextPtr ptrCryptoContext) : m_ptrCryptoContext(ptrCryptoContext)
 			{
 
 			}
@@ -32,12 +32,16 @@ namespace CommonLib
 				if (fileSize == 0)
 				{
 	
-					IoWrite(pFile, &data[0], data.size(), 0);
+					retVal = IoWrite(pFile, &data[0], data.size(), 0);
+					if (retVal != SQLITE_OK)
+						return retVal;
 					//Init salt
 				}
 				else
 				{
-					IoRead(pFile, &data[0], data.size(), 0);
+					retVal = IoRead(pFile, &data[0], data.size(), 0);
+					if (retVal != SQLITE_OK)
+						return retVal;
 				}
 
 				pFile->offset = 8192;

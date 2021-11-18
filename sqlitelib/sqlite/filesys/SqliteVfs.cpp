@@ -3,6 +3,7 @@
 #include "VfsIO.h"
 #include "VfsProxyIo.h"
 #include "../db/sqlite3.h"
+#include "../CryptoContextHolder.h"
 
 #define SQLITE3EN_VFS_NAME "encriptedfilesystem"
 
@@ -104,24 +105,10 @@ namespace CommonLib
 						memcpy(zSpace + nPrefix, "-", 1);
 						memcpy(zSpace + nPrefix + 1, pVfsReal->zName, nRealName);
 
-						/* Allocate the mutex and register the new VFS */
-						pVfsNew->mutex = sqlite3_mutex_alloc(SQLITE_MUTEX_RECURSIVE);
-						if (pVfsNew->mutex)
-						{
-							rc = sqlite3_vfs_register(&pVfsNew->base, makeDefault);
-							if (rc != SQLITE_OK)
-							{
-								sqlite3_mutex_free(pVfsNew->mutex);
-							}
-						}
-						else
-						{
-							/* Mutex could not be allocated */
-							rc = SQLITE_NOMEM;
-						}
+
+						rc = sqlite3_vfs_register(&pVfsNew->base, makeDefault);
 						if (rc != SQLITE_OK)
 						{
-							/* Mutex could not be allocated or new VFS could not be registered */
 							sqlite3_free(pVfsNew);
 						}
 					}
@@ -154,8 +141,10 @@ namespace CommonLib
 
 				if (rc == SQLITE_OK)
 				{
+					const char* dbFileName = sqlite3_filename_database(zName);
 					pFile->pMethods = &mcIoMethodsGlobal;
-					enFile->pFileSystem = new CommonLib::sqlite::impl::CVfsIO();
+					ICryptoContextPtr ptrCryptoContext = CCryptoContextHolder::Instance().GetCryptoContext(zName);
+					enFile->pFileSystem = new CommonLib::sqlite::impl::CVfsIO(ptrCryptoContext);
 
 					rc = enFile->pFileSystem->ValidatePwd(enFile);
 					if (rc != SQLITE_OK)

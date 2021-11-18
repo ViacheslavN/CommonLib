@@ -27,8 +27,6 @@ struct sqlite3En_file
 struct sqlite3En_vfs
 {
 	sqlite3_vfs base;
-	sqlite3_mutex* mutex;
-
 };
 
 #define REALVFS(p) ((sqlite3_vfs*)(((sqlite3En_vfs*)(p))->base.pAppData))

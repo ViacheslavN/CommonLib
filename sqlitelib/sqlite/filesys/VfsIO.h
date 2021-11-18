@@ -1,6 +1,6 @@
 #pragma once
 #include "../db/sqlite3.h"
-
+#include "../Database.h"
 struct sqlite3En_file;
 
 
@@ -16,7 +16,7 @@ namespace CommonLib
 			{
 			public:
 				~CVfsIO();
-				CVfsIO();
+				CVfsIO(ICryptoContextPtr ptrCryptoContext);
 
 				int ValidatePwd(sqlite3En_file *pFile);
 
@@ -38,6 +38,8 @@ namespace CommonLib
 				int IoShmUnmap(sqlite3En_file* pFile, int deleteFlag);
 				int IoFetch(sqlite3En_file* pFile, sqlite3_int64 iOfst, int iAmt, void** pp);
 				int IoUnfetch(sqlite3En_file* pFile, sqlite3_int64 iOfst, void* p);
+			private:
+				ICryptoContextPtr m_ptrCryptoContext;
 
 			};
 		}

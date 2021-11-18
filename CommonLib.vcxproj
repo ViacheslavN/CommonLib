@@ -385,6 +385,7 @@
     <ClInclude Include="perf\PerfCount.h" />
     <ClInclude Include="perf\win\PerformanceTimer.h" />
     <ClInclude Include="sqlitelib\Database.h" />
+    <ClInclude Include="sqlitelib\sqlite\CryptoContextHolder.h" />
     <ClInclude Include="sqlitelib\sqlite\Database.h" />
     <ClInclude Include="sqlitelib\sqlite\db\sqlite3.h" />
     <ClInclude Include="sqlitelib\sqlite\db\sqlite3ext.h" />
@@ -662,6 +663,7 @@
     </ClCompile>
     <ClCompile Include="perf\PerfCount.cpp" />
     <ClCompile Include="perf\win\PerformanceTimer.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\CryptoContextHolder.cpp" />
     <ClCompile Include="sqlitelib\sqlite\Database.cpp" />
     <ClCompile Include="sqlitelib\sqlite\db\sqlite3.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

@@ -5,12 +5,13 @@
 #include "db/sqlite3.h"
 #include "filesys/SqliteVfs.h"
 #include "../../str/str.h"
+#include "CryptoContextHolder.h"
 
 namespace CommonLib
 {
 	namespace sqlite
 	{
-		IDatabasePtr IDatabase::Create(const char *pszFile, DatabaseFlags flags, crypto::IDataCipherPtr ptrDataCipher)
+		IDatabasePtr IDatabase::Create(const char *pszFile, DatabaseFlags flags)
 		{
 			int mode = 0;
 
@@ -29,19 +30,19 @@ namespace CommonLib
 
 			sqlite3* pDB = nullptr;
 
-			if (ptrDataCipher != nullptr)
+			ICryptoContextPtr ptrCryptoContext = impl::CCryptoContextHolder::Instance().GetCryptoContext(pszFile);
+
+			if (ptrCryptoContext.get() != nullptr)
 			{
 				int retVal = impl::CVfs::VfsCreate(NULL, 1);
 				if (retVal != SQLITE_OK)
 					throw impl::CSqlitExc(retVal);
 			}
-
 			//https://www.sqlite.org/src/doc/trunk/src/test_demovfs.c
 			//https://www.sqlite.org/vfs.html
 			int retVal = sqlite3_open_v2(pszFile, &pDB, mode, 0);
 			if (retVal != SQLITE_OK)
 				throw impl::CSqlitExc(retVal);
-
 			
 			return std::shared_ptr<IDatabase>(new impl::CDatabase(pDB, flags & ReadOnlyMode ? true : false));
 		}

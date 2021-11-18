@@ -6,12 +6,46 @@
 #include "../../sqlitelib/Database.h"
 #include "../../crypto/EmptyDataCipher.h"
 
+
+class CryptoContext : public CommonLib::sqlite::ICryptoContext
+{
+public:
+	CryptoContext(){}
+	virtual ~CryptoContext() {}
+
+	virtual CommonLib::crypto::IDataCipherPtr GetDataCipher()
+	{
+		std::shared_ptr<CommonLib::crypto::IDataCipher> ptrDataCipher(new CommonLib::crypto::CEmptyDataCipher());
+		return ptrDataCipher;
+	}
+
+	virtual size_t GetInitBlockSize() const
+	{
+		return 8192;
+	}
+
+	virtual void CreateInitBlock(byte_t *pBuf, size_t size)
+	{
+
+	}
+
+	virtual bool ValidateInitBlock(byte_t *pBuf, size_t size)
+	{
+		return true;
+	}
+};
+
+
+
 int main()
 {
 	try
 	{
-		std::shared_ptr<CommonLib::crypto::IDataCipher> ptrDataCipher(new CommonLib::crypto::CEmptyDataCipher());
-		CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create("test.db", CommonLib::sqlite::CreateDatabase, ptrDataCipher);
+		std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CryptoContext());
+
+		CommonLib::sqlite::ICryptoContext::AddCryptoContext("test.db", ptrCryptoContext);
+
+		CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create("test.db", CommonLib::sqlite::CreateDatabase);
 		ptrDatabase->SetBusyTimeout(1000);
 	
 
