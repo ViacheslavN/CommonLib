@@ -96,6 +96,5 @@ private:
 	std::shared_ptr<IAlloc> m_pAlloc;
 };
 
-
 }
 

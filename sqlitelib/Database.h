@@ -37,6 +37,7 @@ namespace CommonLib
 			virtual ~ICryptoContext() {}
 
 			virtual crypto::IDataCipherPtr GetDataCipher() = 0;
+			virtual crypto::IXTSDataCipherPtr GetXTSDataCipher() = 0;
 			virtual size_t GetInitBlockSize() const = 0;
 			virtual void CreateInitBlock(byte_t *pBuf, size_t size) = 0;
 			virtual bool ValidateInitBlock(byte_t *pBuf, size_t size) = 0;

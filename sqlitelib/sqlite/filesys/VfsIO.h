@@ -1,6 +1,7 @@
 #pragma once
 #include "../db/sqlite3.h"
 #include "../Database.h"
+
 struct sqlite3En_file;
 
 
@@ -39,7 +40,13 @@ namespace CommonLib
 				int IoFetch(sqlite3En_file* pFile, sqlite3_int64 iOfst, int iAmt, void** pp);
 				int IoUnfetch(sqlite3En_file* pFile, sqlite3_int64 iOfst, void* p);
 			private:
+				int  CreateInitPage(sqlite3En_file* pFile);
+				int  CheckInitPage(sqlite3En_file* pFile);
+
+			private:
 				ICryptoContextPtr m_ptrCryptoContext;
+				crypto::IXTSDataCipherPtr m_ptrXTSDataCipher;
+				std::vector<byte_t> m_buffer;
 
 			};
 		}

@@ -347,13 +347,17 @@
     <ClInclude Include="compress\zlib\zutil.h" />
     <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
     <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
+    <ClInclude Include="CryptoData.h" />
     <ClInclude Include="crypto\EmptyDataCipher.h" />
     <ClInclude Include="crypto\IDataCipher.h" />
+    <ClInclude Include="crypto\Win32\CryptoAlgoritmProvider.h" />
+    <ClInclude Include="crypto\Win32\SymmetricKey.h" />
     <ClInclude Include="data\ByteArray.h" />
     <ClInclude Include="exception\ComExc.h" />
     <ClInclude Include="exception\exc_base.h" />
     <ClInclude Include="exception\PosixExc.h" />
     <ClInclude Include="exception\WinExc.h" />
+    <ClInclude Include="exception\WinNtExc.h" />
     <ClInclude Include="exception\WinSockExc.h" />
     <ClInclude Include="filesystem\File.h" />
     <ClInclude Include="filesystem\FilePosix.h" />
@@ -588,6 +592,7 @@
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
     <ClCompile Include="crypto\EmptyDataCipher.cpp" />
+    <ClCompile Include="crypto\Win32\CryptoAlgoritmProvider.cpp" />
     <ClCompile Include="data\ByteArray.cpp" />
     <ClCompile Include="exception\ComExc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
@@ -602,6 +607,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="exception\WinExc.cpp" />
+    <ClCompile Include="exception\WinNtExc.cpp" />
     <ClCompile Include="exception\WinSockExc.cpp" />
     <ClCompile Include="filesystem\File.cpp" />
     <ClCompile Include="filesystem\FilePosix.cpp">

@@ -9,7 +9,9 @@
 	#include <process.h>
 	#include <rpc.h>
 	#include <Objbase.h>
+	#include <bcrypt.h>
 
+	#pragma comment(lib, "bcrypt.lib")
 #else
 	#include <stdio.h>
 	#include <dirent.h>

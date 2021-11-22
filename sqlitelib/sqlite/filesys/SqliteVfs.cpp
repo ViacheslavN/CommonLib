@@ -10,7 +10,7 @@
 
 static sqlite3_io_methods mcIoMethodsGlobal =
 {
-  3,														  /* iVersion */
+  3,															  /* iVersion */
   CommonLib::sqlite::impl::CVfsProxyIO::IoClose,                  /* xClose */
   CommonLib::sqlite::impl::CVfsProxyIO::IoRead,                   /* xRead */
   CommonLib::sqlite::impl::CVfsProxyIO::IoWrite,                  /* xWrite */
@@ -143,7 +143,7 @@ namespace CommonLib
 				{
 					const char* dbFileName = sqlite3_filename_database(zName);
 					pFile->pMethods = &mcIoMethodsGlobal;
-					ICryptoContextPtr ptrCryptoContext = CCryptoContextHolder::Instance().GetCryptoContext(zName);
+					ICryptoContextPtr ptrCryptoContext = CCryptoContextHolder::Instance().GetCryptoContext(dbFileName);
 					enFile->pFileSystem = new CommonLib::sqlite::impl::CVfsIO(ptrCryptoContext);
 
 					rc = enFile->pFileSystem->ValidatePwd(enFile);

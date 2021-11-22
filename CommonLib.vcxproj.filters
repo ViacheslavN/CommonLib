@@ -100,6 +100,12 @@
     <Filter Include="sqlitelib\sqlite\filesys">
       <UniqueIdentifier>{c9654562-e2c8-44bf-936b-ce8077ee9347}</UniqueIdentifier>
     </Filter>
+    <Filter Include="crypto\win32">
+      <UniqueIdentifier>{26247591-b369-4328-b4ec-39d675352510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto\openssl">
+      <UniqueIdentifier>{5b2524ed-d183-4ba3-9cb3-3120f7566226}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -396,6 +402,18 @@
     <ClInclude Include="sqlitelib\sqlite\CryptoContextHolder.h">
       <Filter>sqlitelib\sqlite</Filter>
     </ClInclude>
+    <ClInclude Include="CryptoData.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\Win32\CryptoAlgoritmProvider.h">
+      <Filter>crypto\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="exception\WinNtExc.h">
+      <Filter>exception\win</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\Win32\SymmetricKey.h">
+      <Filter>crypto\win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -637,6 +655,12 @@
     </ClCompile>
     <ClCompile Include="sqlitelib\sqlite\CryptoContextHolder.cpp">
       <Filter>sqlitelib\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\Win32\CryptoAlgoritmProvider.cpp">
+      <Filter>crypto\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="exception\WinNtExc.cpp">
+      <Filter>exception\win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

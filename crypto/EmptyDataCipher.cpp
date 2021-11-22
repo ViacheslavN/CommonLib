@@ -31,5 +31,46 @@ namespace CommonLib
 			memcpy(dstBuf, srcBuf, bufSize);
 			return bufSize;
 		}
+
+		uint32_t CEmptyDataCipher::Encrypt( byte_t* srcBuf, uint32_t bufSize)
+		{
+			return bufSize;
+		}
+
+		uint32_t CEmptyDataCipher::Decrypt( byte_t* srcBuf, uint32_t bufSize)
+		{
+			return bufSize;
+		}
+
+
+		CEmptyXTSDataCipher::CEmptyXTSDataCipher()
+		{}
+
+		CEmptyXTSDataCipher::~CEmptyXTSDataCipher()
+		{}
+
+		uint32_t CEmptyXTSDataCipher::Encrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf)
+		{
+			memcpy(dstBuf, srcBuf, bufSize);
+			return bufSize;
+		}
+
+		uint32_t CEmptyXTSDataCipher::Decrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf)
+		{
+			memcpy(dstBuf, srcBuf, bufSize);
+			return bufSize;
+		}
+
+		uint32_t CEmptyXTSDataCipher::Encrypt(int64_t nBlockId, byte_t* srcBuf, uint32_t bufSize)
+		{
+			return bufSize;
+		}
+
+		uint32_t CEmptyXTSDataCipher::Decrypt(int64_t nBlockId, byte_t* srcBuf, uint32_t bufSize)
+		{
+			return bufSize;
+		}
+
+
 	}
 }
