@@ -19,6 +19,6 @@ namespace CommonLib
 
 		typedef  std::vector<byte_t, crypto_alloc<byte_t> > crypto_vector;
 		typedef std::basic_string<char, std::char_traits<char>, crypto_alloc<char> > crypto_astr;
-	 
+
 	}
 }

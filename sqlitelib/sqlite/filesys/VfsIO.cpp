@@ -2,7 +2,7 @@
 #include "VfsIO.h"
 #include "SqliteVfs.h"
 #include "../db/sqlite3.h"
-#include "../../../CryptoData.h"
+#include "../../../crypto/CryptoData.h"
 
 #define INIT_PAGE_SIZE 8192
 #define SQLITE_DEFAULT_PAGE_SIZE 4096
@@ -153,7 +153,7 @@ namespace CommonLib
 					int iPage;
 					for (iPage = 0; iPage < nPages; ++iPage)
 					{
-						m_ptrXTSDataCipher->Encrypt(pageNo, data, SQLITE_DEFAULT_PAGE_SIZE, m_buffer.data());
+						m_ptrXTSDataCipher->Encrypt(pageNo, data, SQLITE_DEFAULT_PAGE_SIZE, m_buffer.data(), m_buffer.size());
 						rc = REALFILE(pFile)->pMethods->xWrite(REALFILE(pFile), m_buffer.data(), SQLITE_DEFAULT_PAGE_SIZE, iOfst + pFile->offset);
 						if (rc != SQLITE_OK)
 							return rc;

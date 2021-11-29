@@ -30,7 +30,7 @@ namespace CommonLib
 				m_BufForCipher.resize(fullSize);
 
 			*reinterpret_cast<int32_t*>(m_BufForCipher.data()) = htole32(encriptedSize);
-			m_pDataCipher->Encrypt(dataPtr, encriptedSize, m_BufForCipher.data() + sizeof(uint32_t));
+			m_pDataCipher->Encrypt(dataPtr, encriptedSize, m_BufForCipher.data() + sizeof(uint32_t), encriptedSize);
 			m_pSocket->Send(m_BufForCipher.data(), fullSize);
 
 			return fullSize;
@@ -64,7 +64,7 @@ namespace CommonLib
 				m_BufForCipher.resize(fullSize);
 
 			*reinterpret_cast<int32_t*>(m_BufForCipher.data()) = htole32(encriptedSize);
-			m_pDataCipher->Encrypt(dataPtr, encriptedSize, m_BufForCipher.data() + sizeof(uint32_t));
+			m_pDataCipher->Encrypt(dataPtr, encriptedSize, m_BufForCipher.data() + sizeof(uint32_t), encriptedSize);
 
 			size_t sendData;
 			if (!m_pSocket->SendNotBlocking(m_BufForCipher.data(), fullSize, sendData))
@@ -187,7 +187,7 @@ namespace CommonLib
 		uint32_t CNetworkStreamIoDev::DecryptData(byte_t* dataPtr, size_t dataSize)
 		{
 			m_BufForCipher.resize(m_stage.m_recvSize);
-			uint32_t decSize = m_pDataCipher->Decrypt(m_stage.m_BufForRead.data(), m_stage.m_recvSize, m_BufForCipher.data());
+			uint32_t decSize = m_pDataCipher->Decrypt(m_stage.m_BufForRead.data(), m_stage.m_recvSize, m_BufForCipher.data(), (uint32_t)m_BufForCipher.size());
 			if (dataSize != decSize)
 				throw CommonLib::CExcBase("Wrong read size %1, dec size %2", dataSize, decSize);
 
@@ -199,7 +199,7 @@ namespace CommonLib
 		{
 
 			pStream->Resize(m_stage.m_recvSize);
-			uint32_t decSize = m_pDataCipher->Decrypt(m_stage.m_BufForRead.data(), m_stage.m_recvSize, m_BufForCipher.data());
+			uint32_t decSize = m_pDataCipher->Decrypt(m_stage.m_BufForRead.data(), m_stage.m_recvSize, m_BufForCipher.data(), (uint32_t)m_BufForCipher.size());
 			pStream->Resize(decSize);
 
 			return decSize;

@@ -100,11 +100,17 @@
     <Filter Include="sqlitelib\sqlite\filesys">
       <UniqueIdentifier>{c9654562-e2c8-44bf-936b-ce8077ee9347}</UniqueIdentifier>
     </Filter>
-    <Filter Include="crypto\win32">
-      <UniqueIdentifier>{26247591-b369-4328-b4ec-39d675352510}</UniqueIdentifier>
-    </Filter>
     <Filter Include="crypto\openssl">
       <UniqueIdentifier>{5b2524ed-d183-4ba3-9cb3-3120f7566226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto\winapi">
+      <UniqueIdentifier>{26247591-b369-4328-b4ec-39d675352510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto\winapi\Random">
+      <UniqueIdentifier>{698ce39e-5764-49a3-8ff5-abaf62b03a83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto\winapi\AES">
+      <UniqueIdentifier>{6bcc9854-58b2-4fe9-88a8-303661e8be2f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -297,9 +303,6 @@
     <ClInclude Include="log\ConsoleLogWriter.h">
       <Filter>log</Filter>
     </ClInclude>
-    <ClInclude Include="filesystem\FilePosix.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="exception\PosixExc.h">
       <Filter>exception\posix</Filter>
     </ClInclude>
@@ -402,17 +405,35 @@
     <ClInclude Include="sqlitelib\sqlite\CryptoContextHolder.h">
       <Filter>sqlitelib\sqlite</Filter>
     </ClInclude>
-    <ClInclude Include="CryptoData.h">
-      <Filter>crypto</Filter>
-    </ClInclude>
-    <ClInclude Include="crypto\Win32\CryptoAlgoritmProvider.h">
-      <Filter>crypto\win32</Filter>
-    </ClInclude>
     <ClInclude Include="exception\WinNtExc.h">
       <Filter>exception\win</Filter>
     </ClInclude>
-    <ClInclude Include="crypto\Win32\SymmetricKey.h">
-      <Filter>crypto\win32</Filter>
+    <ClInclude Include="crypto\crypto.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\CryptoData.h">
+      <Filter>crypto</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\winapi\CryptoAlgoritmProvider.h">
+      <Filter>crypto\winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\winapi\random\RandomGenerator.h">
+      <Filter>crypto\winapi\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\winapi\CryptoFactory.h">
+      <Filter>crypto\winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\winapi\KeyGenerator.h">
+      <Filter>crypto\winapi</Filter>
+    </ClInclude>
+    <ClInclude Include="filesystem\FilePosix.h">
+      <Filter>filesystem</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\winapi\aes\AESCipher.h">
+      <Filter>crypto\winapi\AES</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\winapi\SymmetricKey.h">
+      <Filter>crypto\winapi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -656,11 +677,26 @@
     <ClCompile Include="sqlitelib\sqlite\CryptoContextHolder.cpp">
       <Filter>sqlitelib\sqlite</Filter>
     </ClCompile>
-    <ClCompile Include="crypto\Win32\CryptoAlgoritmProvider.cpp">
-      <Filter>crypto\win32</Filter>
-    </ClCompile>
     <ClCompile Include="exception\WinNtExc.cpp">
       <Filter>exception\win</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\winapi\CryptoAlgoritmProvider.cpp">
+      <Filter>crypto\winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\winapi\random\RandomGenerator.cpp">
+      <Filter>crypto\winapi\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\winapi\CryptoFactory.cpp">
+      <Filter>crypto\winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\winapi\KeyGenerator.cpp">
+      <Filter>crypto\winapi</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\winapi\aes\AESCipher.cpp">
+      <Filter>crypto\winapi\AES</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\winapi\SymmetricKey.cpp">
+      <Filter>crypto\winapi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
