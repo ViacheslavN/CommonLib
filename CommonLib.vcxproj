@@ -394,6 +394,7 @@
     <ClInclude Include="perf\lin\PerformanceTimer.h" />
     <ClInclude Include="perf\PerfCount.h" />
     <ClInclude Include="perf\win\PerformanceTimer.h" />
+    <ClInclude Include="sqlitelib\CryptoContext.h" />
     <ClInclude Include="sqlitelib\Database.h" />
     <ClInclude Include="sqlitelib\sqlite\CryptoContextHolder.h" />
     <ClInclude Include="sqlitelib\sqlite\Database.h" />
@@ -429,6 +430,7 @@
     <ClInclude Include="system\win\Handle.h" />
     <ClInclude Include="system\win\Process.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="utils\CRC.h" />
     <ClInclude Include="utils\ObjHolder.h" />
   </ItemGroup>
   <ItemGroup>
@@ -681,6 +683,7 @@
     </ClCompile>
     <ClCompile Include="perf\PerfCount.cpp" />
     <ClCompile Include="perf\win\PerformanceTimer.cpp" />
+    <ClCompile Include="sqlitelib\CryptoContext.cpp" />
     <ClCompile Include="sqlitelib\sqlite\CryptoContextHolder.cpp" />
     <ClCompile Include="sqlitelib\sqlite\Database.cpp" />
     <ClCompile Include="sqlitelib\sqlite\db\sqlite3.c">
@@ -735,6 +738,7 @@
     <ClCompile Include="system\win\DynamicLibWin.cpp" />
     <ClCompile Include="system\win\Handle.cpp" />
     <ClCompile Include="system\win\Process.cpp" />
+    <ClCompile Include="utils\CRC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />

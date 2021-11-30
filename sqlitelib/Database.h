@@ -14,7 +14,7 @@ namespace CommonLib
 		typedef std::shared_ptr<class ICryptoContext> ICryptoContextPtr;
 		
 
-		enum DatabaseFlags
+		enum EDatabaseFlags
 		{
 			CreateDatabase = 1,
 			MultithreadMode = 2,
@@ -30,13 +30,19 @@ namespace CommonLib
 			SqliteNull
 		};
 
+		enum EKeyCryptoType
+		{
+			Unknown = 0,
+			MasterKey,
+			PwdKey
+		};
+
 		class ICryptoContext
 		{
 		public:
 			ICryptoContext() = default;
 			virtual ~ICryptoContext() {}
-
-			virtual crypto::IDataCipherPtr GetDataCipher() = 0;
+ 
 			virtual crypto::IXTSDataCipherPtr GetXTSDataCipher() = 0;
 			virtual size_t GetInitBlockSize() const = 0;
 			virtual void CreateInitBlock(byte_t *pBuf, size_t size) = 0;
@@ -61,7 +67,7 @@ namespace CommonLib
 			virtual bool IsTableExists(const char *pszTable) const = 0;
 			virtual void SetBusyTimeout(int ms) noexcept = 0;
 			
-			static IDatabasePtr Create(const char *pszFile, DatabaseFlags flags);
+			static IDatabasePtr Create(const char *pszFile, EDatabaseFlags flags);
 
 		};
 

@@ -41,7 +41,7 @@ namespace CommonLib
 			{
 				try
 				{
-					m_ptrBcryptAlgProvider->CryptGenRandom(pData, size, 0);
+					m_ptrBcryptAlgProvider->CryptGenRandom(pData, size, BCRYPT_RNG_USE_ENTROPY_IN_BUFFER);
 				}
 				catch (std::exception& exc)
 				{

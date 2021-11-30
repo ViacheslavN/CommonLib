@@ -438,6 +438,12 @@
     <ClInclude Include="crypto\XTSBlockChiper.h">
       <Filter>crypto</Filter>
     </ClInclude>
+    <ClInclude Include="sqlitelib\CryptoContext.h">
+      <Filter>sqlitelib</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\CRC.h">
+      <Filter>utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -703,6 +709,12 @@
     </ClCompile>
     <ClCompile Include="crypto\XTSBlockChiper.cpp">
       <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\CryptoContext.cpp">
+      <Filter>sqlitelib</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\CRC.cpp">
+      <Filter>utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

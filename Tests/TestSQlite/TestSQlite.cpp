@@ -6,49 +6,14 @@
 #include "../../sqlitelib/Database.h"
 #include "../../crypto/EmptyDataCipher.h"
 #include "../../str/str.h"
-
-
-class CryptoContext : public CommonLib::sqlite::ICryptoContext
-{
-public:
-	CryptoContext(){}
-	virtual ~CryptoContext() {}
-
-	virtual CommonLib::crypto::IDataCipherPtr GetDataCipher()
-	{
-		std::shared_ptr<CommonLib::crypto::IDataCipher> ptrDataCipher(new CommonLib::crypto::CEmptyDataCipher());
-		return ptrDataCipher;
-	}
-
-	virtual CommonLib::crypto::IXTSDataCipherPtr GetXTSDataCipher()
-	{
-		std::shared_ptr<CommonLib::crypto::IXTSDataCipher> ptrDataCipher(new CommonLib::crypto::CEmptyXTSDataCipher());
-		return ptrDataCipher;
-	}
-
-	virtual size_t GetInitBlockSize() const
-	{
-		return 8192;
-	}
-
-	virtual void CreateInitBlock(byte_t *pBuf, size_t size)
-	{
-
-	}
-
-	virtual bool ValidateInitBlock(byte_t *pBuf, size_t size)
-	{
-		return true;
-	}
-};
-
-
+#include "../../sqlitelib/CryptoContext.h"
+ 
 
 int main()
 {
 	try
 	{
-		std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CryptoContext());
+		std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CommonLib::sqlite::CCryptoContext("12334ddffdfdfg", CommonLib::sqlite::PwdKey));
 
 		CommonLib::sqlite::ICryptoContext::AddCryptoContext("F:\\test.db", ptrCryptoContext);
 

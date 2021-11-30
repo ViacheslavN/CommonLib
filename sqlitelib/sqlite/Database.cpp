@@ -11,7 +11,7 @@ namespace CommonLib
 {
 	namespace sqlite
 	{
-		IDatabasePtr IDatabase::Create(const char *pszFile, DatabaseFlags flags)
+		IDatabasePtr IDatabase::Create(const char *pszFile, EDatabaseFlags flags)
 		{
 			int mode = 0;
 
