@@ -6,10 +6,18 @@
 #include "../../crypto/winapi/CryptoFactory.h"
 #include "../../str/str.h"
 
+
+void TestXTS();
+
 int main()
 { 
 	try
 	{
+
+		TestXTS();
+
+		return 0;
+
 		CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateRandomGenerator();
 		CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateKeyGenerator();
 		CommonLib::crypto::IAESCipherPtr ptrAesCipher= CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
@@ -33,16 +41,16 @@ int main()
 		ptrAesCipher->SetKey(keyData);
 
 		astr plainText;
-		plainText.resize(256, 'a');
+		plainText.resize(16, 'a');
 
 		int32_t size =  ptrAesCipher->GetBufferSize(plainText.length());
 		std::vector<byte_t> butChiperText(size, 0);
-		ptrAesCipher->Encrypt((const byte*)plainText.c_str(), plainText.size(), butChiperText.data(), butChiperText.size());
+		ptrAesCipher->Encrypt((const byte*)plainText.c_str(), plainText.size(), (byte*)plainText.data(), plainText.size());
 
 		int32_t size1 = ptrAesCipher->GetBufferSize(butChiperText.size());
 		std::vector<byte> plainText1;
 		plainText1.resize(size1);
-		ptrAesCipher->Decrypt((const byte*)butChiperText.data(), butChiperText.size(), (byte*)plainText1.data(), plainText1.size());
+		ptrAesCipher->Decrypt((const byte*)plainText.data(), plainText.size(), (byte*)plainText.data(), plainText.size());
 	
 	}
 	catch (std::exception& exc)

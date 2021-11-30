@@ -170,12 +170,12 @@ namespace CommonLib
 
 			uint32_t CAESCipher::Encrypt(byte_t* srcBuf, uint32_t bufSize)
 			{
-				return 0;
+				return Encrypt(srcBuf, bufSize, srcBuf, bufSize);
 			}
 
 			uint32_t CAESCipher::Decrypt(byte_t* srcBuf, uint32_t bufSize)
 			{
-				return 0;
+				return Decrypt(srcBuf, bufSize, srcBuf, bufSize);
 			}
 
 		}

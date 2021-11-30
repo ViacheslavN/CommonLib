@@ -357,6 +357,7 @@
     <ClInclude Include="crypto\winapi\SymmetricKey.h" />
     <ClInclude Include="crypto\winapi\KeyGenerator.h" />
     <ClInclude Include="crypto\winapi\random\RandomGenerator.h" />
+    <ClInclude Include="crypto\XTSBlockChiper.h" />
     <ClInclude Include="data\ByteArray.h" />
     <ClInclude Include="exception\ComExc.h" />
     <ClInclude Include="exception\exc_base.h" />
@@ -603,6 +604,7 @@
     <ClCompile Include="crypto\winapi\SymmetricKey.cpp" />
     <ClCompile Include="crypto\winapi\KeyGenerator.cpp" />
     <ClCompile Include="crypto\winapi\random\RandomGenerator.cpp" />
+    <ClCompile Include="crypto\XTSBlockChiper.cpp" />
     <ClCompile Include="data\ByteArray.cpp" />
     <ClCompile Include="exception\ComExc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
