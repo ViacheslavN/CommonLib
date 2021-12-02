@@ -18,6 +18,8 @@ namespace CommonLib
 			virtual void CreateInitBlock(byte_t *pBuf, size_t size);
 			virtual bool ValidateInitBlock(byte_t *pBuf, size_t size);
 		private:
+			void FillPageWithRandomData(CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator, CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator, byte_t *pBuf, size_t size);
+		private:
 			static const uint32_t INIT_BLOCK_SIZE = 8192;
 			static const uint32_t CRYPTO_BLOCK_SZIE = 4096;
 			static const uint32_t SALT_SZIE = 32;

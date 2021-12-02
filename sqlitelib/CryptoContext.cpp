@@ -46,10 +46,11 @@ namespace CommonLib
 				uint32_t keySize = ptrAesPwdCipher->GetKeySize();
 				CommonLib::crypto::crypto_vector pwdKeyData(keySize, 0);
  
+				FillPageWithRandomData(ptrRandomGenerator, ptrKeyGenerator, pBuf, size);
 
 				CommonLib::CFxMemoryWriteStream writeTotalBuf;
 				writeTotalBuf.AttachBuffer(pBuf, (uint32_t)size);
-				ptrRandomGenerator->GenRandom(pBuf, (uint32_t)size); //fill data with random
+		
 				CommonLib::crypto::crypto_vector pwdSalt(SALT_SZIE, 0);
 
 				ptrRandomGenerator->GenRandom(pwdSalt.data(), (uint32_t)pwdSalt.size());
@@ -70,6 +71,7 @@ namespace CommonLib
 				cryptoBuf.AttachBuffer(writeTotalBuf.Buffer() + writeTotalBuf.Pos(), CRYPTO_BLOCK_SZIE);
 
 				cryptoBuf.Write(uint32_t(m_cryptoType));
+
 				if (m_cryptoType == MasterKey)
 				{				
 					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
@@ -91,12 +93,15 @@ namespace CommonLib
 				{
 					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-					CommonLib::crypto::crypto_vector keyTweakData(keySize, 0);
-					ptrRandomGenerator->GenRandom(keyTweakData);
+					CommonLib::crypto::crypto_vector tweakDataSalt(SALT_SZIE, 0);
+					CommonLib::crypto::crypto_vector tweakDataKey(keySize, 0);
+					ptrRandomGenerator->GenRandom(tweakDataSalt);
 
-					cryptoBuf.Write(keyTweakData.data(), keyTweakData.size());
+					cryptoBuf.Write(tweakDataSalt.data(), tweakDataSalt.size());
 
-					ptrAesTweakCipher->SetKey(keyTweakData);
+					ptrKeyGenerator->DeriveKeyPBKDF2(m_password, tweakDataSalt, PWD_KEY_ROUNDS, tweakDataKey, keySize);
+
+					ptrAesTweakCipher->SetKey(tweakDataKey);
 					ptrAesDataCipher->SetKey(pwdKeyData);
 
 					m_ptrXTSBlockChiper.reset(new crypto::CXTSBlockChiper(ptrAesDataCipher, ptrAesTweakCipher));
@@ -113,6 +118,21 @@ namespace CommonLib
 				CExcBase::RegenExcT("CryptoContext: Failed CreateInitBlock", exc);
 				throw;
 			}
+		}
+
+		void CCryptoContext::FillPageWithRandomData(CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator, CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator, byte_t *pBuf, size_t size)
+		{
+			ptrRandomGenerator->GenRandom(pBuf, (uint32_t)size); //fill data with random
+			CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+			uint32_t blockSize = ptrAesDataCipher->GetBlockSize();
+			uint32_t keySize = ptrAesDataCipher->GetKeySize();
+			CommonLib::crypto::crypto_vector pwdKeyData(keySize, 0);
+			CommonLib::crypto::crypto_vector salt(SALT_SZIE, 0);
+
+			ptrKeyGenerator->DeriveKeyPBKDF2(m_password, salt, PWD_KEY_ROUNDS, pwdKeyData, keySize);
+			ptrAesDataCipher->SetKey(pwdKeyData);
+
+			ptrAesDataCipher->Encrypt(pBuf, (uint32_t)size);
 		}
 
 		bool CCryptoContext::ValidateInitBlock(byte_t *pBuf, size_t size)
@@ -169,11 +189,15 @@ namespace CommonLib
 				{
 					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-	 				CommonLib::crypto::crypto_vector keyTweakData(keySize, 0); 
-					cryptoBuf.Read(keyTweakData.data(), keyTweakData.size());
+					CommonLib::crypto::crypto_vector tweakDataSalt(SALT_SZIE, 0);
+					CommonLib::crypto::crypto_vector tweakDataKey(keySize, 0);
+					cryptoBuf.Read(tweakDataSalt.data(), tweakDataSalt.size());
+
+
+					ptrKeyGenerator->DeriveKeyPBKDF2(m_password, tweakDataSalt, PWD_KEY_ROUNDS, tweakDataKey, keySize);
 
 					ptrAesDataCipher->SetKey(pwdKeyData);
-					ptrAesTweakCipher->SetKey(keyTweakData);
+					ptrAesTweakCipher->SetKey(tweakDataKey);
 
 					m_ptrXTSBlockChiper.reset(new crypto::CXTSBlockChiper(ptrAesDataCipher, ptrAesTweakCipher));
 				}
