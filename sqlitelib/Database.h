@@ -18,7 +18,8 @@ namespace CommonLib
 		{
 			CreateDatabase = 1,
 			MultithreadMode = 2,
-			ReadOnlyMode = 4
+			ReadOnlyMode = 4,
+			WAL = 8
 		};
 
 		enum ESqliteFieldType
@@ -67,7 +68,7 @@ namespace CommonLib
 			virtual bool IsTableExists(const char *pszTable) const = 0;
 			virtual void SetBusyTimeout(int ms) noexcept = 0;
 			
-			static IDatabasePtr Create(const char *pszFile, EDatabaseFlags flags);
+			static IDatabasePtr Create(const char *pszFile, uint32_t flags);
 
 		};
 

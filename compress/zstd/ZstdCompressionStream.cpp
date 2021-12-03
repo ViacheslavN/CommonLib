@@ -100,12 +100,12 @@ namespace CommonLib
 
 	uint32_t CZstdCompressionStream::GetAvailIn() const
 	{
-		return (uint32_t)m_pZstd->m_input.size - m_pZstd->m_input.pos;
+		return (uint32_t)(m_pZstd->m_input.size - m_pZstd->m_input.pos);
 	}
 
 	uint32_t CZstdCompressionStream::GetAvailOut() const
 	{
-		return (uint32_t)m_pZstd->m_output.size - m_pZstd->m_output.pos;
+		return (uint32_t)(m_pZstd->m_output.size - m_pZstd->m_output.pos);
 	}
 	
 }

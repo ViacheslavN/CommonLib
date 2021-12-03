@@ -20,13 +20,13 @@ namespace CommonLib
 			return bufDataSize;
 		}
 
-		uint32_t CEmptyDataCipher::Encrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf)
+		uint32_t CEmptyDataCipher::Encrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize)
 		{
 			memcpy(dstBuf, srcBuf, bufSize);
 			return bufSize;
 		}
 
-		uint32_t CEmptyDataCipher::Decrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf)
+		uint32_t CEmptyDataCipher::Decrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize)
 		{
 			memcpy(dstBuf, srcBuf, bufSize);
 			return bufSize;
@@ -49,13 +49,13 @@ namespace CommonLib
 		CEmptyXTSDataCipher::~CEmptyXTSDataCipher()
 		{}
 
-		uint32_t CEmptyXTSDataCipher::Encrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf)
+		uint32_t CEmptyXTSDataCipher::Encrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize)
 		{
 			memcpy(dstBuf, srcBuf, bufSize);
 			return bufSize;
 		}
 
-		uint32_t CEmptyXTSDataCipher::Decrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf)
+		uint32_t CEmptyXTSDataCipher::Decrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize)
 		{
 			memcpy(dstBuf, srcBuf, bufSize);
 			return bufSize;

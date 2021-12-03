@@ -42,8 +42,13 @@ namespace CommonLib
 			private:
 				int  CreateInitPage(sqlite3En_file* pFile);
 				int  CheckInitPage(sqlite3En_file* pFile);
-
+				int  IoWriteWal(sqlite3En_file* pFile, const void* pBuf, int iAmt, sqlite3_int64 iOfst);
+				int  IoReadWal(sqlite3En_file* pFile, void* pBuf, int iAmt, sqlite3_int64 iOfst);
 			private:
+
+				static const int walFrameHeaderSize = 24;
+				static const int walFileHeaderSize = 32;
+
 				ICryptoContextPtr m_ptrCryptoContext;
 				crypto::IXTSDataCipherPtr m_ptrXTSDataCipher;
 				std::vector<byte_t> m_buffer;

@@ -11,7 +11,7 @@ namespace CommonLib
 {
 	namespace sqlite
 	{
-		IDatabasePtr IDatabase::Create(const char *pszFile, EDatabaseFlags flags)
+		IDatabasePtr IDatabase::Create(const char *pszFile, uint32_t flags)
 		{
 			int mode = 0;
 
@@ -27,6 +27,9 @@ namespace CommonLib
 				mode |= SQLITE_OPEN_FULLMUTEX;
 			else
 				mode |= SQLITE_OPEN_NOMUTEX;
+
+			if (flags & WAL)
+				mode |= SQLITE_OPEN_WAL;
 
 			sqlite3* pDB = nullptr;
 
@@ -44,7 +47,12 @@ namespace CommonLib
 			if (retVal != SQLITE_OK)
 				throw impl::CSqlitExc(retVal);
 			
-			return std::shared_ptr<IDatabase>(new impl::CDatabase(pDB, flags & ReadOnlyMode ? true : false));
+			IDatabasePtr ptrDatabase  = IDatabasePtr(new impl::CDatabase(pDB, flags & ReadOnlyMode ? true : false));
+
+			if (flags & WAL)
+				ptrDatabase->Execute("PRAGMA journal_mode=WAL");
+
+			return ptrDatabase;
 		}
 
 		namespace impl
@@ -56,7 +64,11 @@ namespace CommonLib
 
 			CDatabase::~CDatabase()
 			{
-				sqlite3_close(m_pDB);
+				const int nRetVal = sqlite3_close(m_pDB);
+				if (nRetVal != SQLITE_OK)
+				{
+					//TODO log
+				}
 			}
 		 
 			IStatmentPtr CDatabase::PrepareQuery(const char *pszQuery) const

@@ -108,12 +108,12 @@ namespace CommonLib
 
 	uint32_t CZstdDecompressionStream::GetAvailIn() const
 	{
-		return m_pZstd->m_input.size - m_pZstd->m_input.pos;
+		return uint32_t(m_pZstd->m_input.size - m_pZstd->m_input.pos);
 	}
 
 	uint32_t CZstdDecompressionStream::GetAvailOut() const
 	{
-		return m_pZstd->m_output.size - m_pZstd->m_output.pos;
+		return uint32_t(m_pZstd->m_output.size - m_pZstd->m_output.pos);
 	}
 
 }

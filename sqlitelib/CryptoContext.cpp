@@ -122,15 +122,15 @@ namespace CommonLib
 
 		void CCryptoContext::FillPageWithRandomData(CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator, CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator, byte_t *pBuf, size_t size)
 		{
-			ptrRandomGenerator->GenRandom(pBuf, (uint32_t)size); //fill data with random
-			CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+			//ptrRandomGenerator->GenRandom(pBuf, (uint32_t)size); //fill data with random
+			CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
 			uint32_t blockSize = ptrAesDataCipher->GetBlockSize();
 			uint32_t keySize = ptrAesDataCipher->GetKeySize();
-			CommonLib::crypto::crypto_vector pwdKeyData(keySize, 0);
-			CommonLib::crypto::crypto_vector salt(SALT_SZIE, 0);
+			CommonLib::crypto::crypto_vector keyData(keySize, 0); 
 
-			ptrKeyGenerator->DeriveKeyPBKDF2(m_password, salt, PWD_KEY_ROUNDS, pwdKeyData, keySize);
-			ptrAesDataCipher->SetKey(pwdKeyData);
+			ptrRandomGenerator->GenRandom(ptrAesDataCipher->GetIVData(), ptrAesDataCipher->GetIVSize());
+			ptrRandomGenerator->GenRandom(keyData.data(), (uint32_t)keyData.size());
+			ptrAesDataCipher->SetKey(keyData);
 
 			ptrAesDataCipher->Encrypt(pBuf, (uint32_t)size);
 		}

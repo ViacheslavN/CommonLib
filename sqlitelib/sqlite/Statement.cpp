@@ -213,7 +213,7 @@ namespace CommonLib
 
 			void CStatement::BindText(int32_t col, const astr& text, bool copy)
 			{
-				int nRetVal = sqlite3_bind_text(m_pStmt, col, text.c_str(), text.size(), copy ? SQLITE_TRANSIENT : SQLITE_STATIC);
+				int nRetVal = sqlite3_bind_text(m_pStmt, col, text.c_str(), (int)text.size(), copy ? SQLITE_TRANSIENT : SQLITE_STATIC);
 				if (nRetVal != SQLITE_OK)
 					throw CSqlitExc(m_pStmt, nRetVal);
 			}

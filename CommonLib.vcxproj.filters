@@ -100,9 +100,6 @@
     <Filter Include="sqlitelib\sqlite\filesys">
       <UniqueIdentifier>{c9654562-e2c8-44bf-936b-ce8077ee9347}</UniqueIdentifier>
     </Filter>
-    <Filter Include="crypto\openssl">
-      <UniqueIdentifier>{5b2524ed-d183-4ba3-9cb3-3120f7566226}</UniqueIdentifier>
-    </Filter>
     <Filter Include="crypto\winapi">
       <UniqueIdentifier>{26247591-b369-4328-b4ec-39d675352510}</UniqueIdentifier>
     </Filter>
@@ -111,6 +108,9 @@
     </Filter>
     <Filter Include="crypto\winapi\AES">
       <UniqueIdentifier>{6bcc9854-58b2-4fe9-88a8-303661e8be2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crypto\openssllib">
+      <UniqueIdentifier>{5b2524ed-d183-4ba3-9cb3-3120f7566226}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -444,6 +444,9 @@
     <ClInclude Include="utils\CRC.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="crypto\openssllib\EvpCipherCtx.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -715,6 +718,9 @@
     </ClCompile>
     <ClCompile Include="utils\CRC.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\EvpCipherCtx.cpp">
+      <Filter>crypto\openssllib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

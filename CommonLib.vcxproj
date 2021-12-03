@@ -226,7 +226,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>../</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../;../../../ThirdParty/OpenSSL/openssl-3.0.0/Lib/x64/Debug/include/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -351,6 +351,7 @@
     <ClInclude Include="crypto\EmptyDataCipher.h" />
     <ClInclude Include="crypto\crypto.h" />
     <ClInclude Include="crypto\IDataCipher.h" />
+    <ClInclude Include="crypto\openssllib\EvpCipherCtx.h" />
     <ClInclude Include="crypto\winapi\aes\AESCipher.h" />
     <ClInclude Include="crypto\winapi\CryptoAlgoritmProvider.h" />
     <ClInclude Include="crypto\winapi\CryptoFactory.h" />
@@ -600,6 +601,7 @@
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
     <ClCompile Include="crypto\EmptyDataCipher.cpp" />
+    <ClCompile Include="crypto\openssllib\EvpCipherCtx.cpp" />
     <ClCompile Include="crypto\winapi\aes\AESCipher.cpp" />
     <ClCompile Include="crypto\winapi\CryptoAlgoritmProvider.cpp" />
     <ClCompile Include="crypto\winapi\CryptoFactory.cpp" />
