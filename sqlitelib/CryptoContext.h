@@ -9,8 +9,8 @@ namespace CommonLib
 		{
 		public:
 
-			CCryptoContext(const crypto::crypto_astr& password, EKeyCryptoType cryptoType);
-			CCryptoContext(const crypto::crypto_astr& password);
+			CCryptoContext(const crypto::crypto_astr& password, EKeyCryptoType cryptoType, crypto::ICryptoFactoryPtr ptrCryptoFactory);
+			CCryptoContext(const crypto::crypto_astr& password, crypto::ICryptoFactoryPtr ptrCryptoFactory);
 			virtual ~CCryptoContext();
 
 			virtual crypto::IXTSDataCipherPtr GetXTSDataCipher();
@@ -25,6 +25,7 @@ namespace CommonLib
 			static const uint32_t SALT_SZIE = 32;
 			static const uint32_t PWD_KEY_ROUNDS = 2048;
 
+			crypto::ICryptoFactoryPtr m_ptrCryptoFactory;
 			crypto::CXTSBlockChiperPtr m_ptrXTSBlockChiper;
 			EKeyCryptoType m_cryptoType;
 			crypto::crypto_astr m_password; //set protected object with CryptProtectData

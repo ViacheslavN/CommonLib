@@ -16,7 +16,7 @@ namespace CommonLib
 			CExcBase::AddMsg(GetErrorDesc(ntStatus));
 		}
 
-		~CWinNtExc() noexcept;
+		virtual ~CWinNtExc() noexcept;
 		virtual std::shared_ptr<CExcBase> Clone() const;
 
 		static astr GetErrorDesc(NTSTATUS ntStatus);

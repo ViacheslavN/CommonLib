@@ -6,10 +6,12 @@
 
 void TestXTS()
 {
-	CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateRandomGenerator();
-	CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateKeyGenerator();
-	CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-	CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+	CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory(new CommonLib::crypto::winapi::CCryptoFactory());
+
+	CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = ptrCryptoFactory->CreateRandomGenerator();
+	CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = ptrCryptoFactory->CreateKeyGenerator();
+	CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+	CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 	uint32_t blockSize = ptrAesDataCipher->GetBlockSize();
 	uint32_t keySize = ptrAesDataCipher->GetKeySize();
 

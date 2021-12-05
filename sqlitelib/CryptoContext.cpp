@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "CryptoContext.h"
-#include "../crypto/winapi/CryptoFactory.h"
-#include "../stream/MemoryStream.h"
+ #include "../stream/MemoryStream.h"
 #include "../stream/FixedMemoryStream.h"
 #include "../utils/CRC.h"
 
@@ -10,12 +9,14 @@ namespace CommonLib
 	namespace sqlite
 	{
 
-		CCryptoContext::CCryptoContext(const crypto::crypto_astr& password, EKeyCryptoType cryptoType) : m_password(password), m_cryptoType(cryptoType)
+		CCryptoContext::CCryptoContext(const crypto::crypto_astr& password, EKeyCryptoType cryptoType, crypto::ICryptoFactoryPtr ptrCryptoFactory) :
+			m_password(password), m_cryptoType(cryptoType), m_ptrCryptoFactory(ptrCryptoFactory)
 		{
 
 		}
 
-		CCryptoContext::CCryptoContext(const crypto::crypto_astr& password ) : m_password(password), m_cryptoType(Unknown)
+		CCryptoContext::CCryptoContext(const crypto::crypto_astr& password, crypto::ICryptoFactoryPtr ptrCryptoFactory) :
+			m_password(password), m_cryptoType(Unknown), m_ptrCryptoFactory(ptrCryptoFactory)
 		{
 
 		}
@@ -39,9 +40,9 @@ namespace CommonLib
 		{
 			try
 			{
-				CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateRandomGenerator();
-				CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateKeyGenerator();
-				CommonLib::crypto::IAESCipherPtr ptrAesPwdCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
+				CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = m_ptrCryptoFactory->CreateRandomGenerator();
+				CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = m_ptrCryptoFactory->CreateKeyGenerator();
+				CommonLib::crypto::IAESCipherPtr ptrAesPwdCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
 				uint32_t blockSize = ptrAesPwdCipher->GetBlockSize();
 				uint32_t keySize = ptrAesPwdCipher->GetKeySize();
 				CommonLib::crypto::crypto_vector pwdKeyData(keySize, 0);
@@ -74,8 +75,8 @@ namespace CommonLib
 
 				if (m_cryptoType == MasterKey)
 				{				
-					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 					CommonLib::crypto::crypto_vector keyData(keySize, 0);
 					CommonLib::crypto::crypto_vector keyTweakData(keySize, 0);					
 					ptrRandomGenerator->GenRandom(keyData); 
@@ -91,8 +92,8 @@ namespace CommonLib
 				}
 				else
 				{
-					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 					CommonLib::crypto::crypto_vector tweakDataSalt(SALT_SZIE, 0);
 					CommonLib::crypto::crypto_vector tweakDataKey(keySize, 0);
 					ptrRandomGenerator->GenRandom(tweakDataSalt);
@@ -123,7 +124,7 @@ namespace CommonLib
 		void CCryptoContext::FillPageWithRandomData(CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator, CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator, byte_t *pBuf, size_t size)
 		{
 			//ptrRandomGenerator->GenRandom(pBuf, (uint32_t)size); //fill data with random
-			CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
+			CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
 			uint32_t blockSize = ptrAesDataCipher->GetBlockSize();
 			uint32_t keySize = ptrAesDataCipher->GetKeySize();
 			CommonLib::crypto::crypto_vector keyData(keySize, 0); 
@@ -139,8 +140,8 @@ namespace CommonLib
 		{
 			try
 			{
-				CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateKeyGenerator();
-				CommonLib::crypto::IAESCipherPtr ptrAesPwdCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
+				CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = m_ptrCryptoFactory->CreateKeyGenerator();
+				CommonLib::crypto::IAESCipherPtr ptrAesPwdCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::CBC);
 				uint32_t blockSize = ptrAesPwdCipher->GetBlockSize();
 				uint32_t keySize = ptrAesPwdCipher->GetKeySize();
 				CommonLib::crypto::crypto_vector pwdKeyData(keySize, 0);
@@ -172,8 +173,8 @@ namespace CommonLib
 
 				if (m_cryptoType == MasterKey)
 				{
-					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 					CommonLib::crypto::crypto_vector keyData(keySize, 0);
 					CommonLib::crypto::crypto_vector keyTweakData(keySize, 0); 
 
@@ -187,8 +188,8 @@ namespace CommonLib
 				}
 				else
 				{
-					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesDataCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+					CommonLib::crypto::IAESCipherPtr ptrAesTweakCipher = m_ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 					CommonLib::crypto::crypto_vector tweakDataSalt(SALT_SZIE, 0);
 					CommonLib::crypto::crypto_vector tweakDataKey(keySize, 0);
 					cryptoBuf.Read(tweakDataSalt.data(), tweakDataSalt.size());

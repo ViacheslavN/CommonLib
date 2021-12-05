@@ -447,6 +447,24 @@
     <ClInclude Include="crypto\openssllib\EvpCipherCtx.h">
       <Filter>crypto\openssllib</Filter>
     </ClInclude>
+    <ClInclude Include="crypto\openssllib\EnvCipher.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\openssllib\OpensslExc.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\openssllib\OpenSSlLib.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\openssllib\KeyGeneratorSSL.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\openssllib\CryptoFactoryOpenSSL.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
+    <ClInclude Include="crypto\openssllib\AESCipherSSL.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -720,6 +738,24 @@
       <Filter>utils</Filter>
     </ClCompile>
     <ClCompile Include="crypto\openssllib\EvpCipherCtx.cpp">
+      <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\EnvCipher.cpp">
+      <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\OpensslExc.cpp">
+      <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\OpenSSlLib.cpp">
+      <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\KeyGeneratorSSL.cpp">
+      <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\CryptoFactoryOpenSSL.cpp">
+      <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\AESCipherSSL.cpp">
       <Filter>crypto\openssllib</Filter>
     </ClCompile>
   </ItemGroup>

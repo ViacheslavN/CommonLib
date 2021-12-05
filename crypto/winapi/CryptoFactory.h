@@ -8,12 +8,15 @@ namespace CommonLib
 	{
 		namespace winapi
 		{
-			class CCryptoFactory
+			class CCryptoFactory : public ICryptoFactory
 			{
 			public:
-				static IRandomGeneratorPtr CreateRandomGenerator();
-				static IKeyGeneratorPtr CreateKeyGenerator();
-				static IAESCipherPtr CreateAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode);
+				CCryptoFactory();
+				virtual ~CCryptoFactory();
+
+				virtual IRandomGeneratorPtr CreateRandomGenerator() const;
+				virtual IKeyGeneratorPtr CreateKeyGenerator() const;
+				virtual IAESCipherPtr CreateAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode) const;
 			};
 		}
 	}

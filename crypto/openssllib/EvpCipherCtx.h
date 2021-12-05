@@ -1,6 +1,5 @@
 #pragma once
-//F:\ThirdParty\OpenSSL\openssl - 3.0.0\Lib\x64\Debug\include
-//F:\work\MyProject\CommonLib\crypto\openssllib\EvpCipherCtx.h
+ 
 #include <openssl/evp.h>
 
 #include "../crypto.h"
@@ -9,13 +8,17 @@ namespace CommonLib
 {
 	namespace crypto
 	{
-		namespace winapi
+		namespace openssllib
 		{
 			class CEvpCipherCtx
 			{
 			public:
 				CEvpCipherCtx();
 				~CEvpCipherCtx();
+
+				int EVP_EncryptInit_ex(EVP_CIPHER_CTX *ctx, const EVP_CIPHER *type,
+					ENGINE *impl, const unsigned char *key, const unsigned char *iv);
+
 			private:
 				EVP_CIPHER_CTX* m_pCipherCtx;
 			};

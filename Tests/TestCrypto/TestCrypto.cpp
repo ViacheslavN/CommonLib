@@ -4,6 +4,7 @@
 #include <iostream>
 #include "../../CommonLib.h"
 #include "../../crypto/winapi/CryptoFactory.h"
+#include "../../crypto/openssllib/CryptoFactoryOpenSSL.h"
 #include "../../str/str.h"
 
 
@@ -14,14 +15,19 @@ int main()
 	try
 	{
 
-		TestXTS();
+		//TestXTS();
 
-		return 0;
+		//return 0;
 
-		CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateRandomGenerator();
-		CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = CommonLib::crypto::winapi::CCryptoFactory::CreateKeyGenerator();
-		CommonLib::crypto::IAESCipherPtr ptrAesCipher= CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
-		CommonLib::crypto::IAESCipherPtr ptrAesCipherWithPadding = CommonLib::crypto::winapi::CCryptoFactory::CreateAESCipher(CommonLib::crypto::AES_256, true, CommonLib::crypto::CipherChainMode::ECB);
+		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory(new CommonLib::crypto::winapi::CCryptoFactory());
+		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactorySSL(new CommonLib::crypto::openssllib::CCryptoFactoryOpenSSL());
+
+		CommonLib::crypto::IRandomGeneratorPtr ptrRandomGenerator = ptrCryptoFactory->CreateRandomGenerator();
+		CommonLib::crypto::IKeyGeneratorPtr ptrKeyGenerator = ptrCryptoFactory->CreateKeyGenerator();
+		CommonLib::crypto::IKeyGeneratorPtr ptrKeyGeneratorSSL = ptrCryptoFactorySSL->CreateKeyGenerator();
+
+		CommonLib::crypto::IAESCipherPtr ptrAesCipher= ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+		CommonLib::crypto::IAESCipherPtr ptrAesCipherWithPadding = ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, true, CommonLib::crypto::CipherChainMode::ECB);
 	
 		uint32_t blockSize = ptrAesCipher->GetBlockSize();
 		uint32_t keySize = ptrAesCipher->GetKeySize();
@@ -29,6 +35,7 @@ int main()
 		CommonLib::crypto::crypto_astr pwd = "123456789";
 		CommonLib::crypto::crypto_vector pwdSalt(64, 0);
 		CommonLib::crypto::crypto_vector keyData;
+		CommonLib::crypto::crypto_vector keyData1;
 
 		ptrRandomGenerator->GenRandom(pwdSalt);
 
@@ -36,6 +43,16 @@ int main()
 		
 
 		ptrKeyGenerator->DeriveKeyPBKDF2(pwd, pwdSalt,  2048, keyData, keySize);
+		ptrKeyGeneratorSSL->DeriveKeyPBKDF2(pwd, pwdSalt, 2048, keyData1, keySize);
+
+		for (uint32_t i = 0; i < keySize; ++i)
+		{
+			if (keyData[i] != keyData1[i])
+			{
+				std::cout << "wrong PBKDF2\n";
+				break;
+			}
+		}
 
  
 		ptrAesCipher->SetKey(keyData);

@@ -351,7 +351,13 @@
     <ClInclude Include="crypto\EmptyDataCipher.h" />
     <ClInclude Include="crypto\crypto.h" />
     <ClInclude Include="crypto\IDataCipher.h" />
+    <ClInclude Include="crypto\openssllib\AESCipherSSL.h" />
+    <ClInclude Include="crypto\openssllib\CryptoFactoryOpenSSL.h" />
+    <ClInclude Include="crypto\openssllib\EnvCipher.h" />
     <ClInclude Include="crypto\openssllib\EvpCipherCtx.h" />
+    <ClInclude Include="crypto\openssllib\KeyGeneratorSSL.h" />
+    <ClInclude Include="crypto\openssllib\OpensslExc.h" />
+    <ClInclude Include="crypto\openssllib\OpenSSlLib.h" />
     <ClInclude Include="crypto\winapi\aes\AESCipher.h" />
     <ClInclude Include="crypto\winapi\CryptoAlgoritmProvider.h" />
     <ClInclude Include="crypto\winapi\CryptoFactory.h" />
@@ -601,7 +607,13 @@
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
     <ClCompile Include="crypto\EmptyDataCipher.cpp" />
+    <ClCompile Include="crypto\openssllib\AESCipherSSL.cpp" />
+    <ClCompile Include="crypto\openssllib\CryptoFactoryOpenSSL.cpp" />
+    <ClCompile Include="crypto\openssllib\EnvCipher.cpp" />
     <ClCompile Include="crypto\openssllib\EvpCipherCtx.cpp" />
+    <ClCompile Include="crypto\openssllib\KeyGeneratorSSL.cpp" />
+    <ClCompile Include="crypto\openssllib\OpensslExc.cpp" />
+    <ClCompile Include="crypto\openssllib\OpenSSlLib.cpp" />
     <ClCompile Include="crypto\winapi\aes\AESCipher.cpp" />
     <ClCompile Include="crypto\winapi\CryptoAlgoritmProvider.cpp" />
     <ClCompile Include="crypto\winapi\CryptoFactory.cpp" />

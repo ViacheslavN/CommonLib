@@ -37,7 +37,7 @@ namespace CommonLib
 			}
 
 
-			void CBcryptAlgProvider::CryptDeriveKeyPBKDF2(const crypto_astr& password, const crypto_vector& salt, uint64_t interations, uint32_t keySize, crypto_vector& derivedKey)
+			void CBcryptAlgProvider::CryptDeriveKeyPBKDF2(const crypto_astr& password, const crypto_vector& salt, uint32_t interations, uint32_t keySize, crypto_vector& derivedKey)
 			{
 				try
 				{

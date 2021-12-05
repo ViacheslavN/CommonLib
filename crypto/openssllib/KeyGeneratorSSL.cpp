@@ -1,34 +1,30 @@
 #include "stdafx.h"
-#include "KeyGenerator.h"
-
+#include <openssl/evp.h>
+#include <openssl/sha.h>
+#include "KeyGeneratorSSL.h"
 
 namespace CommonLib
 {
 	namespace crypto
 	{
-		namespace winapi
+		namespace openssllib
 		{
 			CKeyGenerator::CKeyGenerator()
 			{
-				try
-				{
-					m_ptrAlgProvider = CBcryptAlgProvider::Create(BCRYPT_SHA512_ALGORITHM, BCRYPT_ALG_HANDLE_HMAC_FLAG);
-				}
-				catch (std::exception& exc)
-				{
-					CExcBase::RegenExcT("CKeyGenerator: Failed to create", exc);
-				}
+
 			}
 
 			CKeyGenerator::~CKeyGenerator()
 			{
+
 			}
 
 			void CKeyGenerator::DeriveKeyPBKDF2(const crypto_astr& password, const crypto_vector& salt, uint32_t interations, crypto_vector& keyData, uint32_t keySize)
 			{
 				try
 				{
-					m_ptrAlgProvider->CryptDeriveKeyPBKDF2(password, salt, interations, keySize, keyData);
+					keyData.resize(keySize);
+		 			PKCS5_PBKDF2_HMAC(password.c_str(), (int)password.size(), salt.data(), (int)salt.size(), interations, EVP_sha512(), keySize, keyData.data());
 				}
 				catch (std::exception& exc)
 				{
@@ -37,6 +33,5 @@ namespace CommonLib
 				}
 			}
 		}
-	
 	}
 }

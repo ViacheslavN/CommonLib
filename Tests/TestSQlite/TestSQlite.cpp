@@ -7,7 +7,7 @@
 #include "../../crypto/EmptyDataCipher.h"
 #include "../../str/str.h"
 #include "../../sqlitelib/CryptoContext.h"
- 
+#include "../../crypto/winapi/CryptoFactory.h"
 
 
 class CryptoContext : public CommonLib::sqlite::ICryptoContext
@@ -51,7 +51,9 @@ int main()
 {
 	try
 	{
-		std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CommonLib::sqlite::CCryptoContext("12334ddffdfdfg", CommonLib::sqlite::PwdKey));
+		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory(new CommonLib::crypto::winapi::CCryptoFactory());
+
+		std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CommonLib::sqlite::CCryptoContext("12334ddffdfdfg", CommonLib::sqlite::PwdKey, ptrCryptoFactory));
 		//std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CryptoContext());
 		CommonLib::sqlite::ICryptoContext::AddCryptoContext("F:\\test.db", ptrCryptoContext);
 

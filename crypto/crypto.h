@@ -26,7 +26,26 @@ namespace CommonLib
 		typedef std::shared_ptr<class IKeyGenerator> IKeyGeneratorPtr; 
 		typedef std::shared_ptr<class IAESCipher> IAESCipherPtr;
 		typedef std::shared_ptr<class ISymmetricKey> ISymmetricKeyPtr;
+		typedef std::shared_ptr<class ICryptoFactory> ICryptoFactoryPtr;
 
+		enum class CipherChainMode
+		{
+			ECB,
+			CBC,
+			CCM,
+			GCM
+		};
+
+		class ICryptoFactory
+		{
+		public:
+			ICryptoFactory() {}
+			virtual ~ICryptoFactory() {}
+
+			virtual IRandomGeneratorPtr CreateRandomGenerator() const = 0;
+			virtual IKeyGeneratorPtr CreateKeyGenerator() const = 0;
+			virtual IAESCipherPtr CreateAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode) const = 0;
+		};
 	 
 
 		class IRandomGenerator
@@ -42,17 +61,11 @@ namespace CommonLib
 		class IKeyGenerator
 		{
 		public:
-			virtual void DeriveKeyPBKDF2(const crypto_astr& password, const crypto_vector& salt, uint64_t interations, crypto_vector& keyData, uint32_t keySize) = 0;
+			virtual void DeriveKeyPBKDF2(const crypto_astr& password, const crypto_vector& salt, uint32_t interations, crypto_vector& keyData, uint32_t keySize) = 0;
 
 		};
 
-		enum class CipherChainMode
-		{
-			ECB,
-			CBC,
-			CCM,
-			GCM
-		};
+		
 
 		class IAESCipher : public IDataCipher
 		{

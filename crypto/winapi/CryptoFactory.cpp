@@ -10,17 +10,27 @@ namespace CommonLib
 	{
 		namespace winapi
 		{
-			IRandomGeneratorPtr CCryptoFactory::CreateRandomGenerator()
+			CCryptoFactory::CCryptoFactory() 
+			{
+
+			}
+			
+			CCryptoFactory::~CCryptoFactory()
+			{
+
+			}
+
+			IRandomGeneratorPtr CCryptoFactory::CreateRandomGenerator() const
 			{
 				return IRandomGeneratorPtr(new CRandomGenerator());
 			}
 
-			IKeyGeneratorPtr CCryptoFactory::CreateKeyGenerator()
+			IKeyGeneratorPtr CCryptoFactory::CreateKeyGenerator() const
 			{
 				return IKeyGeneratorPtr(new CKeyGenerator());
 			}
 
-			IAESCipherPtr CCryptoFactory::CreateAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode)
+			IAESCipherPtr CCryptoFactory::CreateAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode) const
 			{ 
 				return IAESCipherPtr(new CAESCipher(keySize, bPadding, mode));
 			}
