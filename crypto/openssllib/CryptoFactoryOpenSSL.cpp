@@ -2,6 +2,7 @@
 #include "CryptoFactoryOpenSSL.h"
 #include "KeyGeneratorSSL.h"
 #include "OpenSSlLib.h"
+#include "AESCipherSSL.h"
 
 namespace CommonLib
 {
@@ -30,7 +31,7 @@ namespace CommonLib
 			 
 			IAESCipherPtr CCryptoFactoryOpenSSL::CreateAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode) const
 			{
-				return IAESCipherPtr();
+				return IAESCipherPtr(new CAESCipherSSL(keySize, bPadding, mode));
 			}
 
 		}

@@ -347,6 +347,7 @@
     <ClInclude Include="compress\zlib\zutil.h" />
     <ClInclude Include="compress\zstd\ZstdCompressionStream.h" />
     <ClInclude Include="compress\zstd\ZstdDecompressionStream.h" />
+    <ClInclude Include="crypto\AESBase.h" />
     <ClInclude Include="crypto\CryptoData.h" />
     <ClInclude Include="crypto\EmptyDataCipher.h" />
     <ClInclude Include="crypto\crypto.h" />
@@ -606,6 +607,7 @@
     </ClCompile>
     <ClCompile Include="compress\zstd\ZstdCompressionStream.cpp" />
     <ClCompile Include="compress\zstd\ZstdDecompressionStream.cpp" />
+    <ClCompile Include="crypto\AESBase.cpp" />
     <ClCompile Include="crypto\EmptyDataCipher.cpp" />
     <ClCompile Include="crypto\openssllib\AESCipherSSL.cpp" />
     <ClCompile Include="crypto\openssllib\CryptoFactoryOpenSSL.cpp" />

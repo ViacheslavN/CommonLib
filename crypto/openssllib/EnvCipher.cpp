@@ -9,24 +9,24 @@ namespace CommonLib
 		namespace openssllib
 		{
 
-			CEvpCipher::CEvpCipher(OpenSSLCipherType type)
+			CEvpCipher::CEvpCipher(EAESKeySize keySize, CipherChainMode mode)
 			{
-				switch (type)
+				switch (mode)
 				{
-				case CommonLib::crypto::openssllib::OpenSSLCipherType::AES_256_ECB:
-					m_pCipher = EVP_aes_256_ecb();
+				case CommonLib::crypto::CipherChainMode::ECB:
+					m_pCipher = GetEVPcipherECB(keySize);
 					break;
-				case CommonLib::crypto::openssllib::OpenSSLCipherType::AES_256_CBC:
-					m_pCipher = EVP_aes_256_cbc();
+				case CommonLib::crypto::CipherChainMode::CBC:
+					m_pCipher = GetEVPcipherCBC(keySize);
 					break;
-				case CommonLib::crypto::openssllib::OpenSSLCipherType::AES_256_CCM:
-					m_pCipher = EVP_aes_256_ccm();
+				case CommonLib::crypto::CipherChainMode::CCM:
+					m_pCipher = GetEVPcipherCCM(keySize);
 					break;
-				case CommonLib::crypto::openssllib::OpenSSLCipherType::AES_256_GCM:
-					m_pCipher = EVP_aes_256_gcm();
+				case CommonLib::crypto::CipherChainMode::GCM:
+					m_pCipher = GetEVPcipherGCM(keySize);
 					break;
 				default:
-					throw CExcBase("EvpCipher unknown cipher type: %1", (int)type);
+					throw CExcBase("EvpCipher unknown chain mode: %1", (int)mode);
 
 				}
 
@@ -44,6 +44,66 @@ namespace CommonLib
 			const EVP_CIPHER* CEvpCipher::GetCipher() const
 			{
 				return m_pCipher;
+			}
+
+			const EVP_CIPHER* CEvpCipher::GetEVPcipherECB(EAESKeySize keySize) const
+			{
+				switch (keySize)
+				{
+				case CommonLib::crypto::AES_128:
+					return EVP_aes_128_ecb();
+				case CommonLib::crypto::AES_192:
+					return EVP_aes_192_ecb();
+				case CommonLib::crypto::AES_256:
+					return EVP_aes_256_ecb();
+				default:
+					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+				}
+			}
+
+			const EVP_CIPHER* CEvpCipher::GetEVPcipherCBC(EAESKeySize keySize) const
+			{
+				switch (keySize)
+				{
+				case CommonLib::crypto::AES_128:
+					return EVP_aes_128_cbc();
+				case CommonLib::crypto::AES_192:
+					return EVP_aes_192_cbc();
+				case CommonLib::crypto::AES_256:
+					return EVP_aes_256_cbc();
+				default:
+					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+				}
+			}
+
+			const EVP_CIPHER* CEvpCipher::GetEVPcipherCCM(EAESKeySize keySize) const
+			{
+				switch (keySize)
+				{
+				case CommonLib::crypto::AES_128:
+					return EVP_aes_128_ccm();
+				case CommonLib::crypto::AES_192:
+					return EVP_aes_192_ccm();
+				case CommonLib::crypto::AES_256:
+					return EVP_aes_256_ccm();
+				default:
+					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+				}
+			}
+
+			const EVP_CIPHER* CEvpCipher::GetEVPcipherGCM(EAESKeySize keySize) const
+			{
+				switch (keySize)
+				{
+				case CommonLib::crypto::AES_128:
+					return EVP_aes_128_gcm();
+				case CommonLib::crypto::AES_192:
+					return EVP_aes_192_gcm();
+				case CommonLib::crypto::AES_256:
+					return EVP_aes_256_gcm();
+				default:
+					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+				}
 			}
 		}
 	}

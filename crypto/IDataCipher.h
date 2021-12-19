@@ -14,7 +14,7 @@ namespace CommonLib
 			IDataCipher(){}
 			virtual ~IDataCipher() {}
 
-			virtual uint32_t GetBufferSize(uint32_t bufDataSize) = 0;
+			virtual uint32_t GetBufferSize(uint32_t bufDataSize) const = 0;
 			virtual uint32_t Encrypt(const byte_t* srcBuf, uint32_t srcSize, byte_t* dstBuf, uint32_t dstSize) = 0;
 			virtual uint32_t Decrypt(const byte_t* srcBuf, uint32_t srcSize, byte_t* dstBuf, uint32_t dstSize) = 0;
 			virtual uint32_t Encrypt(byte_t* srcBuf, uint32_t bufSize) = 0;

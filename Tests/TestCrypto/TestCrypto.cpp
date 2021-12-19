@@ -29,6 +29,11 @@ int main()
 		CommonLib::crypto::IAESCipherPtr ptrAesCipher= ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
 		CommonLib::crypto::IAESCipherPtr ptrAesCipherWithPadding = ptrCryptoFactory->CreateAESCipher(CommonLib::crypto::AES_256, true, CommonLib::crypto::CipherChainMode::ECB);
 	
+		CommonLib::crypto::IAESCipherPtr ptrAesCipherSSL = ptrCryptoFactorySSL->CreateAESCipher(CommonLib::crypto::AES_256, false, CommonLib::crypto::CipherChainMode::ECB);
+		CommonLib::crypto::IAESCipherPtr ptrAesCipherWithPaddingSSL = ptrCryptoFactorySSL->CreateAESCipher(CommonLib::crypto::AES_256, true, CommonLib::crypto::CipherChainMode::ECB);
+
+
+
 		uint32_t blockSize = ptrAesCipher->GetBlockSize();
 		uint32_t keySize = ptrAesCipher->GetKeySize();
 
@@ -40,6 +45,8 @@ int main()
 		ptrRandomGenerator->GenRandom(pwdSalt);
 
 		ptrRandomGenerator->GenRandom(ptrAesCipher->GetIVData(), ptrAesCipher->GetIVSize());
+
+		memcpy(ptrAesCipherSSL->GetIVData(), ptrAesCipher->GetIVData(), ptrAesCipher->GetIVSize());
 		
 
 		ptrKeyGenerator->DeriveKeyPBKDF2(pwd, pwdSalt,  2048, keyData, keySize);
@@ -56,18 +63,25 @@ int main()
 
  
 		ptrAesCipher->SetKey(keyData);
+		ptrAesCipherSSL->SetKey(keyData);
 
 		astr plainText;
 		plainText.resize(16, 'a');
+		astr plainTextSSL;
+		plainTextSSL.resize(16, 'a');
 
 		int32_t size =  ptrAesCipher->GetBufferSize(plainText.length());
 		std::vector<byte_t> butChiperText(size, 0);
 		ptrAesCipher->Encrypt((const byte*)plainText.c_str(), plainText.size(), (byte*)plainText.data(), plainText.size());
+		ptrAesCipherSSL->Encrypt((const byte*)plainTextSSL.c_str(), plainTextSSL.size(), (byte*)plainTextSSL.data(), plainTextSSL.size());
 
 		int32_t size1 = ptrAesCipher->GetBufferSize(butChiperText.size());
 		std::vector<byte> plainText1;
+		std::vector<byte> plainText2;
 		plainText1.resize(size1);
-		ptrAesCipher->Decrypt((const byte*)plainText.data(), plainText.size(), (byte*)plainText.data(), plainText.size());
+		plainText2.resize(size1);
+		ptrAesCipher->Decrypt((const byte*)plainTextSSL.data(), plainTextSSL.size(), (byte*)plainTextSSL.data(), plainTextSSL.size());
+		ptrAesCipherSSL->Decrypt((const byte*)plainText.data(), plainText.size(), (byte*)plainText.data(), plainText.size());
 	
 	}
 	catch (std::exception& exc)

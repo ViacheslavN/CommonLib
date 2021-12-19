@@ -7,21 +7,18 @@ namespace CommonLib
 	{
 		namespace winapi
 		{
-			CAESCipher::CAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode) : m_bPadding(bPadding), m_keySize(keySize),
-				m_chainMode(mode)
+			CAESCipher::CAESCipher(EAESKeySize keySize, bool bPadding, CipherChainMode mode) : CAESBase(keySize, bPadding, mode)
 			{
 				try
 				{
 					m_ptrAlgProvider = CBcryptAlgProvider::Create(BCRYPT_AES_ALGORITHM, 0);
 					ULONG resultLength = 0;
-					m_ptrAlgProvider->CryptGetProperty(BCRYPT_BLOCK_LENGTH, (PBYTE)&m_nBlockSize, sizeof(m_nBlockSize),  &resultLength, 0);
-					if (m_nBlockSize == 0)
-						throw CExcBase("Block size is null");
+					//m_ptrAlgProvider->CryptGetProperty(BCRYPT_BLOCK_LENGTH, (PBYTE)&m_nBlockSize, sizeof(m_nBlockSize),  &resultLength, 0);
+					//if (m_nBlockSize == 0)
+					//	throw CExcBase("Block size is null");
 
 					m_ptrAlgProvider->CryptGetProperty(BCRYPT_OBJECT_LENGTH, (PBYTE)&m_nObjectSize, sizeof(m_nObjectSize), &resultLength, 0);
-				
 					SetChainMode(m_chainMode);
-					m_IvData.resize(m_nBlockSize, 0);
 				}
 				catch (std::exception& exc)
 				{
@@ -56,22 +53,7 @@ namespace CommonLib
 
 			}
 
-			uint32_t CAESCipher::GetKeySize() const
-			{
-				switch (m_keySize)
-				{
-				case CommonLib::crypto::AES_128:
-					return 16;
-				case CommonLib::crypto::AES_192:
-					return 24;
-				case CommonLib::crypto::AES_256:
-					return 32;
-				default:
-					throw CExcBase("AESCipher: unknown type %1", m_keySize);
-					break;
-				}
-			}
-
+		
 			void CAESCipher::SetKey(const crypto_vector& keyData)
 			{
 				try
@@ -92,38 +74,7 @@ namespace CommonLib
 					throw;
 				}
 			}
-
- 
-
-			uint32_t CAESCipher::GetBufferSize(uint32_t bufDataSize)
-			{
-				if (m_bPadding)
-					return (bufDataSize / m_nBlockSize + 1) * m_nBlockSize;
-
-				return (bufDataSize / m_nBlockSize) * m_nBlockSize;
-			}
-
-			uint32_t CAESCipher::GetBlockSize() const
-			{
-				return m_nBlockSize;
-			}
-
-			uint32_t CAESCipher::GetIVSize() const
-			{
-				return (uint32_t)m_IvData.size();
-			}
-
-			byte_t* CAESCipher::GetIVData()
-			{
-				return m_IvData.data();
-			}
-
-			const byte_t* CAESCipher::GetIVData() const
-			{
-				return m_IvData.data();
-			}
-
-
+			
 			uint32_t CAESCipher::Encrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize)
 			{
 				try

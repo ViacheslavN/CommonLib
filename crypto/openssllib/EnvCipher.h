@@ -23,11 +23,16 @@ namespace CommonLib
 			class CEvpCipher
 			{
 			public:
-				CEvpCipher(OpenSSLCipherType type);
+				CEvpCipher(EAESKeySize keySize, CipherChainMode mode);
 				~CEvpCipher();
 
 				 const EVP_CIPHER* GetCipher() const;
-			private:
+			private:				
+				const EVP_CIPHER* GetEVPcipherECB(EAESKeySize keySize) const;
+				const EVP_CIPHER* GetEVPcipherCBC(EAESKeySize keySize) const;
+				const EVP_CIPHER* GetEVPcipherCCM(EAESKeySize keySize) const;
+				const EVP_CIPHER* GetEVPcipherGCM(EAESKeySize keySize) const;
+
 				const  EVP_CIPHER* m_pCipher;
 			};
 		}
