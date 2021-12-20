@@ -468,6 +468,9 @@
     <ClInclude Include="crypto\AESBase.h">
       <Filter>crypto</Filter>
     </ClInclude>
+    <ClInclude Include="crypto\openssllib\RandomGeneratorSSL.h">
+      <Filter>crypto\openssllib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -763,6 +766,9 @@
     </ClCompile>
     <ClCompile Include="crypto\AESBase.cpp">
       <Filter>crypto</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto\openssllib\RandomGeneratorSSL.cpp">
+      <Filter>crypto\openssllib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

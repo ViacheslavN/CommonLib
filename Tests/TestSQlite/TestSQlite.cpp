@@ -8,6 +8,7 @@
 #include "../../str/str.h"
 #include "../../sqlitelib/CryptoContext.h"
 #include "../../crypto/winapi/CryptoFactory.h"
+#include "../../crypto/openssllib/CryptoFactoryOpenSSL.h"
 
 
 class CryptoContext : public CommonLib::sqlite::ICryptoContext
@@ -47,78 +48,88 @@ public:
 
 
 
+void TestDatabase(CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory, const astr& strPath, const astr& pwd)
+{
+ 
+	std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CommonLib::sqlite::CCryptoContext(pwd.c_str(), CommonLib::sqlite::PwdKey, ptrCryptoFactory));
+	CommonLib::sqlite::ICryptoContext::RemoveCryptoContext(strPath);
+	CommonLib::sqlite::ICryptoContext::AddCryptoContext(strPath, ptrCryptoContext);
+
+	CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create(strPath.c_str(), uint32_t(CommonLib::sqlite::CreateDatabase | CommonLib::sqlite::WAL));
+	ptrDatabase->SetBusyTimeout(1000);
+
+
+	if (ptrDatabase->IsTableExists("testTable"))
+	{
+		{
+			CommonLib::sqlite::IStatmentPtr ptrStatment = ptrDatabase->PrepareQuery("SELECT contact_id, first_name, last_name, email, phone from testTable");
+			while (ptrStatment->Next())
+			{
+				std::cout << ptrStatment->ReadInt32(1) << "\n";
+				std::cout << ptrStatment->ReadText(2) << "\n";
+				std::cout << ptrStatment->ReadText(3) << "\n";
+				std::cout << ptrStatment->ReadText(4) << "\n";
+				std::cout << ptrStatment->ReadText(5) << "\n";
+			}
+		}
+
+		CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
+		ptrTran->Begin();
+		ptrDatabase->Execute("drop table testTable");
+		ptrTran->Commit();
+	}
+
+	{
+
+		CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
+		ptrTran->Begin();
+		ptrDatabase->Execute("CREATE TABLE testTable ( "
+			" contact_id INTEGER PRIMARY KEY, "
+			" first_name TEXT NOT NULL, "
+			" last_name TEXT NOT NULL, "
+			" email TEXT NOT NULL, "
+			" phone TEXT NOT NULL) ");
+		ptrTran->Commit();
+	}
+
+	int key = 0;
+	for (int t = 0; t < 100; ++t)
+	{
+		CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
+		ptrTran->Begin();
+
+		for (int i = 0; i < 100; ++i)
+		{
+
+			CommonLib::sqlite::IStatmentPtr ptrStatment = ptrDatabase->PrepareQuery("INSERT INTO testTable(contact_id, first_name, last_name, email, phone) VALUES(?,?,?,?,?)");
+			ptrStatment->BindInt32(1, key);
+			ptrStatment->BindText(2, CommonLib::str_format::AStrFormatSafeT("first_name_%1", key), true);
+			ptrStatment->BindText(3, CommonLib::str_format::AStrFormatSafeT("last_name_%1", key), true);
+			ptrStatment->BindText(4, CommonLib::str_format::AStrFormatSafeT("email_%1", key), true);
+			ptrStatment->BindText(5, CommonLib::str_format::AStrFormatSafeT("phone_%1", key), true);
+
+			key += 1;
+			ptrStatment->Next();
+		}
+
+		ptrTran->Commit();
+	}
+}
+
+
 int main()
 {
 	try
 	{
 		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory(new CommonLib::crypto::winapi::CCryptoFactory());
+		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactorySSL(new CommonLib::crypto::openssllib::CCryptoFactoryOpenSSL());
+		astr dbPath = "F:\\test.db";
+		astr pwd = "12334ddffdfdfg";
 
-		std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CommonLib::sqlite::CCryptoContext("12334ddffdfdfg", CommonLib::sqlite::PwdKey, ptrCryptoFactory));
-		//std::shared_ptr<CommonLib::sqlite::ICryptoContext> ptrCryptoContext(new CryptoContext());
-		CommonLib::sqlite::ICryptoContext::AddCryptoContext("F:\\test.db", ptrCryptoContext);
-
-		CommonLib::sqlite::IDatabasePtr ptrDatabase = CommonLib::sqlite::IDatabase::Create("F:\\test.db", uint32_t(CommonLib::sqlite::CreateDatabase | CommonLib::sqlite::WAL));
-		ptrDatabase->SetBusyTimeout(1000);
-
-
-		if (ptrDatabase->IsTableExists("testTable"))
-		{
-			{
-				CommonLib::sqlite::IStatmentPtr ptrStatment = ptrDatabase->PrepareQuery("SELECT contact_id, first_name, last_name, email, phone from testTable");
-				while (ptrStatment->Next())
-				{
-					std::cout << ptrStatment->ReadInt32(1) << "\n";
-					std::cout << ptrStatment->ReadText(2) << "\n";
-					std::cout << ptrStatment->ReadText(3) << "\n";
-					std::cout << ptrStatment->ReadText(4) << "\n";
-					std::cout << ptrStatment->ReadText(5) << "\n";
-				}
-			}
-
-			CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
-			ptrTran->Begin();
-			ptrDatabase->Execute("drop table testTable");
-			ptrTran->Commit();
-		}
-
-		{
-
-			CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
-			ptrTran->Begin();
-			ptrDatabase->Execute("CREATE TABLE testTable ( "
-				" contact_id INTEGER PRIMARY KEY, "
-				" first_name TEXT NOT NULL, "
-				" last_name TEXT NOT NULL, "
-				" email TEXT NOT NULL, "
-				" phone TEXT NOT NULL) ");
-			ptrTran->Commit();
-		}
-
-		int key = 0;
-		for (int t = 0; t < 100; ++t)
-		{
-			CommonLib::sqlite::ITransactionPtr ptrTran = CommonLib::sqlite::ITransaction::CreateTransaction(ptrDatabase);
-			ptrTran->Begin();
-
-			for (int i = 0; i < 100; ++i)
-			{
-			
-				CommonLib::sqlite::IStatmentPtr ptrStatment = ptrDatabase->PrepareQuery("INSERT INTO testTable(contact_id, first_name, last_name, email, phone) VALUES(?,?,?,?,?)");
-				ptrStatment->BindInt32(1, key);
-				ptrStatment->BindText(2, CommonLib::str_format::AStrFormatSafeT("first_name_%1", key), true);
-				ptrStatment->BindText(3, CommonLib::str_format::AStrFormatSafeT("last_name_%1", key), true);
-				ptrStatment->BindText(4, CommonLib::str_format::AStrFormatSafeT("email_%1", key), true);
-				ptrStatment->BindText(5, CommonLib::str_format::AStrFormatSafeT("phone_%1", key), true);
-
-				key += 1;
-				ptrStatment->Next();
-			}
-
-
-
-			
-			ptrTran->Commit();
-		}
+		//TestDatabase(ptrCryptoFactorySSL, dbPath, pwd);
+		TestDatabase(ptrCryptoFactory, dbPath, pwd);
+		TestDatabase(ptrCryptoFactorySSL, dbPath, pwd);
+		
 	}
 	catch (std::exception& exc )
 	{

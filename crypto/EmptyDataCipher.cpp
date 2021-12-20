@@ -15,7 +15,7 @@ namespace CommonLib
 
 		}
 		
-		uint32_t CEmptyDataCipher::GetBufferSize(uint32_t bufDataSize)
+		uint32_t CEmptyDataCipher::GetBufferSize(uint32_t bufDataSize) const
 		{
 			return bufDataSize;
 		}

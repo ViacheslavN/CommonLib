@@ -51,7 +51,7 @@ namespace CommonLib
 
 
 			static void AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrCryptoContex);
-			static void RemoveCryptoContext(const astr& databaseName, ICryptoContextPtr ptrCryptoContex);
+			static void RemoveCryptoContext(const astr& databaseName);
 		};
 
 		class IDatabase

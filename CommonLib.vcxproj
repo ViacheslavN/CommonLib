@@ -359,6 +359,7 @@
     <ClInclude Include="crypto\openssllib\KeyGeneratorSSL.h" />
     <ClInclude Include="crypto\openssllib\OpensslExc.h" />
     <ClInclude Include="crypto\openssllib\OpenSSlLib.h" />
+    <ClInclude Include="crypto\openssllib\RandomGeneratorSSL.h" />
     <ClInclude Include="crypto\winapi\aes\AESCipher.h" />
     <ClInclude Include="crypto\winapi\CryptoAlgoritmProvider.h" />
     <ClInclude Include="crypto\winapi\CryptoFactory.h" />
@@ -616,6 +617,7 @@
     <ClCompile Include="crypto\openssllib\KeyGeneratorSSL.cpp" />
     <ClCompile Include="crypto\openssllib\OpensslExc.cpp" />
     <ClCompile Include="crypto\openssllib\OpenSSlLib.cpp" />
+    <ClCompile Include="crypto\openssllib\RandomGeneratorSSL.cpp" />
     <ClCompile Include="crypto\winapi\aes\AESCipher.cpp" />
     <ClCompile Include="crypto\winapi\CryptoAlgoritmProvider.cpp" />
     <ClCompile Include="crypto\winapi\CryptoFactory.cpp" />

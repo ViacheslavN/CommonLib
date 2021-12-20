@@ -85,7 +85,7 @@ namespace CommonLib
 				if (pVfsReal)
 				{
 					size_t nPrefix = strlen(SQLITE3EN_VFS_NAME);
-					size_t nRealName = strlen(pVfsReal->zName);
+					size_t nRealName = 0;// strlen(pVfsReal->zName);
 					size_t nName = nPrefix + nRealName + 1;
 					size_t nByte = sizeof(sqlite3En_vfs) + nName + 1;
 					pVfsNew = (sqlite3En_vfs*)sqlite3_malloc64(nByte);
@@ -102,8 +102,8 @@ namespace CommonLib
 						/* Set name of new VFS as combination of the multiple ciphers prefix and the name of the underlying VFS */
 						pVfsNew->base.zName = (const char*)zSpace;
 						memcpy(zSpace, SQLITE3EN_VFS_NAME, nPrefix);
-						memcpy(zSpace + nPrefix, "-", 1);
-						memcpy(zSpace + nPrefix + 1, pVfsReal->zName, nRealName);
+					//	memcpy(zSpace + nPrefix, "-", 1);
+					//	memcpy(zSpace + nPrefix + 1, pVfsReal->zName, nRealName);
 
 
 						rc = sqlite3_vfs_register(&pVfsNew->base, makeDefault);

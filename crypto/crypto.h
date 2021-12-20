@@ -55,7 +55,7 @@ namespace CommonLib
 			virtual ~IRandomGenerator(){}
 
 			virtual void GenRandom(crypto_vector& random) = 0;
-			virtual void GenRandom(byte* pData, uint32_t size) = 0;
+			virtual void GenRandom(byte_t* pData, uint32_t size) = 0;
 		};
 
 		class IKeyGenerator

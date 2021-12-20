@@ -3,6 +3,7 @@
 #include "KeyGeneratorSSL.h"
 #include "OpenSSlLib.h"
 #include "AESCipherSSL.h"
+#include "RandomGeneratorSSL.h"
 
 namespace CommonLib
 {
@@ -21,7 +22,7 @@ namespace CommonLib
 
 			IRandomGeneratorPtr CCryptoFactoryOpenSSL::CreateRandomGenerator() const
 			{
-				return IRandomGeneratorPtr();
+				return IRandomGeneratorPtr(new CRandomGeneratorSSL());
 			}
 
 			IKeyGeneratorPtr CCryptoFactoryOpenSSL::CreateKeyGenerator() const

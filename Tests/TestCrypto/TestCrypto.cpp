@@ -15,9 +15,9 @@ int main()
 	try
 	{
 
-		//TestXTS();
+		TestXTS();
 
-		//return 0;
+		return 0;
 
 		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory(new CommonLib::crypto::winapi::CCryptoFactory());
 		CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactorySSL(new CommonLib::crypto::openssllib::CCryptoFactoryOpenSSL());

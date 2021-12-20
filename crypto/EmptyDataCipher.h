@@ -12,7 +12,7 @@ namespace CommonLib
 			virtual ~CEmptyDataCipher();
 
 
-			virtual uint32_t GetBufferSize(uint32_t bufDataSize);
+			virtual uint32_t GetBufferSize(uint32_t bufDataSize) const;
 
 			virtual uint32_t Encrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize);
 			virtual uint32_t Decrypt(const byte_t* srcBuf, uint32_t bufSize, byte_t* dstBuf, uint32_t dstSize);

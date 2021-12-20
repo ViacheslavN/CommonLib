@@ -37,7 +37,7 @@ namespace CommonLib
 				}
 			}
 			
-			void CRandomGenerator::GenRandom(byte* pData, uint32_t size)
+			void CRandomGenerator::GenRandom(byte_t* pData, uint32_t size)
 			{
 				try
 				{

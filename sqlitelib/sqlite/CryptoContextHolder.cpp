@@ -11,7 +11,7 @@ namespace CommonLib
 			impl::CCryptoContextHolder::Instance().AddCryptoContext(databaseName, ptrCryptoContex);
 		}
 
-		void ICryptoContext::RemoveCryptoContext(const astr& databaseName, ICryptoContextPtr ptrCryptoContex)
+		void ICryptoContext::RemoveCryptoContext(const astr& databaseName)
 		{
 			impl::CCryptoContextHolder::Instance().RemoveCryptoContext(databaseName);
 		}

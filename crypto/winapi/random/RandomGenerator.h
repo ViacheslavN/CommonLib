@@ -16,7 +16,7 @@ namespace CommonLib
 				virtual ~CRandomGenerator();
 
 				virtual void GenRandom(crypto_vector& random);
-				virtual void GenRandom(byte* pData, uint32_t size);
+				virtual void GenRandom(byte_t* pData, uint32_t size);
 			private:
 				CBcryptAlgProviderPtr m_ptrBcryptAlgProvider;
 			};
