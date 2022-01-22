@@ -19,8 +19,8 @@ namespace CommonLib
 
 				CHandle& operator= (HANDLE handle);
 
-				HANDLE GetHandle();
-				const HANDLE GetHandle() const;
+				HANDLE& GetHandle();
+				const HANDLE& GetHandle() const;
 
 				CHandle(const CHandle& handle) = delete;
 				CHandle& operator= (const CHandle& handle) = delete;

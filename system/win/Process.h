@@ -17,13 +17,10 @@ namespace CommonLib
 				bool IsValid() const;
 
 				astr GetFullImageName() const;
-				astr GetCommandLine() const;
-				astr GetUserName() const;
-				astr GetName() const;
-				astr GetWindowTitle() const;
+ 
 
-
-
+			private:
+				void IsValidExc() const;
 			private:
 				HANDLE m_hProcess;
 			};

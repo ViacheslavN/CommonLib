@@ -27,12 +27,12 @@ namespace CommonLib
 			}
 
 
-			HANDLE CHandle::GetHandle() 
+			HANDLE& CHandle::GetHandle() 
 			{ 
 				return m_handle; 
 			}
 
-			const HANDLE CHandle::GetHandle() const 
+			const HANDLE& CHandle::GetHandle() const 
 			{ 
 				return m_handle; 
 			}

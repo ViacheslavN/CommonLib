@@ -63,7 +63,7 @@ namespace CommonLib
 			return m_IvData.data();
 		}
 
-		void CAESBase::EncryptThrowIfWrongtSize(int plainInSize, int dstBufSize) const
+		void CAESBase::EncryptThrowIfWrongtSize(uint32_t plainInSize, uint32_t dstBufSize) const
 		{
 			if (!m_bPadding)
 			{

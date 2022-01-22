@@ -13,6 +13,11 @@
 #include "CommonLib.h"
 #include "exception/exc_base.h"
 
+#ifdef _WIN32
+	#include "exception/WinExc.h"
+	#include "exception/WinNtExc.h"
+	#include "exception/ComExc.h"
+#endif
 
 
 

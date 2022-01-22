@@ -21,7 +21,7 @@ namespace CommonLib
 			virtual uint32_t GetBufferSize(uint32_t bufDataSize) const;
 			virtual uint32_t GetBlockSize() const;
 
-			void EncryptThrowIfWrongtSize(int plainInSize, int dstBufSize) const;
+			void EncryptThrowIfWrongtSize(uint32_t plainInSize, uint32_t dstBufSize) const;
 
 		protected:
 			bool m_bPadding;
