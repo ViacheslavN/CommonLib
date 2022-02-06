@@ -4,56 +4,57 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
+
 		void ICryptoContext::AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrCryptoContex)
 		{
-			impl::CCryptoContextHolder::Instance().AddCryptoContext(databaseName, ptrCryptoContex);
+			CCryptoContextHolder::Instance().AddCryptoContext(databaseName, ptrCryptoContex);
 		}
 
 		void ICryptoContext::RemoveCryptoContext(const astr& databaseName)
 		{
-			impl::CCryptoContextHolder::Instance().RemoveCryptoContext(databaseName);
+			CCryptoContextHolder::Instance().RemoveCryptoContext(databaseName);
 		}
 
-		namespace impl
+
+		CCryptoContextHolder& CCryptoContextHolder::Instance()
 		{
-			CCryptoContextHolder& CCryptoContextHolder::Instance()
-			{
-				static CCryptoContextHolder cryptoContext;
-				return cryptoContext;
-			}
-
-			CCryptoContextHolder::CCryptoContextHolder()
-			{}
-
-			CCryptoContextHolder::~CCryptoContextHolder()
-			{}
-
-			ICryptoContextPtr CCryptoContextHolder::GetCryptoContext(const astr& databaseName) const
-			{
-				auto it = m_cryptoContexts.find(databaseName);
-				if (it != m_cryptoContexts.end())
-					return it->second;
-
-				return ICryptoContextPtr();
-			}
-
-			void CCryptoContextHolder::AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrContext)
-			{
-				auto it = m_cryptoContexts.find(databaseName);
-				if (it != m_cryptoContexts.end())
-					throw CExcBase("CryptoContext has been set already");
-
-				m_cryptoContexts.insert(std::make_pair(databaseName, ptrContext));
-			}
-
-			void CCryptoContextHolder::RemoveCryptoContext(const astr& databaseName)
-			{
-				m_cryptoContexts.erase(databaseName);
-			}
-
-			
+			static CCryptoContextHolder cryptoContext;
+			return cryptoContext;
 		}
+
+		CCryptoContextHolder::CCryptoContextHolder()
+		{}
+
+		CCryptoContextHolder::~CCryptoContextHolder()
+		{}
+
+		ICryptoContextPtr CCryptoContextHolder::GetCryptoContext(const astr& databaseName) const
+		{
+			auto it = m_cryptoContexts.find(databaseName);
+			if (it != m_cryptoContexts.end())
+				return it->second;
+
+			return ICryptoContextPtr();
+		}
+
+		void CCryptoContextHolder::AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrContext)
+		{
+			auto it = m_cryptoContexts.find(databaseName);
+			if (it != m_cryptoContexts.end())
+				throw CExcBase("CryptoContext has been set already");
+
+			m_cryptoContexts.insert(std::make_pair(databaseName, ptrContext));
+		}
+
+		void CCryptoContextHolder::RemoveCryptoContext(const astr& databaseName)
+		{
+			m_cryptoContexts.erase(databaseName);
+		}
+
+
+		
+
 	}
 }

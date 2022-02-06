@@ -7,9 +7,9 @@ struct sqlite3En_file;
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 			typedef std::shared_ptr<class CVfsIO> CVfsIOPtr;
 

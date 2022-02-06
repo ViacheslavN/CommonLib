@@ -7,10 +7,11 @@ struct sqlite3_stmt;
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
+
 			class CSqlitExc : public CExcBase
 			{
 			public:
@@ -36,6 +37,7 @@ namespace CommonLib
 			private:
 				int m_sqliteErr;
 			};
+
 		}
 	}
 }

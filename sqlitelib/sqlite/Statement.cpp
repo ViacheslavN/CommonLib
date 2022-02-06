@@ -5,9 +5,9 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 			CStatement::CStatement(sqlite3_stmt *pStmt) : m_pStmt(pStmt)
 			{}
@@ -62,25 +62,25 @@ namespace CommonLib
 				return sqlite3_column_type(m_pStmt, col) == SQLITE_NULL;
 			}
 
-			ESqliteFieldType CStatement::GetColumnType(int col) const
+			EDBFieldType CStatement::GetColumnType(int col) const
 			{
 				int iType = sqlite3_column_type(m_pStmt, col);
 				switch (iType)
 				{
 				case SQLITE_INTEGER:
-					return SqliteInteger;
+					return ftInt64_t;
 				case SQLITE_FLOAT:
-					return SqliteFloat;
+					return ftDouble;
 				case SQLITE_TEXT:
-					return SqliteText;
+					return ftString;
 				case SQLITE_BLOB:
-					return SqliteBlob;
+					return ftBlob;
 				case SQLITE_NULL:
-					return SqliteNull;
+					return ftNull;
 				}
 
 				ThrowError();
-				return SqliteNull;
+				return ftNull;
 			}
 
 			int32_t CStatement::GetColumnBytes(int32_t col) const
@@ -224,6 +224,7 @@ namespace CommonLib
 				if (nRetVal != SQLITE_OK)
 					throw CSqlitExc(m_pStmt, nRetVal);
 			}
+			
 		}
 	}
 }

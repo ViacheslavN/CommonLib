@@ -1,17 +1,18 @@
 #pragma once
 
-#include "../Database.h"
+#include "SqliteApi.h"
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
+
 			class CTransaction : public ITransaction
 			{
 			public:
-				CTransaction(IDatabasePtr ptrDatabase);
+				CTransaction(CSQliteApiPtr ptrDB, bool isReadOnly);
 				~CTransaction();
 
 				virtual void Begin();
@@ -20,14 +21,12 @@ namespace CommonLib
 			private:
 				void RollbackImpl();
 
-				IDatabasePtr m_ptrDatabase;
+				CSQliteApiPtr m_ptrDB;
+				bool m_IsReadOnly;
 				bool m_start{ false };
 			};
-		}
 
-		ITransactionPtr ITransaction::CreateTransaction(IDatabasePtr ptrDatabase)
-		{
-			return std::shared_ptr<ITransaction>(new impl::CTransaction(ptrDatabase));
 		}
+		
 	}
 }

@@ -471,6 +471,9 @@
     <ClInclude Include="crypto\openssllib\RandomGeneratorSSL.h">
       <Filter>crypto\openssllib</Filter>
     </ClInclude>
+    <ClInclude Include="sqlitelib\sqlite\SqliteApi.h">
+      <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -769,6 +772,9 @@
     </ClCompile>
     <ClCompile Include="crypto\openssllib\RandomGeneratorSSL.cpp">
       <Filter>crypto\openssllib</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlitelib\sqlite\SqliteApi.cpp">
+      <Filter>sqlitelib\sqlite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

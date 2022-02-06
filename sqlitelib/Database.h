@@ -4,7 +4,7 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
 
 		typedef std::shared_ptr<class IDatabase> IDatabasePtr;
@@ -22,14 +22,24 @@ namespace CommonLib
 			WAL = 8
 		};
 
-		enum ESqliteFieldType
+		enum EDBFieldType
 		{
-			SqliteInteger,
-			SqliteFloat,
-			SqliteText,
-			SqliteBlob,
-			SqliteNull
+			ftNull,
+			ftInt8,
+			ftInt16_t,
+			ftInt32_t,
+			ftInt64_t,
+			tfUint8_t,
+			tfUint16_t,
+			tfUint32_t,
+			tfUint64_t,
+			ftFloat,
+			ftDouble,
+			ftString,
+			ftBlob,
+			ftDate
 		};
+ 
 
 		enum EKeyCryptoType
 		{
@@ -60,6 +70,8 @@ namespace CommonLib
 			IDatabase() = default;
 			virtual ~IDatabase(){}
 
+
+			virtual ITransactionPtr CreateTransaction() = 0;
 			virtual IStatmentPtr PrepareQuery(const char *pszQuery) const = 0;
 			virtual void Execute(const char *pszQuery) = 0;
 			virtual int32_t GetChanges() const noexcept  = 0;
@@ -67,10 +79,15 @@ namespace CommonLib
 			virtual bool IsReadOnly() const noexcept = 0;
 			virtual bool IsTableExists(const char *pszTable) const = 0;
 			virtual void SetBusyTimeout(int ms) noexcept = 0;
-			
-			static IDatabasePtr Create(const char *pszFile, uint32_t flags);
 
 		};
+
+		class IDatabaseSQLiteCreator
+		{
+		public:
+			static IDatabasePtr Create(const char *pszFile, uint32_t flags);
+		};
+
 
 		class ITransaction
 		{
@@ -82,9 +99,7 @@ namespace CommonLib
 			virtual void Commit() = 0;
 			virtual void Rollback() = 0;
 
-			static ITransactionPtr CreateTransaction(IDatabasePtr ptrDatabase);
 		};
-
 
 		class IStatment
 		{
@@ -97,7 +112,7 @@ namespace CommonLib
 			virtual int32_t  ColumnCount() const = 0;
 			virtual astr ColumnName(int32_t col) const = 0;
 			virtual bool ColumnIsNull(int32_t col) const = 0;
-			virtual ESqliteFieldType GetColumnType(int32_t col) const = 0;
+			virtual EDBFieldType GetColumnType(int32_t col) const = 0;
 			virtual int32_t GetColumnBytes(int32_t col) const = 0;
 			
 			virtual int16_t ReadInt16(int32_t col) const = 0;
@@ -123,6 +138,5 @@ namespace CommonLib
 			virtual void BindText(int32_t col, const astr& text, bool copy) = 0;
 			virtual void BindBlob(int32_t col, const byte_t *pBuf, int32_t size, bool copy) = 0;
 		};
-
 	}
 }

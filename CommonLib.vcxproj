@@ -412,6 +412,7 @@
     <ClInclude Include="sqlitelib\sqlite\filesys\VfsIO.h" />
     <ClInclude Include="sqlitelib\sqlite\filesys\SqliteVfs.h" />
     <ClInclude Include="sqlitelib\sqlite\filesys\VfsProxyIo.h" />
+    <ClInclude Include="sqlitelib\sqlite\SqliteApi.h" />
     <ClInclude Include="sqlitelib\sqlite\Transaction.h" />
     <ClInclude Include="sqlitelib\sqlite\SqliteExc.h" />
     <ClInclude Include="sqlitelib\sqlite\Statement.h" />
@@ -717,6 +718,7 @@
     <ClCompile Include="sqlitelib\sqlite\filesys\VfsIO.cpp" />
     <ClCompile Include="sqlitelib\sqlite\filesys\VfsProxyIo.cpp" />
     <ClCompile Include="sqlitelib\sqlite\filesys\SqliteVfs.cpp" />
+    <ClCompile Include="sqlitelib\sqlite\SqliteApi.cpp" />
     <ClCompile Include="sqlitelib\sqlite\SqliteExc.cpp" />
     <ClCompile Include="sqlitelib\sqlite\Statement.cpp" />
     <ClCompile Include="sqlitelib\sqlite\Transaction.cpp" />

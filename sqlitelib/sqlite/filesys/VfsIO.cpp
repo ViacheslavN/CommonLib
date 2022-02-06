@@ -68,9 +68,9 @@ uint32_t sqlite3Get4byte(const byte_t *p)
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 		
 			CVfsIO::CVfsIO(ICryptoContextPtr ptrCryptoContext) : m_ptrCryptoContext(ptrCryptoContext)

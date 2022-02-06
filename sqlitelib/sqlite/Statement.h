@@ -5,9 +5,9 @@ struct sqlite3_stmt;
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 
 			class CStatement : public IStatment
@@ -22,7 +22,7 @@ namespace CommonLib
 				int32_t  ColumnCount() const override;
 				astr ColumnName(int32_t col) const override;
 				bool ColumnIsNull(int32_t col) const override;
-				ESqliteFieldType GetColumnType(int32_t col) const override;
+				EDBFieldType GetColumnType(int32_t col) const override;
 				int32_t GetColumnBytes(int32_t col) const override;
 
 				int16_t ReadInt16(int32_t col) const override;
@@ -55,5 +55,6 @@ namespace CommonLib
 				sqlite3_stmt *m_pStmt;
 			};
 		}
+		
 	}
 }

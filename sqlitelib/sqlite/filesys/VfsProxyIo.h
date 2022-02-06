@@ -3,9 +3,9 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 			class CVfsProxyIO
 			{

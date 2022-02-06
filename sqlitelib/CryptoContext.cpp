@@ -6,7 +6,7 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
 
 		CCryptoContext::CCryptoContext(const crypto::crypto_astr& password, EKeyCryptoType cryptoType, crypto::ICryptoFactoryPtr ptrCryptoFactory) :

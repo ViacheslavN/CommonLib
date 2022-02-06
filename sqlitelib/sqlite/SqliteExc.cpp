@@ -4,9 +4,9 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 
 			CSqlitExc::CSqlitExc(sqlite3* db, int sqliteErr) : m_sqliteErr(sqliteErr)
@@ -65,5 +65,6 @@ namespace CommonLib
 				return "Unknown error";
 			}
 		}
+		
 	}
 }

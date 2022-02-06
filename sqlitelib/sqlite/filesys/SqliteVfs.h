@@ -5,9 +5,9 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 			class CVfsIO;
 		}
@@ -19,7 +19,7 @@ struct sqlite3En_file
 	sqlite3_file base;
 	sqlite3_file *pFile;
 	sqlite3_int64 offset;
-	CommonLib::sqlite::impl::CVfsIO *pFileSystem;
+	CommonLib::database::sqlite::CVfsIO *pFileSystem;
 	const char* zFileName;        
 	int openFlags;              
 };
@@ -36,9 +36,9 @@ struct sqlite3En_vfs
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 
 			class CVfs

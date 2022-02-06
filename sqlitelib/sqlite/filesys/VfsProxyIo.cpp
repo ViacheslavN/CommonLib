@@ -5,9 +5,9 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 			int CVfsProxyIO::IoClose(sqlite3_file* pFile)
 			{

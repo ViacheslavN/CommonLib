@@ -11,32 +11,32 @@
 static sqlite3_io_methods mcIoMethodsGlobal =
 {
   3,															  /* iVersion */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoClose,                  /* xClose */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoRead,                   /* xRead */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoWrite,                  /* xWrite */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoTruncate,               /* xTruncate */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoSync,                   /* xSync */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoFileSize,               /* xFileSize */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoLock,                   /* xLock */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoUnlock,                 /* xUnlock */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoCheckReservedLock,      /* xCheckReservedLock */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoFileControl,            /* xFileControl */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoSectorSize,             /* xSectorSize */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoDeviceCharacteristics,  /* xDeviceCharacteristics */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoShmMap,                 /* xShmMap */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoShmLock,                /* xShmLock */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoShmBarrier,             /* xShmBarrier */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoShmUnmap,               /* xShmUnmap */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoFetch,                  /* xFetch */
-  CommonLib::sqlite::impl::CVfsProxyIO::IoUnfetch,                /* xUnfetch */
+  CommonLib::database::sqlite::CVfsProxyIO::IoClose,                  /* xClose */
+  CommonLib::database::sqlite::CVfsProxyIO::IoRead,                   /* xRead */
+  CommonLib::database::sqlite::CVfsProxyIO::IoWrite,                  /* xWrite */
+  CommonLib::database::sqlite::CVfsProxyIO::IoTruncate,               /* xTruncate */
+  CommonLib::database::sqlite::CVfsProxyIO::IoSync,                   /* xSync */
+  CommonLib::database::sqlite::CVfsProxyIO::IoFileSize,               /* xFileSize */
+  CommonLib::database::sqlite::CVfsProxyIO::IoLock,                   /* xLock */
+  CommonLib::database::sqlite::CVfsProxyIO::IoUnlock,                 /* xUnlock */
+  CommonLib::database::sqlite::CVfsProxyIO::IoCheckReservedLock,      /* xCheckReservedLock */
+  CommonLib::database::sqlite::CVfsProxyIO::IoFileControl,            /* xFileControl */
+  CommonLib::database::sqlite::CVfsProxyIO::IoSectorSize,             /* xSectorSize */
+  CommonLib::database::sqlite::CVfsProxyIO::IoDeviceCharacteristics,  /* xDeviceCharacteristics */
+  CommonLib::database::sqlite::CVfsProxyIO::IoShmMap,                 /* xShmMap */
+  CommonLib::database::sqlite::CVfsProxyIO::IoShmLock,                /* xShmLock */
+  CommonLib::database::sqlite::CVfsProxyIO::IoShmBarrier,             /* xShmBarrier */
+  CommonLib::database::sqlite::CVfsProxyIO::IoShmUnmap,               /* xShmUnmap */
+  CommonLib::database::sqlite::CVfsProxyIO::IoFetch,                  /* xFetch */
+  CommonLib::database::sqlite::CVfsProxyIO::IoUnfetch,                /* xUnfetch */
 };
 
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
 
 			int CVfs::VfsCreate(const char* zVfsReal, int makeDefault)
@@ -144,7 +144,7 @@ namespace CommonLib
 					const char* dbFileName = sqlite3_filename_database(zName);
 					pFile->pMethods = &mcIoMethodsGlobal;
 					ICryptoContextPtr ptrCryptoContext = CCryptoContextHolder::Instance().GetCryptoContext(dbFileName);
-					enFile->pFileSystem = new CommonLib::sqlite::impl::CVfsIO(ptrCryptoContext);
+					enFile->pFileSystem = new CVfsIO(ptrCryptoContext);
 
 					rc = enFile->pFileSystem->ValidatePwd(enFile);
 					if (rc != SQLITE_OK)

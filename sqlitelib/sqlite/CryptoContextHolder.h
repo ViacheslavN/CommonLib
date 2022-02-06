@@ -4,28 +4,27 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+
+		class CCryptoContextHolder
 		{
+		public:
+			static CCryptoContextHolder& Instance();
 
-			class CCryptoContextHolder
-			{
-			public:
-				static CCryptoContextHolder& Instance();
+			ICryptoContextPtr GetCryptoContext(const astr& databaseName) const;
+			void AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrContext);
+			void RemoveCryptoContext(const astr& databaseName);
 
-				ICryptoContextPtr GetCryptoContext(const astr& databaseName) const;
-				void AddCryptoContext(const astr& databaseName, ICryptoContextPtr ptrContext);
-				void RemoveCryptoContext(const astr& databaseName);
+			~CCryptoContextHolder();
 
-				~CCryptoContextHolder();
+		private:
+			CCryptoContextHolder();
+			typedef std::map<astr, ICryptoContextPtr> TMapCryptoContexts;
+			TMapCryptoContexts m_cryptoContexts;
+		};
 
-			private:
-				CCryptoContextHolder();
-				typedef std::map<astr, ICryptoContextPtr> TMapCryptoContexts;
-				TMapCryptoContexts m_cryptoContexts;
-			};
 
-		}
+
 	}
 }

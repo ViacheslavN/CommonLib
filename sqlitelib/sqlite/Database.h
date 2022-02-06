@@ -1,15 +1,16 @@
 #pragma once
 
 #include "../Database.h"
-
-struct sqlite3;
+#include "SqliteApi.h"
+ 
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
+
 			typedef std::shared_ptr<class CDatabase> CDatabasePtr;
 
 			class CDatabase : public IDatabase
@@ -17,7 +18,7 @@ namespace CommonLib
 			public:
 				CDatabase(sqlite3* pDB, bool readOnly);
 				virtual ~CDatabase();
- 
+
 				IStatmentPtr PrepareQuery(const char *pszQuery) const override;
 				void Execute(const char *pszQuery) override;
 				int32_t GetChanges() const noexcept override;
@@ -25,11 +26,13 @@ namespace CommonLib
 				bool IsReadOnly() const noexcept override;
 				bool IsTableExists(const char *pszTable) const override;
 				void SetBusyTimeout(int ms) noexcept override;
+				ITransactionPtr CreateTransaction() override;
 
 			private:
-				sqlite3* m_pDB;
+				CSQliteApiPtr m_ptrDBApi;
 				bool m_readOnly;
- 			};
+			};
+		
 		}
 	}
 }

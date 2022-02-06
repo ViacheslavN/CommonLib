@@ -6,12 +6,13 @@
 #include "filesys/SqliteVfs.h"
 #include "../../str/str.h"
 #include "CryptoContextHolder.h"
+#include "Transaction.h"
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		IDatabasePtr IDatabase::Create(const char *pszFile, uint32_t flags)
+		IDatabasePtr IDatabaseSQLiteCreator::Create(const char *pszFile, uint32_t flags)
 		{
 			int mode = 0;
 
@@ -33,21 +34,21 @@ namespace CommonLib
 
 			sqlite3* pDB = nullptr;
 
-			ICryptoContextPtr ptrCryptoContext = impl::CCryptoContextHolder::Instance().GetCryptoContext(pszFile);
+			ICryptoContextPtr ptrCryptoContext = CCryptoContextHolder::Instance().GetCryptoContext(pszFile);
 
 			if (ptrCryptoContext.get() != nullptr)
 			{
-				int retVal = impl::CVfs::VfsCreate(NULL, 1);
+				int retVal = sqlite::CVfs::VfsCreate(NULL, 1);
 				if (retVal != SQLITE_OK)
-					throw impl::CSqlitExc(retVal);
+					throw sqlite::CSqlitExc(retVal);
 			}
 			//https://www.sqlite.org/src/doc/trunk/src/test_demovfs.c
 			//https://www.sqlite.org/vfs.html
 			int retVal = sqlite3_open_v2(pszFile, &pDB, mode, 0);
 			if (retVal != SQLITE_OK)
-				throw impl::CSqlitExc(retVal);
-			
-			IDatabasePtr ptrDatabase  = IDatabasePtr(new impl::CDatabase(pDB, flags & ReadOnlyMode ? true : false));
+				throw sqlite::CSqlitExc(retVal);
+
+			IDatabasePtr ptrDatabase = IDatabasePtr(new sqlite::CDatabase(pDB, flags & ReadOnlyMode ? true : false));
 
 			if (flags & WAL)
 				ptrDatabase->Execute("PRAGMA journal_mode=WAL");
@@ -55,48 +56,39 @@ namespace CommonLib
 			return ptrDatabase;
 		}
 
-		namespace impl
-		{			
+		namespace sqlite
+		{		
 
-			CDatabase::CDatabase(sqlite3* pDB, bool readOnly) : m_pDB(pDB), m_readOnly(readOnly)
-			{			
+
+			CDatabase::CDatabase(sqlite3* pDB, bool readOnly) :  m_readOnly(readOnly)
+			{
+				m_ptrDBApi.reset(new CSQliteApi(pDB));
 			}
 
 			CDatabase::~CDatabase()
 			{
-				const int nRetVal = sqlite3_close(m_pDB);
-				if (nRetVal != SQLITE_OK)
-				{
-					//TODO log
-				}
+			 
 			}
-		 
+
 			IStatmentPtr CDatabase::PrepareQuery(const char *pszQuery) const
 			{
-				sqlite3_stmt* pStmt = 0;
-				const int nRetVal = sqlite3_prepare_v2(m_pDB, pszQuery, -1, &pStmt, 0);
-				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(m_pDB, nRetVal);
-
+				sqlite3_stmt* pStmt = m_ptrDBApi->PrepareQuery(pszQuery);
 				return std::shared_ptr<IStatment>(new CStatement(pStmt));
 			}
 
 			void CDatabase::Execute(const char *pszQuery)
 			{
-				const int nRetVal = sqlite3_exec(m_pDB, pszQuery, 0, 0, 0);
-				if (nRetVal != SQLITE_OK)
-					throw CSqlitExc(m_pDB, nRetVal);
-	
+				m_ptrDBApi->Execute(pszQuery);
 			}
 
 			int32_t CDatabase::GetChanges() const noexcept
 			{
-				return sqlite3_changes(m_pDB);
+				return sqlite3_changes(m_ptrDBApi->GetDB());
 			}
 
 			int64_t CDatabase::GetLastInsertRowID() const noexcept
 			{
-				return sqlite3_last_insert_rowid(m_pDB);
+				return sqlite3_last_insert_rowid(m_ptrDBApi->GetDB());
 			}
 
 			bool CDatabase::IsReadOnly() const noexcept
@@ -116,9 +108,14 @@ namespace CommonLib
 
 			void CDatabase::SetBusyTimeout(int ms) noexcept
 			{
-				sqlite3_busy_timeout(m_pDB, ms);
+				sqlite3_busy_timeout(m_ptrDBApi->GetDB(), ms);
 			}
-		}
+			
+			ITransactionPtr CDatabase::CreateTransaction()
+			{
+				return std::shared_ptr<ITransaction>(new CTransaction(m_ptrDBApi, m_readOnly));
+			}
 
+		}
 	}
 }

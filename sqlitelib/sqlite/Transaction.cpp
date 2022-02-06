@@ -4,11 +4,11 @@
 
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
-		namespace impl
+		namespace sqlite
 		{
-			CTransaction::CTransaction(IDatabasePtr ptrDatabase) : m_ptrDatabase(ptrDatabase)
+			CTransaction::CTransaction(CSQliteApiPtr ptrDB, bool isReadOnly) : m_ptrDB(ptrDB), m_IsReadOnly(isReadOnly)
 			{
 
 			}
@@ -31,10 +31,10 @@ namespace CommonLib
 
 			void CTransaction::Begin()
 			{
-				if(m_ptrDatabase->IsReadOnly())
-					m_ptrDatabase->Execute("BEGIN");
+				if(m_IsReadOnly)
+					m_ptrDB->Execute("BEGIN");
 				else
-					m_ptrDatabase->Execute("BEGIN IMMEDIATE");
+					m_ptrDB->Execute("BEGIN IMMEDIATE");
 
 				m_start = true;
 			}
@@ -42,7 +42,7 @@ namespace CommonLib
 			void CTransaction::Commit()
 			{
 				m_start = false;
-				m_ptrDatabase->Execute("COMMIT");
+				m_ptrDB->Execute("COMMIT");
 			}
 
 			void CTransaction::Rollback()
@@ -53,7 +53,7 @@ namespace CommonLib
 			void CTransaction::RollbackImpl()
 			{
 				m_start = false;
-				m_ptrDatabase->Execute("ROLLBACK");
+				m_ptrDB->Execute("ROLLBACK");
 			}
 		}
 	}

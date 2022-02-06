@@ -3,7 +3,7 @@
 #include "../crypto/XTSBlockChiper.h"
 namespace CommonLib
 {
-	namespace sqlite
+	namespace database
 	{
 		class CCryptoContext : public ICryptoContext
 		{
