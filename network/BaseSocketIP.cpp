@@ -57,9 +57,7 @@ namespace CommonLib
 #endif
 				m_socket = CSocketUtil::GetInvalidSocket();
 			}
-		}
-
-		
+		}		
 
 		SOCKET CBaseSocketIP::GetSocketExc()
 		{
@@ -85,8 +83,6 @@ namespace CommonLib
 			int retVal = setsockopt(GetSocketExc(), level, optname, optval, optlen);
 			CheckSocketRetVal(retVal, "setsockopt failed");
 		}
-
-
 
 		void CBaseSocketIP::SetSocketBlockMode(bool block)
 		{
@@ -135,10 +131,7 @@ namespace CommonLib
 
 			CheckSocketRetVal(retVal, "SetKeepAlive")
 		}
-
-
-
-
+			   		 
 #ifdef _WIN32
 		void CBaseSocketIP::SelecEvent(HANDLE hEvent, long networkEvents)
 		{

@@ -13,7 +13,7 @@ namespace CommonLib
 		CComExc(const astr& err_msg, _com_error& err);
 
 		template<typename... Types>
-		CComExc(HRESULT err, const astr& format, Types... args) : CExcBase(format, args...), m_hr(err)
+		CComExc(HRESULT err, const astr& format, Types&&... args) : CExcBase(format, std::forward<Types>(args)...), m_hr(err)
 		{
 			CExcBase::AddMsg(GetComErrorDesc(err));
 		}

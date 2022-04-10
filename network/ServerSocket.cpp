@@ -82,8 +82,7 @@ namespace CommonLib
 					}
 				
 					m_socketAddr = addr;
-					break;;
-
+					break;
 				}
 
 			}

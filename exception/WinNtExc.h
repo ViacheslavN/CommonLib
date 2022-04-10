@@ -11,7 +11,7 @@ namespace CommonLib
 		CWinNtExc(const astr& err_msg, NTSTATUS ntStatus);
 
 		template<typename... Types>
-		CWinNtExc(NTSTATUS ntStatus, const astr& format, Types... args) : CExcBase(format, args...), m_ntStatus(ntStatus)
+		CWinNtExc(NTSTATUS ntStatus, const astr& format, Types&&... args) : CExcBase(format, std::forward<Types>(args)...), m_ntStatus(ntStatus)
 		{
 			CExcBase::AddMsg(GetErrorDesc(ntStatus));
 		}

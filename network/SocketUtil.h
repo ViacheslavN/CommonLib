@@ -16,8 +16,6 @@ namespace CommonLib
 			static bool IsBlockingError(int error);
 			static bool IsConnectAborted(int error);
 
-		};
-
-	
+		};	
 	}
 }

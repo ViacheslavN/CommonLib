@@ -10,7 +10,7 @@ namespace CommonLib
  		CWinSockExc(const astr& err_msg, int err = WSAGetLastError());
 
 		template<typename... Types>
-		CWinSockExc(HRESULT err, const astr& format, Types... args) : CExcBase(format, args...), m_err(err)
+		CWinSockExc(HRESULT err, const astr& format, Types&&... args) : CExcBase(format, std::forward<Types>(args)...), m_err(err)
 		{
 			CExcBase::AddMsg(GetErrorDesc(err));
 		}

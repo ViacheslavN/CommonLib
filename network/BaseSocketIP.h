@@ -62,9 +62,6 @@ namespace CommonLib
 				void Ioctl(long cmd, unsigned long* arg);
 				void Setsockopt(int level,int optname, const char*  optval, int optlen);
 
-
-
-
 				void SetSocketBlockMode(bool block);
 				void SetKeepAlive(bool enable, unsigned long time, unsigned long interval);
 				void SetNoDelay(bool enable);
@@ -73,7 +70,6 @@ namespace CommonLib
 				void Recv(byte_t* data, size_t count, long timeout = 0);
 				bool SendNotBlocking(const byte_t* data, size_t count, size_t& sent);
 				bool RecvNotBlocking(byte_t* data, size_t count, size_t& recvdata);
-
 
 #ifdef _WIN32
 				void SelecEvent(HANDLE hEvent, long networkEvents);

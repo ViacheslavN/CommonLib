@@ -16,7 +16,6 @@ namespace CommonLib
 			virtual ~CAcceptedSocket();
 			const astr GetClientAddr() const;
 
-
 		private:
 			astr m_connectedAddr;
 

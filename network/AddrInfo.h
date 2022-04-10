@@ -14,7 +14,6 @@ namespace CommonLib
 		private:
 			addrinfo* m_addrinfo;
 		};
-
 		
 	}
 }

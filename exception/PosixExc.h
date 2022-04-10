@@ -12,7 +12,7 @@ namespace CommonLib
 
 
 		template<typename... Types>
-		CPosixExc(int err_code, const astr& format, Types... args) : CExcBase(format, args...), m_errCode(err_code)
+		CPosixExc(int err_code, const astr& format, Types&&... args) : CExcBase(format, std::forward<Types>(args)...), m_errCode(err_code)
 		{
 			CExcBase::AddMsg(GetErrorMessageA(m_errCode));
 		}

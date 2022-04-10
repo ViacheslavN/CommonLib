@@ -20,8 +20,6 @@ namespace CommonLib
 			virtual std::streamsize Read(byte_t* dataPtr, size_t dataSize);
 			virtual std::streamsize WriteNotBlocking(const byte_t* dataPtr, size_t dataSize);
 			virtual std::streamsize ReadNotBlocking(byte_t* dataPtr, size_t dataSize);
-
-
  
 			virtual std::streamsize Read(IMemoryStream *pStream);
 			virtual std::streamsize ReadNotBlocking(IMemoryStream *pStream);
