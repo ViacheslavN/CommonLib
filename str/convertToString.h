@@ -85,7 +85,7 @@ namespace CommonLib
 			return WStrDouble(val);
 		}
 
-
+		static astr AStrBool(bool val);
 		static astr AStrInt8(int8_t val);
 		static astr AStrUint8(uint8_t val);
 		static astr AStrInt16(int16_t val);
@@ -117,6 +117,11 @@ namespace CommonLib
 		static astr AStrFrom(const astr& val)
 		{
 			return val;
+		}
+
+		static astr AStrFrom(bool val)
+		{
+			return AStrBool(val);
 		}
 
 		static  astr AStrFrom(const int8_t& val)
@@ -180,6 +185,17 @@ namespace CommonLib
 			return AStrDouble(val);
 		}
 
+		static bool AStr2Bool(const astr& val);
+		static int8_t AStr2Int8(const astr& val);
+		static uint8_t AStr2Uint8(const astr& val);
+		static int16_t AStr2Int16(const astr& val);
+		static uint16_t AStr2Uint16(const astr& val);
+		static int32_t AStr2Int32(const astr& val);
+		static uint32_t AStr2Uint32(const astr& val);
+		static int64_t AStr2Int64(const astr& val);
+		static uint64_t AStr2Uint64(const astr& val);
+		static float AStr2Float(const astr& val);
+		static double AStr2Double(const astr& val);
 	};
 
 }

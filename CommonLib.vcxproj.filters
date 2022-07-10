@@ -112,6 +112,9 @@
     <Filter Include="crypto\openssllib">
       <UniqueIdentifier>{5b2524ed-d183-4ba3-9cb3-3120f7566226}</UniqueIdentifier>
     </Filter>
+    <Filter Include="synch\WaitForGraph">
+      <UniqueIdentifier>{90357fee-3385-48d7-919e-8bdf0c305a8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -473,6 +476,9 @@
     </ClInclude>
     <ClInclude Include="sqlitelib\sqlite\SqliteApi.h">
       <Filter>sqlitelib\sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="synch\WaitForGraph\SyncObject.h">
+      <Filter>synch\WaitForGraph</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

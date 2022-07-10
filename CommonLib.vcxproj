@@ -434,6 +434,7 @@
     <ClInclude Include="synch\PosixThread.h" />
     <ClInclude Include="synch\SyncQueue.h" />
     <ClInclude Include="synch\thread.h" />
+    <ClInclude Include="synch\WaitForGraph\SyncObject.h" />
     <ClInclude Include="synch\WinThread.h" />
     <ClInclude Include="system\DynamicLib.h" />
     <ClInclude Include="system\win\DynamicLibWin.h" />

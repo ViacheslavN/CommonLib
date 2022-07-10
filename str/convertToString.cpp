@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "convertToString.h"
 #include "StringEncoding.h"
+#include "../exception/exc_base.h"
+#include <string.h>
 
 namespace CommonLib
 {
@@ -93,7 +95,10 @@ namespace CommonLib
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+	astr str_utils::AStrBool(bool val)
+	{
+		return val ? "1" : "0";
+	}
 
 	astr str_utils::AStrInt8(int8_t val)
 	{
@@ -254,5 +259,117 @@ namespace CommonLib
 	astr str_utils::AStrFrom(const wstr& val)
 	{
 		return StringEncoding::str_w2utf8_safe(val);
+	}
+
+	//================================================================================================
+
+
+	int StrCaseIcmp(const astr& str1, const astr& str2)
+	{
+#ifdef  _WIN32
+		return _stricmp(str1.c_str(), str2.c_str());
+#else
+		return strcasecmp(str1.c_str(), str2.c_str());
+#endif
+	}
+
+
+	bool str_utils::AStr2Bool(const astr& val)
+	{
+		if (StrCaseIcmp(val, "true"))
+			return true;
+		else if (StrCaseIcmp(val, "1"))
+			return true;
+		else if (StrCaseIcmp(val, "0"))
+			return false;
+		else if (StrCaseIcmp(val, "false"))
+			return false;
+	 
+		throw CExcBase("Failed convert str to bool, %1", val);
+	}
+	
+	int8_t str_utils::AStr2Int8(const astr& val)
+	{
+		return (int8_t)AStr2Int32(val);
+	}
+
+	uint8_t str_utils::AStr2Uint8(const astr& val)
+	{
+		return (int16_t)AStr2Uint32(val);
+	}
+
+	int16_t str_utils::AStr2Int16(const astr& val)
+	{
+		return (int16_t)AStr2Int32(val);
+	}
+
+	uint16_t str_utils::AStr2Uint16(const astr& val)
+	{
+		return (uint16_t)AStr2Uint32(val);
+	}
+
+	int32_t str_utils::AStr2Int32(const astr& val)
+	{
+		const char  *start = val.c_str();
+		char *stop = 0;
+
+		int32_t ret = strtol(val.c_str(), &stop, 10);
+		if (start == stop)
+			throw CExcBase("Failed convert str to int32, %1", val);
+
+		return ret;
+	}
+
+	uint32_t str_utils::AStr2Uint32(const astr& val)
+	{
+		const char  *start = val.c_str();
+		char *stop = 0;
+
+		uint32_t ret = strtoul(val.c_str(), &stop, 10);
+		if (start == stop)
+			throw CExcBase("Failed convert str to uint32_t, %1", val);
+
+		return ret;
+	}
+
+	int64_t str_utils::AStr2Int64(const astr& val)
+	{
+		const char  *start = val.c_str();
+		char *stop = 0;
+
+		int64_t ret = strtoll(val.c_str(), &stop, 10);
+		if (start == stop)
+			throw CExcBase("Failed convert str to int64_t, %1", val);
+
+		return ret;
+	}
+
+	uint64_t str_utils::AStr2Uint64(const astr& val)
+	{
+		const char  *start = val.c_str();
+		char *stop = 0;
+
+		uint64_t ret = strtoul(val.c_str(), &stop, 10);
+		if (start == stop)
+			throw CExcBase("Failed convert str to uint64_t, %1", val);
+
+		return ret;
+	}
+
+	float str_utils::AStr2Float(const astr& val)
+	{
+		return (float)AStr2Double(val);
+	}
+
+	double str_utils::AStr2Double(const astr& val)
+	{
+		const char  *start = val.c_str();
+		char *stop = 0;
+
+		double ret = strtod(val.c_str(), &stop);
+		if (start == stop)
+			throw CExcBase("Failed convert str to double, %1", val);
+
+		return ret;
 	}
 }
