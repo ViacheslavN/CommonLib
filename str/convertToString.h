@@ -196,6 +196,77 @@ namespace CommonLib
 		static uint64_t AStr2Uint64(const astr& val);
 		static float AStr2Float(const astr& val);
 		static double AStr2Double(const astr& val);
+
+		template<class T>
+		static T AStr2T(const astr& val);
+
+		template<>
+		static bool AStr2T<bool>(const astr& val)
+		{
+			return AStr2Bool(val);
+		}
+
+		template<>
+		static int8_t AStr2T<int8_t>(const astr& val)
+		{
+			return AStr2Int8(val);
+		}
+
+		template<>
+		static uint8_t AStr2T<uint8_t>(const astr& val)
+		{
+			return AStr2Uint8(val);
+		}
+
+		template<>
+		static int16_t AStr2T<int16_t>(const astr& val)
+		{
+			return AStr2Int16(val);
+		}
+
+		template<>
+		static int32_t AStr2T<int32_t>(const astr& val)
+		{
+			return AStr2Int32(val);
+		}
+
+		template<>
+		static uint32_t AStr2T<uint32_t>(const astr& val)
+		{
+			return AStr2Uint32(val);
+		}
+
+		template<>
+		static int64_t AStr2T<int64_t>(const astr& val)
+		{
+			return AStr2Int64(val);
+		}
+
+		template<>
+		static uint64_t AStr2T<uint64_t>(const astr& val)
+		{
+			return AStr2Uint64(val);
+		}
+
+		template<>
+		static float AStr2T<float>(const astr& val)
+		{
+			return AStr2Float(val);
+		}
+
+		template<>
+		static double AStr2T<double>(const astr& val)
+		{
+			return AStr2Double(val);
+		}
+
+		template<>
+		static astr AStr2T<astr>(const astr& val)
+		{
+			return val;
+		}
+
+
 	};
 
 }

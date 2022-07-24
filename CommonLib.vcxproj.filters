@@ -480,6 +480,9 @@
     <ClInclude Include="synch\WaitForGraph\SyncObject.h">
       <Filter>synch\WaitForGraph</Filter>
     </ClInclude>
+    <ClInclude Include="stream\FileStream.h">
+      <Filter>stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -781,6 +784,9 @@
     </ClCompile>
     <ClCompile Include="sqlitelib\sqlite\SqliteApi.cpp">
       <Filter>sqlitelib\sqlite</Filter>
+    </ClCompile>
+    <ClCompile Include="stream\FileStream.cpp">
+      <Filter>stream</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

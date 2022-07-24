@@ -418,6 +418,7 @@
     <ClInclude Include="sqlitelib\sqlite\Statement.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="stream\BitStream.h" />
+    <ClInclude Include="stream\FileStream.h" />
     <ClInclude Include="stream\FixedBitStream.h" />
     <ClInclude Include="stream\FixedMemoryStream.h" />
     <ClInclude Include="stream\io.h" />
@@ -734,6 +735,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseStatic|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="stream\BitStream.cpp" />
+    <ClCompile Include="stream\FileStream.cpp" />
     <ClCompile Include="stream\FixedBitStream.cpp" />
     <ClCompile Include="stream\FixedMemoryStream.cpp" />
     <ClCompile Include="stream\MemoryStream.cpp" />

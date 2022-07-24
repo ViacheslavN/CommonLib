@@ -295,7 +295,7 @@ namespace CommonLib
 
 	uint8_t str_utils::AStr2Uint8(const astr& val)
 	{
-		return (int16_t)AStr2Uint32(val);
+		return (uint8_t)AStr2Uint32(val);
 	}
 
 	int16_t str_utils::AStr2Int16(const astr& val)
