@@ -76,6 +76,8 @@ public:
 	virtual void Write(double value) = 0;
 	virtual void Write(const astr& str) = 0;
 	virtual void Write(const wstr& str) = 0;
+	virtual void Write(const char* pszStr) = 0;
+	virtual void Write(const wchar_t* pszStr) = 0;
 	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
 
 	virtual std::streamsize WriteSafe(const byte_t* pBuffer, size_t bufLen) = 0;
@@ -205,6 +207,8 @@ public:
 	virtual void Write(double value);
 	virtual void Write(const astr& str);
 	virtual void Write(const wstr& str);
+	virtual void Write(const char* pszStr);
+	virtual void Write(const wchar_t* pszStr);
 	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
 
 	virtual std::streamsize WriteSafe(const byte_t* pBuffer, size_t bufLen);

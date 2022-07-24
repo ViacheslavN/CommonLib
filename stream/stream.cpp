@@ -81,6 +81,16 @@ namespace CommonLib
 		Write((byte_t*)str.c_str(), sizeof(wchar_t) * length);
 	}
 
+	void IWriteStreamBase::Write(const char* pszStr)
+	{
+		Write((byte_t*)pszStr, (uint32_t)strlen(pszStr));
+	}
+
+	void IWriteStreamBase::Write(const wchar_t* pszStr)
+	{
+		Write((byte_t*)pszStr, 2 * (uint32_t)wcslen(pszStr));
+	}
+
 	void IWriteStreamBase::Write(IStream *pStream, int64_t nPos, int64_t nSize)
 	{
 		WriteStream(pStream, nPos, nSize);

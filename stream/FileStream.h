@@ -116,9 +116,6 @@ namespace CommonLib
 		virtual bool ReadBytesSafe(byte_t* dst, size_t size);
 		virtual bool ReadInverseSafe(byte_t* buffer, size_t size);
 		virtual bool ReadStreamSafe(IStream *pStream, bool bAttach);
-	private:
-		file::TFilePtr m_ptrFile;
-
 	};
 
 	typedef std::shared_ptr<CFileReadStream> CFileReadStreamPtr;

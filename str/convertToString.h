@@ -225,6 +225,12 @@ namespace CommonLib
 		}
 
 		template<>
+		static uint16_t AStr2T<uint16_t>(const astr& val)
+		{
+			return AStr2Uint16(val);
+		}
+
+		template<>
 		static int32_t AStr2T<int32_t>(const astr& val)
 		{
 			return AStr2Int32(val);
