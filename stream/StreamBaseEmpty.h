@@ -6,7 +6,7 @@ namespace CommonLib
 {
 
 	template<class I>
-	class TMemoryStreamBaseEmpty : public I, public IMemoryStream
+	class TMemoryStreamBaseEmpty : public I
 	{
 
 	private:

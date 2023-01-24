@@ -4,196 +4,212 @@
 namespace CommonLib
 {
 
-	std::streamsize  IWriteStreamBase::Write(const byte_t* pBuffer, size_t bufLen)
+	std::streamsize  IWriteStream::Write(const byte_t* pBuffer, size_t bufLen)
 	{
 		if (IStream::IsBigEndian())
-			WriteInverse(pBuffer, bufLen);
-		else
-			WriteBytes(pBuffer, bufLen);
+			return WriteInverse(pBuffer, bufLen);
+ 
+		return WriteBytes(pBuffer, bufLen);
 
-		return bufLen;
 	}
 
-	void IWriteStreamBase::Write(bool value)
+	void IWriteStream::Write(bool value)
 	{
 		WriteT<byte_t>(value ? (byte_t)1 : (byte_t)0);
 	}
 
-	void IWriteStreamBase::Write(byte_t value)
+	void IWriteStream::Write(byte_t value)
 	{
 		WriteT<byte_t>(value);
 	}
 
-	void IWriteStreamBase::Write(char value)
+	void IWriteStream::Write(char value)
 	{
 		WriteT<char>(value);
 	}
 
-	void IWriteStreamBase::Write(int16_t value)
+	void IWriteStream::Write(int16_t value)
 	{
 		WriteT<int16_t>(value);
 	}
 
-	void IWriteStreamBase::Write(uint16_t value)
+	void IWriteStream::Write(uint16_t value)
 	{
 		WriteT<uint16_t>(value);
 	}
 
-	void IWriteStreamBase::Write(uint32_t value)
+	void IWriteStream::Write(uint32_t value)
 	{
 		WriteT<uint32_t>(value);
 	}
 
-	void IWriteStreamBase::Write(int32_t value)
+	void IWriteStream::Write(int32_t value)
 	{
 		WriteT<int32_t>(value);
 	}
 
-	void IWriteStreamBase::Write(int64_t value)
+	void IWriteStream::Write(int64_t value)
 	{
 		WriteT<int64_t>(value);
 	}
-	void IWriteStreamBase::Write(uint64_t value)
+	void IWriteStream::Write(uint64_t value)
 	{
 		WriteT<uint64_t>(value);
 	}
 
-	void IWriteStreamBase::Write(float value)
+	void IWriteStream::Write(float value)
 	{
 		WriteT<float>(value);
 	}
 
-	void IWriteStreamBase::Write(double value)
+	void IWriteStream::Write(double value)
 	{
 		WriteT<double>(value);
 	}
 	 
-	void IWriteStreamBase::Write(const astr& str)
+	void IWriteStream::Write(const astr& str)
 	{
 		uint32_t length = (uint32_t)str.length();
 		Write(length);
 		Write((byte_t*)str.c_str(), length);
 	}
-	void IWriteStreamBase::Write(const wstr& str)
+	void IWriteStream::Write(const wstr& str)
 	{
 		uint32_t length = (uint32_t)str.length();
 		Write(length);
 		Write((byte_t*)str.c_str(), sizeof(wchar_t) * length);
 	}
 
-	void IWriteStreamBase::Write(const char* pszStr)
+	void IWriteStream::Write(const char* pszStr)
 	{
 		Write((byte_t*)pszStr, (uint32_t)strlen(pszStr));
 	}
 
-	void IWriteStreamBase::Write(const wchar_t* pszStr)
+	void IWriteStream::Write(const wchar_t* pszStr)
 	{
 		Write((byte_t*)pszStr, 2 * (uint32_t)wcslen(pszStr));
 	}
 
-	void IWriteStreamBase::Write(IStream *pStream, int64_t nPos, int64_t nSize)
+	std::streamsize IWriteStream::WriteDataSafe(const byte_t* pBuffer, size_t bufLen)
 	{
-		WriteStream(pStream, nPos, nSize);
-	}
+ 
+		try
+		{
+			if (IStream::IsBigEndian())
+				return WriteInverse(pBuffer, bufLen);
 
+			return	WriteBytes(pBuffer, bufLen);
 
-	std::streamsize IWriteStreamBase::WriteSafe(const byte_t* pBuffer, size_t bufLen)
-	{
-		if (!IsEnoughSpace(bufLen))
+		}
+ 		catch (...)
+		{
 			return 0;
-
-		if (IStream::IsBigEndian())
-			WriteInverse(pBuffer, bufLen);
-		else
-			WriteBytes(pBuffer, bufLen);
-
-		return bufLen;
+		}		
 	}
 
-	bool IWriteStreamBase::WriteSafe(bool value)
+	bool  IWriteStream::WriteSafe(const byte_t* pBuffer, size_t bufLen)
+	{
+		return WriteDataSafe(pBuffer, bufLen) != 0;
+	}
+
+	bool IWriteStream::WriteSafe(bool value)
 	{
 		return WriteTSafe<bool>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(uint8_t value)
+	bool IWriteStream::WriteSafe(uint8_t value)
 	{
 		return WriteTSafe<uint8_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(char value)
+	bool IWriteStream::WriteSafe(char value)
 	{
 		return WriteTSafe<char>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(int16_t value)
+	bool IWriteStream::WriteSafe(int16_t value)
 	{
 		return WriteTSafe<int16_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(uint16_t value)
+	bool IWriteStream::WriteSafe(uint16_t value)
 	{
 		return WriteTSafe<uint16_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(uint32_t value)
+	bool IWriteStream::WriteSafe(uint32_t value)
 	{
 		return WriteTSafe<uint32_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(int32_t value)
+	bool IWriteStream::WriteSafe(int32_t value)
 	{
 		return WriteTSafe<int32_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(int64_t value)
+	bool IWriteStream::WriteSafe(int64_t value)
 	{
 		return WriteTSafe<int64_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(uint64_t value)
+	bool IWriteStream::WriteSafe(uint64_t value)
 	{
 		return WriteTSafe<uint64_t>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(float value)
+	bool IWriteStream::WriteSafe(float value)
 	{
 		return WriteTSafe<float>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(double value)
+	bool IWriteStream::WriteSafe(double value)
 	{
 		return WriteTSafe<double>(value);
 	}
 
-	bool IWriteStreamBase::WriteSafe(const astr& str)
+	bool IWriteStream::WriteSafe(const astr& str)
 	{
 		uint32_t length = (uint32_t)str.length();
-
-		if (!IsEnoughSpace(sizeof(uint32_t) + length))
+		
+		if (WriteTSafe(length))
 			return false;
 
-		Write(length);
-		Write((byte_t*)str.c_str(), length);
+		return WriteSafe((byte_t*)str.c_str(), length) != 0;
 
-		return true;
 	}
 
-	bool IWriteStreamBase::WriteSafe(const wstr& str)
+	bool IWriteStream::WriteSafe(const wstr& str)
 	{
 		uint32_t length = (uint32_t)str.length();
 
-		if (!IsEnoughSpace(sizeof(uint32_t) + (sizeof(wchar_t) *length)))
-			return false;
+	
+		if (WriteTSafe(length))
+		 return false;
 
-		Write(length);
-		Write((byte_t*)str.c_str(), sizeof(wchar_t) * length);
+		return WriteSafe((byte_t*)str.c_str(), sizeof(wchar_t) * length) != 0;
+	}
 
-		return true;
+	//////////////////////////////////////////////////////////////////////////////////////////
+
+	std::streamsize IMemoryWriteStream::WriteDataSafe(const byte_t* pBuffer, size_t bufLen)
+	{
+
+		try
+		{
+			if (!IsEnoughSpace(bufLen))
+				return 0;
+
+			return IWriteStream::WriteDataSafe(pBuffer, bufLen);
+		}
+		catch (...)
+		{
+			return 0;
+		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////
 
-	std::streamsize IReadStreamBase::Read(byte_t* pBuffer, size_t bufLen)
+	std::streamsize IReadStream::Read(byte_t* pBuffer, size_t bufLen)
 	{
 		if (IStream::IsBigEndian())
 			ReadInverse(pBuffer, bufLen);
@@ -203,64 +219,64 @@ namespace CommonLib
 		return bufLen;
 	}
 
-	void IReadStreamBase::Read(bool& value)
+	void IReadStream::Read(bool& value)
 	{
 		byte_t ret;
 		ReadT<byte_t>(ret);
 		value = (ret == 1) ? true : false;
 	}
 
-	void IReadStreamBase::Read(char& value)
+	void IReadStream::Read(char& value)
 	{
 		ReadT<char>(value);
 	}
 
-	void IReadStreamBase::Read(byte_t& value)
+	void IReadStream::Read(byte_t& value)
 	{
 		ReadT<byte_t>(value);
 	}
 
-	void IReadStreamBase::Read(int16_t& value)
+	void IReadStream::Read(int16_t& value)
 	{
 		ReadT<int16_t>(value);
 	}
 
-	void IReadStreamBase::Read(uint16_t& value)
+	void IReadStream::Read(uint16_t& value)
 	{
 		ReadT<uint16_t>(value);
 	}
 
-	void IReadStreamBase::Read(uint32_t& value)
+	void IReadStream::Read(uint32_t& value)
 	{
 		ReadT<uint32_t>(value);
 	}
 
-	void IReadStreamBase::Read(int32_t& value)
+	void IReadStream::Read(int32_t& value)
 	{
 		ReadT<int32_t>(value);
 	}
 
-	void IReadStreamBase::Read(int64_t& value)
+	void IReadStream::Read(int64_t& value)
 	{
 		ReadT<int64_t>(value);
 	}
 
-	void IReadStreamBase::Read(uint64_t& value)
+	void IReadStream::Read(uint64_t& value)
 	{
 		ReadT<uint64_t>(value);
 	}
 
-	void IReadStreamBase::Read(float& value)
+	void IReadStream::Read(float& value)
 	{
 		ReadT<float>(value);
 	}
 
-	void IReadStreamBase::Read(double& value)
+	void IReadStream::Read(double& value)
 	{
 		ReadT<double>(value);
 	}
 
-	void IReadStreamBase::Read(astr& str)
+	void IReadStream::Read(astr& str)
 	{
 		uint32_t nLen = ReadIntu32();
 		if (nLen != 0)
@@ -270,7 +286,7 @@ namespace CommonLib
 		}
 	}
 
-	void IReadStreamBase::Read(wstr& str)
+	void IReadStream::Read(wstr& str)
 	{
 		uint32_t nLen = ReadIntu32();
 		if (nLen != 0)
@@ -280,76 +296,77 @@ namespace CommonLib
 		}
 	}
 
-	void IReadStreamBase::Read(IStream *pStream, bool bAttach)
+	std::streamsize IReadStream::ReadSafe(byte_t* pBuffer, uint32_t bufLen)
 	{
-		ReadStream(pStream, bAttach);
+		try
+		{
+			if (IStream::IsBigEndian())
+				return ReadInverse((byte_t*)&pBuffer, bufLen);
+	
+			return ReadBytes((byte_t*)&pBuffer, bufLen);
+		}
+		catch (...)
+		{
+			return 0;
+		}
 	}
 
-
-	bool IReadStreamBase::ReadSafe(byte_t* pBuffer, uint32_t bufLen)
-	{
-		if (IStream::IsBigEndian())
-			return ReadInverseSafe((byte_t*)&pBuffer, bufLen);
-		else
-			return ReadBytesSafe((byte_t*)&pBuffer, bufLen);
-	}
-
-	bool IReadStreamBase::ReadSafe(bool& value)
+	bool IReadStream::ReadSafe(bool& value)
 	{
 		return SafeReadT<bool>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(char& value)
+	bool IReadStream::ReadSafe(char& value)
 	{
 		return SafeReadT<char>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(byte_t& value)
+	bool IReadStream::ReadSafe(byte_t& value)
 	{
 		return SafeReadT<byte_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(int16_t& value)
+	bool IReadStream::ReadSafe(int16_t& value)
 	{
 		return SafeReadT<int16_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(uint16_t& value)
+	bool IReadStream::ReadSafe(uint16_t& value)
 	{
 		return SafeReadT<uint16_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(uint32_t& value)
+	bool IReadStream::ReadSafe(uint32_t& value)
 	{
 		return SafeReadT<uint32_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(int32_t& value)
+	bool IReadStream::ReadSafe(int32_t& value)
 	{
 		return SafeReadT<int32_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(int64_t& value)
+	bool IReadStream::ReadSafe(int64_t& value)
 	{
 		return SafeReadT<int64_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(uint64_t& value)
+	bool IReadStream::ReadSafe(uint64_t& value)
 	{
 		return SafeReadT<uint64_t>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(float& value)
+	bool IReadStream::ReadSafe(float& value)
 	{
 		return SafeReadT<float>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(double& value)
+	bool IReadStream::ReadSafe(double& value)
 	{
 		return SafeReadT<double>(value);
 	}
 
-	bool IReadStreamBase::ReadSafe(astr& str)
+	bool IReadStream::ReadSafe(astr& str)
 	{
 		uint32_t nLen = 0;
 		if (!ReadSafe(nLen))
@@ -363,7 +380,7 @@ namespace CommonLib
 		return ReadSafe((byte_t*)&str[0], sizeof(char)*nLen);
 	}
 
-	bool IReadStreamBase::ReadSafe(wstr& str)
+	bool IReadStream::ReadSafe(wstr& str)
 	{
 		uint32_t nLen = 0;
 		if (!ReadSafe(nLen))
@@ -377,73 +394,67 @@ namespace CommonLib
 		return ReadSafe((byte_t*)&str[0], sizeof(wchar_t)*nLen);
 	}
 
-	bool IReadStreamBase::ReadSafe(IStream *pStream, bool bAttach)
-	{
-		return ReadStreamSafe(pStream, bAttach);
-	}
-
-
-	bool IReadStreamBase::ReadBool()
+	bool IReadStream::ReadBool()
 	{
 		return (ReadTR<byte_t>() == 1) ? true : false;
 	}
 
-	byte_t IReadStreamBase::ReadByte()
+	byte_t IReadStream::ReadByte()
 	{
 		return ReadTR<byte_t>();
 	}
 
-	char IReadStreamBase::ReadChar()
+	char IReadStream::ReadChar()
 	{
 		return ReadTR<char>();
 	}
 
-	int16_t IReadStreamBase::Readint16()
+	int16_t IReadStream::Readint16()
 	{
 		return ReadTR<int16_t>();
 	}
 
-	uint16_t IReadStreamBase::Readintu16()
+	uint16_t IReadStream::Readintu16()
 	{
 		return ReadTR<uint16_t>();
 	}
 
-	uint32_t IReadStreamBase::ReadDword()
+	uint32_t IReadStream::ReadDword()
 	{
 		return ReadTR<uint32_t>();
 	}
 
-	int32_t  IReadStreamBase::ReadInt32()
+	int32_t  IReadStream::ReadInt32()
 	{
 		return ReadTR<int32_t>();
 	}
 
-	uint32_t IReadStreamBase::ReadIntu32()
+	uint32_t IReadStream::ReadIntu32()
 	{
 		return ReadTR<uint32_t>();
 	}
 
-	int64_t IReadStreamBase::ReadInt64()
+	int64_t IReadStream::ReadInt64()
 	{
 		return ReadTR<int64_t>();
 	}
 
-	uint64_t IReadStreamBase::ReadIntu64()
+	uint64_t IReadStream::ReadIntu64()
 	{
 		return ReadTR<uint64_t>();
 	}
 
-	float  IReadStreamBase::ReadFloat()
+	float  IReadStream::ReadFloat()
 	{
 		return ReadTR<float>();
 	}
 
-	double IReadStreamBase::ReadDouble()
+	double IReadStream::ReadDouble()
 	{
 		return ReadTR<double>();
 	}
 
-	astr IReadStreamBase::ReadAstr()
+	astr IReadStream::ReadAstr()
 	{
 		astr str;
 		Read(str);
@@ -451,12 +462,30 @@ namespace CommonLib
 		return str;
 	}
 
-	wstr IReadStreamBase::ReadWstr()
+	wstr IReadStream::ReadWstr()
 	{
 		wstr str;
 		Read(str);
 
 		return str;
+	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	std::streamsize IMemoryReadStream::ReadSafe( byte_t* pBuffer, size_t bufLen)
+	{
+
+		try
+		{
+			if (!IsEnoughSpace(bufLen))
+				return 0;
+
+			return IReadStream::ReadSafe(pBuffer, bufLen);
+		}
+		catch (...)
+		{
+			return 0;
+		}
 	}
 
 }

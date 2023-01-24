@@ -21,15 +21,6 @@ typedef std::shared_ptr<IStream> TStreamPtr;
 class IStream
 {
 public:
-	virtual size_t Size() const = 0;
-	virtual void Seek(size_t position, enSeekOffset offset) = 0;
-	virtual bool SeekSafe(size_t position, enSeekOffset offset) = 0;
-	virtual size_t Pos() const = 0;
-	virtual void Reset() = 0;
-	virtual void Close() = 0;
-	virtual void Attach(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeekPos = false) = 0;
-	virtual TStreamPtr Deattach() = 0;
-
 	static bool IsBigEndian()
 	{
 		static const uint16_t word = 0xFF00;
@@ -37,6 +28,7 @@ public:
 
 	}
 };
+
 
 
 class IMemoryStream 
@@ -52,148 +44,40 @@ public:
 
 	virtual void Create(size_t nSize) = 0;
 	virtual void Resize(size_t nSize) = 0;
+
+	virtual size_t Size() const = 0;
+	virtual void Seek(size_t position, enSeekOffset offset) = 0;
+	virtual bool SeekSafe(size_t position, enSeekOffset offset) = 0;
+	virtual size_t Pos() const = 0;
+	virtual void Reset() = 0;
+	virtual bool IsEnoughSpace(size_t size) const = 0;
 };
 
 
-class IWriteStream : public IStream, public io::IWrite
+class IWriteStream : public io::IWrite
 {
 public:
 	
 	IWriteStream(){}
 	virtual ~IWriteStream() {}
 
-	virtual std::streamsize Write(const byte_t* pBuffer, size_t bufLen) = 0;
-	virtual void Write(bool value) = 0;
-	virtual void Write(uint8_t value) = 0;
-	virtual void Write(char value) = 0;
-	virtual void Write(int16_t value) = 0;
-	virtual void Write(uint16_t value) = 0;
-	virtual void Write(uint32_t value) = 0;
-	virtual void Write(int32_t value) = 0;
-	virtual void Write(int64_t value) = 0;
-	virtual void Write(uint64_t value) = 0;
-	virtual void Write(float value) = 0;
-	virtual void Write(double value) = 0;
-	virtual void Write(const astr& str) = 0;
-	virtual void Write(const wstr& str) = 0;
-	virtual void Write(const char* pszStr) = 0;
-	virtual void Write(const wchar_t* pszStr) = 0;
-	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
-
-	virtual std::streamsize WriteSafe(const byte_t* pBuffer, size_t bufLen) = 0;
-	virtual bool WriteSafe(bool value) = 0;
-	virtual bool WriteSafe(uint8_t value) = 0;
-	virtual bool WriteSafe(char value) = 0;
-	virtual bool WriteSafe(int16_t value) = 0;
-	virtual bool WriteSafe(uint16_t value) = 0;
-	virtual bool WriteSafe(uint32_t value) = 0;
-	virtual bool WriteSafe(int32_t value) = 0;
-	virtual bool WriteSafe(int64_t value) = 0;
-	virtual bool WriteSafe(uint64_t value) = 0;
-	virtual bool WriteSafe(float value) = 0;
-	virtual bool WriteSafe(double value) = 0;
-	virtual bool WriteSafe(const astr& str) = 0;
-	virtual bool WriteSafe(const wstr& str) = 0;
-};
-
-typedef std::shared_ptr<IWriteStream> WriteStreamPtr;
-
-
-class IReadStream : public IStream, public io::IRead
-{
-public:
-
-	virtual ~IReadStream() {}
-	IReadStream() {}
-	virtual std::streamsize Read(byte_t* pBuffer, size_t bufLen) = 0;
-	virtual void Read(bool& value) = 0;
-	virtual void Read(char& value) = 0;
-	virtual void Read(byte_t& value) = 0;
-	virtual void Read(int16_t& value) = 0;
-	virtual void Read(uint16_t& value) = 0;
-	virtual void Read(uint32_t& value) = 0;
-	virtual void Read(int32_t& value) = 0;
-	virtual void Read(int64_t& value) = 0;
-	virtual void Read(uint64_t& value) = 0;
-	virtual void Read(float& value) = 0;
-	virtual void Read(double& value) = 0;
-	virtual void Read(astr& str) = 0;
-	virtual void Read(wstr& str) = 0;
-	virtual void Read(IStream *pStream, bool bAttach = false) = 0;
-
-	virtual bool ReadSafe(byte_t* pBuffer, uint32_t bufLen) = 0;
-	virtual bool ReadSafe(bool& value) = 0;
-	virtual bool ReadSafe(char& value) = 0;
-	virtual bool ReadSafe(byte_t& value) = 0;
-	virtual bool ReadSafe(int16_t& value) = 0;
-	virtual bool ReadSafe(uint16_t& value) = 0;
-	virtual bool ReadSafe(uint32_t& value) = 0;
-	virtual bool ReadSafe(int32_t& value) = 0;
-	virtual bool ReadSafe(int64_t& value) = 0;
-	virtual bool ReadSafe(uint64_t& value) = 0;
-	virtual bool ReadSafe(float& value) = 0;
-	virtual bool ReadSafe(double& value) = 0;
-	virtual bool ReadSafe(astr& str) = 0;
-	virtual bool ReadSafe(wstr& str) = 0;
-	virtual bool ReadSafe(IStream *pStream, bool bAttach = false) = 0;
-
-	virtual bool         ReadBool() = 0;
-	virtual byte_t       ReadByte() = 0;
-	virtual char         ReadChar() = 0;
-	virtual int16_t      Readint16() = 0;
-	virtual uint16_t     Readintu16() = 0;
-	virtual uint32_t     ReadDword() = 0;
-	virtual int32_t      ReadInt32() = 0;
-	virtual uint32_t     ReadIntu32() = 0;
-	virtual int64_t      ReadInt64() = 0;
-	virtual uint64_t     ReadIntu64() = 0;
-	virtual float        ReadFloat() = 0;
-	virtual double       ReadDouble() = 0;
-	virtual astr         ReadAstr() = 0;
-	virtual wstr	     ReadWstr() = 0;
-
-};
-
-typedef std::shared_ptr<IReadStream> ReadStreamPtr;
-
-class IWriteStreamBase : public IWriteStream
-{
-public:
-	IWriteStreamBase() {}
-	virtual ~IWriteStreamBase() {}
-
+	virtual std::streamsize WriteBytes(const byte_t* buffer, size_t size) = 0;
+	virtual std::streamsize WriteInverse(const byte_t* buffer, size_t size) = 0;
+	virtual std::streamsize WriteDataSafe(const byte_t* buffer, size_t size);
 
 
 	template <typename T>
 	void WriteT(const T& value)
 	{
-		if (IStream::IsBigEndian())
-			WriteInverse((byte_t*)&value, sizeof(T));
-		else
-			WriteBytes((byte_t*)&value, sizeof(T));
+		Write((byte_t*)&value, sizeof(T));
 	}
 
 	template <typename T>
 	bool WriteTSafe(const T& value)
-	{
-		if (!IsEnoughSpace(sizeof(T)))
-			return false;
-
-		if (IStream::IsBigEndian())
-			WriteInverse((byte_t*)&value, sizeof(T));
-		else
-			WriteBytes((byte_t*)&value, sizeof(T));
-
-		return true;
+	{	 
+		return WriteDataSafe((byte_t*)&value, sizeof(T)) != 0;
 	}
 
-
-	virtual void WriteBytes(const byte_t* buffer, size_t size) = 0;
-	virtual void WriteInverse(const byte_t* buffer, size_t size) = 0;
-	virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1) = 0;
-	virtual bool IsEnoughSpace(size_t size) const = 0;
-
-	virtual std::streamsize Write(const byte_t* pBuffer, size_t bufLen);
 	virtual void Write(bool value);
 	virtual void Write(uint8_t value);
 	virtual void Write(char value);
@@ -209,9 +93,9 @@ public:
 	virtual void Write(const wstr& str);
 	virtual void Write(const char* pszStr);
 	virtual void Write(const wchar_t* pszStr);
-	virtual void Write(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
+	virtual std::streamsize Write(const byte_t* dataPtr, size_t dataSize);
 
-	virtual std::streamsize WriteSafe(const byte_t* pBuffer, size_t bufLen);
+	virtual bool WriteSafe(const byte_t* pBuffer, size_t bufLen);
 	virtual bool WriteSafe(bool value);
 	virtual bool WriteSafe(uint8_t value);
 	virtual bool WriteSafe(char value);
@@ -227,8 +111,118 @@ public:
 	virtual bool WriteSafe(const wstr& str);
 };
 
+typedef std::shared_ptr<IWriteStream> WriteStreamPtr;
+
+
+class IReadStream : public io::IRead
+{
+public:
+
+	virtual ~IReadStream() {}
+	IReadStream() {}
+
+	template <typename T>
+	void ReadT(T& val)
+	{
+		Read((byte_t*)&val, sizeof(T));
+	}
+
+
+	template <typename T>
+	T ReadTR()
+	{
+		T ret;
+		Read((byte_t*)&ret, sizeof(T));
+
+		return ret;
+	}
+
+
+	template <typename T>
+	bool SafeReadT(T& val)
+	{		 
+		return ReadSafe((byte_t*)&val, sizeof(T)) != 0;
+	}
+
+	virtual std::streamsize ReadBytes(byte_t* dst, size_t size) = 0;
+	virtual std::streamsize ReadInverse(byte_t* buffer, size_t size) = 0;
+
+	 
+
+
+	virtual std::streamsize Read(byte_t* pBuffer, size_t bufLen);
+	virtual void Read(bool& value);
+	virtual void Read(char& value);
+	virtual void Read(byte_t& value);
+	virtual void Read(int16_t& value);
+	virtual void Read(uint16_t& value);
+	virtual void Read(uint32_t& value);
+	virtual void Read(int32_t& value);
+	virtual void Read(int64_t& value);
+	virtual void Read(uint64_t& value);
+	virtual void Read(float& value);
+	virtual void Read(double& value);
+	virtual void Read(astr& str);
+	virtual void Read(wstr& str);
+
+	virtual std::streamsize ReadSafe(byte_t* pBuffer, uint32_t bufLen);
+	virtual bool ReadSafe(bool& value);
+	virtual bool ReadSafe(char& value);
+	virtual bool ReadSafe(byte_t& value);
+	virtual bool ReadSafe(int16_t& value);
+	virtual bool ReadSafe(uint16_t& value);
+	virtual bool ReadSafe(uint32_t& value);
+	virtual bool ReadSafe(int32_t& value);
+	virtual bool ReadSafe(int64_t& value);
+	virtual bool ReadSafe(uint64_t& value);
+	virtual bool ReadSafe(float& value);
+	virtual bool ReadSafe(double& value);
+	virtual bool ReadSafe(astr& str);
+	virtual bool ReadSafe(wstr& str);
+
+	virtual bool         ReadBool();
+	virtual byte_t       ReadByte();
+	virtual char         ReadChar();
+	virtual int16_t      Readint16();
+	virtual uint16_t     Readintu16();
+	virtual uint32_t     ReadDword();
+	virtual int32_t      ReadInt32();
+	virtual uint32_t     ReadIntu32();
+	virtual int64_t      ReadInt64();
+	virtual uint64_t     ReadIntu64();
+	virtual float        ReadFloat();
+	virtual double       ReadDouble();
+	virtual astr         ReadAstr();
+	virtual wstr	     ReadWstr();
+
+};
+
+typedef std::shared_ptr<IReadStream> ReadStreamPtr;
+
+class IMemoryWriteStream : public IWriteStream, public IMemoryStream
+{
+public:
+
+	virtual std::streamsize WriteDataSafe(const byte_t* pBuffer, size_t bufLen);
+
+	IMemoryWriteStream() {}
+	virtual ~IMemoryWriteStream() {}
+};
+
+
+class IMemoryReadStream : public IReadStream, public IMemoryStream
+{
+public:
+	virtual std::streamsize ReadSafe(byte_t* pBuffer, size_t bufLen);
+
+	IMemoryReadStream() {}
+	virtual ~IMemoryReadStream() {}
+};
+
+
+
 template<class I>
-class TMemoryStreamBase : public I, public IMemoryStream
+class TMemoryStreamBase : public I
 {
 
 private:
@@ -321,48 +315,7 @@ public:
 	{
 		m_nPos = 0;
 	}
-
-	virtual void Attach(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeekPos = false)
-	{
-		try
-		{
-			IMemoryStream *pMemStream = dynamic_cast<IMemoryStream *>(pStream.get());
-			if (!pMemStream)
-				throw CExcBase(L"IStream isn't memstream");
-
-			size_t _nPos = (nPos != -1 ? nPos : 0);
-			size_t _nSize = (nSize != -1 ? nSize : pStream->Size());
-
-			if ((pStream->Size() - _nPos) < _nSize)
-			{
-				pMemStream->Resize(pStream->Size() + _nSize);
-			}
-
-			AttachBuffer(pMemStream->Buffer() + _nPos, _nSize, false);
-
-			m_pAttachStream = pStream;
-			if (bSeekPos)
-				pStream->Seek(_nPos + _nSize, CommonLib::soFromBegin);
-		}
-		catch (CExcBase& exc)
-		{
-			exc.AddMsg(L"Can't attach to IStream");
-			throw;
-		}		
-	}
-	 
-	virtual TStreamPtr Deattach()
-	{
-		if (!m_pAttachStream.get())
-			return TStreamPtr();
-
-		DeattachBuffer();
-		TStreamPtr pTmp = m_pAttachStream;
-		m_pAttachStream = TStreamPtr();
-		return pTmp;
-
-
-	}
+	
 	virtual void Close()
 	{
 		try
@@ -486,107 +439,5 @@ protected:
 	TStreamPtr m_pAttachStream;
  };
 
-
-
-
- class IReadStreamBase : public IReadStream
- {
- public:
-
-
-	 IReadStreamBase() {}
-	 virtual ~IReadStreamBase() {}
-
-	 template <typename T>
-	 void ReadT(T& val)
-	 {
-		 if (IStream::IsBigEndian())
-			 ReadInverse((byte_t*)&val, sizeof(T));
-		 else
-			 ReadBytes((byte_t*)&val, sizeof(T));
-	 }
-
-
-	 template <typename T>
-	 T ReadTR()
-	 {
-		 T ret;
-		 if (IStream::IsBigEndian())
-			 ReadInverse((byte_t*)&ret, sizeof(T));
-		 else
-			 ReadBytes((byte_t*)&ret, sizeof(T));
-
-		 return ret;
-	 }
-
-
-	 template <typename T>
-	 bool SafeReadT(T& val)
-	 {
-		 if (IStream::IsBigEndian())
-			 return ReadInverseSafe((byte_t*)&val, sizeof(T)); 
-		 else
-			 return ReadBytesSafe((byte_t*)&val, sizeof(T));
-	 }
-
-	 virtual void ReadBytes(byte_t* dst, size_t size) = 0;
-	 virtual void ReadInverse(byte_t* buffer, size_t size) = 0;
-	 virtual void ReadStream(IStream *pStream, bool bAttach) = 0;
-
-
-	 virtual bool ReadBytesSafe(byte_t* dst, size_t size) = 0;
-	 virtual bool ReadInverseSafe(byte_t* buffer, size_t size) = 0;
-	 virtual bool ReadStreamSafe(IStream *pStream, bool bAttach) = 0;
-
-
-
-	 virtual std::streamsize Read(byte_t* pBuffer, size_t bufLen);
-	 virtual void Read(bool& value);
-	 virtual void Read(char& value);
-	 virtual void Read(byte_t& value) ;
-	 virtual void Read(int16_t& value);
-	 virtual void Read(uint16_t& value);
-	 virtual void Read(uint32_t& value);
-	 virtual void Read(int32_t& value);
-	 virtual void Read(int64_t& value) ;
-	 virtual void Read(uint64_t& value);
-	 virtual void Read(float& value) ;
-	 virtual void Read(double& value);
-	 virtual void Read(astr& str);
-	 virtual void Read(wstr& str);
-	 virtual void Read(IStream *pStream, bool bAttach = false);
-
-	 virtual bool ReadSafe(byte_t* pBuffer, uint32_t bufLen);
-	 virtual bool ReadSafe(bool& value);
-	 virtual bool ReadSafe(char& value);
-	 virtual bool ReadSafe(byte_t& value);
-	 virtual bool ReadSafe(int16_t& value);
-	 virtual bool ReadSafe(uint16_t& value);
-	 virtual bool ReadSafe(uint32_t& value);
-	 virtual bool ReadSafe(int32_t& value);
-	 virtual bool ReadSafe(int64_t& value);
-	 virtual bool ReadSafe(uint64_t& value);
-	 virtual bool ReadSafe(float& value);
-	 virtual bool ReadSafe(double& value);
-	 virtual bool ReadSafe(astr& str);
-	 virtual bool ReadSafe(wstr& str);
-	 virtual bool ReadSafe(IStream *pStream, bool bAttach = false);
-
-	 virtual bool         ReadBool();
-	 virtual byte_t       ReadByte();
-	 virtual char         ReadChar();
-	 virtual int16_t      Readint16();
-	 virtual uint16_t     Readintu16();
-	 virtual uint32_t     ReadDword();
-	 virtual int32_t      ReadInt32();
-	 virtual uint32_t     ReadIntu32();
-	 virtual int64_t      ReadInt64();
-	 virtual uint64_t     ReadIntu64();
-	 virtual float        ReadFloat();
-	 virtual double       ReadDouble();
-	 virtual astr         ReadAstr();
-	 virtual wstr	      ReadWstr();
- };
-
-
+ 
 }

@@ -50,16 +50,7 @@ namespace CommonLib
 		m_nCurrBit++;
 
 		return true;
-	}
-
-
-	void CFxBitWriteStream::Attach(TStreamPtr pStream, int32_t nPos, int32_t nSize, bool bSeek)
-	{
-		TBase::Attach(pStream, nPos, nSize, bSeek);
-
-		m_pBuffer[0] = 0;
-		m_nCurrBit = 0;
-	}
+	}	
 	
 	CFxBitReadStream::CFxBitReadStream( ) : TBase(IAllocPtr())
 	{

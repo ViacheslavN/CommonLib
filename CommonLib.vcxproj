@@ -425,6 +425,7 @@
     <ClInclude Include="stream\MemoryStream.h" />
     <ClInclude Include="stream\stream.h" />
     <ClInclude Include="stream\StreamBaseEmpty.h" />
+    <ClInclude Include="stream\StreamIO.h" />
     <ClInclude Include="stream\WriteBitStream.h" />
     <ClInclude Include="str\convertToString.h" />
     <ClInclude Include="str\multibyte.h" />
@@ -740,6 +741,7 @@
     <ClCompile Include="stream\FixedMemoryStream.cpp" />
     <ClCompile Include="stream\MemoryStream.cpp" />
     <ClCompile Include="stream\stream.cpp" />
+    <ClCompile Include="stream\StreamIO.cpp" />
     <ClCompile Include="stream\WriteBitStream.cpp" />
     <ClCompile Include="str\convertToString.cpp" />
     <ClCompile Include="str\multibyte.cpp" />

@@ -7,7 +7,7 @@ namespace CommonLib
 {
 	class IAlloc;
 
-	class CWriteMemoryStream : public TMemoryStreamBase<IWriteStreamBase>
+	class CWriteMemoryStream : public TMemoryStreamBase<IMemoryWriteStream>, public IStream
 	{
 	private:
 
@@ -17,12 +17,11 @@ namespace CommonLib
 		CWriteMemoryStream(std::shared_ptr<IAlloc> pAlloc = std::shared_ptr<IAlloc>());
 		~CWriteMemoryStream();
 
-		typedef TMemoryStreamBase<IWriteStreamBase> TBase;
+		typedef TMemoryStreamBase<IMemoryWriteStream> TBase;
 
 
-		virtual void WriteBytes(const byte_t* buffer, size_t size);
-		virtual void WriteInverse(const byte_t* buffer, size_t size);
-		virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
+		virtual std::streamsize WriteBytes(const byte_t* buffer, size_t size);
+		virtual std::streamsize WriteInverse(const byte_t* buffer, size_t size);
 		virtual void Resize(size_t nSize);
 		virtual bool IsEnoughSpace(size_t size) const { return true; }
 
@@ -31,7 +30,7 @@ namespace CommonLib
 	};
 
 
-	class CReadMemoryStream : public TMemoryStreamBase<IReadStreamBase>
+	class CReadMemoryStream : public TMemoryStreamBase<IMemoryReadStream>, public IStream
 	{
 
 	private:
@@ -42,18 +41,12 @@ namespace CommonLib
 		CReadMemoryStream();
 		~CReadMemoryStream();
 
-		typedef TMemoryStreamBase<IReadStreamBase> TBase;
+		typedef TMemoryStreamBase<IMemoryReadStream> TBase;
 
 
-		virtual void ReadBytes(byte_t* dst, size_t size);
-		virtual void ReadInverse(byte_t* buffer, size_t size);
-		virtual void ReadStream(IStream *pStream, bool bAttach);
-
-
-		virtual bool ReadBytesSafe(byte_t* dst, size_t size);
-		virtual bool ReadInverseSafe(byte_t* buffer, size_t size);
-		virtual bool ReadStreamSafe(IStream *pStream, bool bAttach);
-
+		virtual std::streamsize  ReadBytes(byte_t* dst, size_t size);
+		virtual std::streamsize  ReadInverse(byte_t* buffer, size_t size);
+		virtual bool IsEnoughSpace(size_t size) const { return true; }
 	};
 
 

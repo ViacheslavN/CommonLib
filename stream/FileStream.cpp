@@ -42,88 +42,25 @@ namespace CommonLib
 		TBase::Close();
 	}
 
-	void CFileReadStream::Attach(TStreamPtr pStream, int64_t nPos, int64_t nSize, bool bSeekPos)
-	{
-		TBase::Attach(pStream, nPos, nSize, bSeekPos);
-	}
 
-	TStreamPtr CFileReadStream::Deattach()
-	{
-		return TBase::Deattach();
-	}
-
-	void CFileReadStream::ReadBytes(byte_t* dst, size_t size)
+	std::streamsize CFileReadStream::ReadBytes(byte_t* dst, size_t size)
 	{
 		std::streamsize readSize = m_ptrFile->Read(dst, size);
 		if(readSize != size)
 			throw CExcBase("FileReadStream bytes to read %1, result %2", size, readSize);
+
+		return readSize;
 	}
 
-	void CFileReadStream::ReadInverse(byte_t* buffer, size_t size)
+	std::streamsize CFileReadStream::ReadInverse(byte_t* buffer, size_t size)
 	{
 		std::streamsize readSize = m_ptrFile->Read(buffer, size); //TO DO inverse
 		if (readSize != size)
 			throw CExcBase("FileReadStream bytes to read %1, result %2", size, readSize);
-	}
 
-	void CFileReadStream::ReadStream(IStream *pStream, bool bAttach)
-	{
-		if (IMemoryStream *pMemStream = dynamic_cast<IMemoryStream *>(pStream))
-		{
-
-
-			uint32_t nStreamSize = ReadIntu32();
-			if (nStreamSize)
-			{
-				pMemStream->Resize(nStreamSize);
-				Read(pMemStream->Buffer() + pStream->Pos(), nStreamSize);
-			}
-		}
-		else
-			throw CExcBase("CFileReadStream ReadStream, stream isn't memory stream");
-	}
-
-
-	bool CFileReadStream::ReadBytesSafe(byte_t* dst, size_t size)
-	{
-		try
-		{
-			std::streamsize readSize = m_ptrFile->Read(dst, size);
-			return readSize == size;
-		}
-		catch (...)
-		{
-		}
-		return false;
-	}
-
-	bool CFileReadStream::ReadInverseSafe(byte_t* buffer, size_t size)
-	{
-		try
-		{
-			std::streamsize readSize = m_ptrFile->Read(buffer, size);
-			return readSize == size;
-		}
-		catch (...)
-		{
-		}
-		return false;
-	}
-
-	bool CFileReadStream::ReadStreamSafe(IStream *pStream, bool bAttach)
-	{
-		try
-		{
-			ReadStream(pStream, bAttach);
-		}
-		catch (...)
-		{
-		}
-		return false;
-	}
-
-
-
+		return readSize;
+	} 
+	
 
 	CFileWriteStream::CFileWriteStream(file::TFilePtr ptrFile) : TBase(ptrFile)
 	{}
@@ -160,44 +97,17 @@ namespace CommonLib
 	void CFileWriteStream::Close()
 	{
 		TBase::Close();
-	}
+	}	
 
-	void CFileWriteStream::Attach(TStreamPtr pStream, int64_t nPos, int64_t nSize, bool bSeekPos)
+	std::streamsize CFileWriteStream::WriteBytes(const byte_t* buffer, size_t size)
 	{
-		TBase::Attach(pStream, nPos, nSize, bSeekPos);
+		return this->m_ptrFile->Write(buffer, size);
 	}
 
-	TStreamPtr CFileWriteStream::Deattach()
+	std::streamsize CFileWriteStream::WriteInverse(const byte_t* buffer, size_t size)
 	{
-		return TBase::Deattach();
-	}
+		return this->m_ptrFile->Write(buffer, size); //TO DO do inverse
+	}	
 
-	void CFileWriteStream::WriteBytes(const byte_t* buffer, size_t size)
-	{
-		this->m_ptrFile->Write(buffer, size);
-	}
-
-	void CFileWriteStream::WriteInverse(const byte_t* buffer, size_t size)
-	{
-		this->m_ptrFile->Write(buffer, size); //TO DO do inverse
-	}
-
-	void CFileWriteStream::WriteStream(IStream *pStream, int64_t nPos, int64_t nSize)
-	{
-		if (IMemoryStream *pMemStream = dynamic_cast<IMemoryStream *>(pStream))
-		{
-			int64_t _nPos = (nPos != -1 ? nPos : 0);
-			uint32_t _nSize =(uint32_t)(nSize != -1 ? nSize : pStream->Size());
-
-			Write(_nSize);
-			Write(pMemStream->Buffer() + _nPos, _nSize);
-		}
-		else
-			throw CExcBase("CFileWriteStream WriteStream, stream isn't memory stream");
-	}
-
-	bool CFileWriteStream::IsEnoughSpace(size_t size) const
-	{
-		return true;
-	}
+ 
 }

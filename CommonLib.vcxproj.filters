@@ -483,6 +483,9 @@
     <ClInclude Include="stream\FileStream.h">
       <Filter>stream</Filter>
     </ClInclude>
+    <ClInclude Include="stream\StreamIO.h">
+      <Filter>stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -786,6 +789,9 @@
       <Filter>sqlitelib\sqlite</Filter>
     </ClCompile>
     <ClCompile Include="stream\FileStream.cpp">
+      <Filter>stream</Filter>
+    </ClCompile>
+    <ClCompile Include="stream\StreamIO.cpp">
       <Filter>stream</Filter>
     </ClCompile>
   </ItemGroup>

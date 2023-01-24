@@ -84,7 +84,7 @@ namespace CommonLib
 
 
 
-	class CFileReadStream : public TFileStreamBase<IReadStreamBase>
+	class CFileReadStream : public TFileStreamBase<IReadStream>
 	{
 
 	private:
@@ -95,39 +95,31 @@ namespace CommonLib
 		CFileReadStream(file::TFilePtr ptrFile);
 		~CFileReadStream();
 
-		typedef TFileStreamBase<IReadStreamBase> TBase;
+		typedef TFileStreamBase<IReadStream> TBase;
 
-		//Stream
 		virtual size_t Size() const;
 		virtual void Seek(size_t position, enSeekOffset offset);
 		virtual bool SeekSafe(size_t position, enSeekOffset offset);
 		virtual size_t Pos() const ;
 		virtual void Reset();
 		virtual void Close();
-		virtual void Attach(TStreamPtr pStream, int64_t nPos, int64_t nSize, bool bSeekPos);
-		virtual TStreamPtr Deattach();
 
 
-		virtual void ReadBytes(byte_t* dst, size_t size);
-		virtual void ReadInverse(byte_t* buffer, size_t size);
-		virtual void ReadStream(IStream *pStream, bool bAttach);
-
-
-		virtual bool ReadBytesSafe(byte_t* dst, size_t size);
-		virtual bool ReadInverseSafe(byte_t* buffer, size_t size);
-		virtual bool ReadStreamSafe(IStream *pStream, bool bAttach);
+		virtual std::streamsize  ReadBytes(byte_t* dst, size_t size);
+		virtual std::streamsize  ReadInverse(byte_t* buffer, size_t size);
+		 
 	};
 
 	typedef std::shared_ptr<CFileReadStream> CFileReadStreamPtr;
 
-	class CFileWriteStream : public TFileStreamBase<IWriteStreamBase>
+	class CFileWriteStream : public TFileStreamBase<IWriteStream>
 	{
 
 		CFileWriteStream(const CFileWriteStream& stream);
 		CFileWriteStream& operator=(const CFileWriteStream& stream);
 
 	public:
-		typedef TFileStreamBase<IWriteStreamBase> TBase;
+		typedef TFileStreamBase<IWriteStream> TBase;
 
 		CFileWriteStream(file::TFilePtr ptrFile);
 		~CFileWriteStream();
@@ -139,14 +131,11 @@ namespace CommonLib
 		virtual size_t Pos() const;
 		virtual void Reset();
 		virtual void Close();
-		virtual void Attach(TStreamPtr pStream, int64_t nPos, int64_t nSize, bool bSeekPos);
-		virtual TStreamPtr Deattach();
 
 
-		virtual void WriteBytes(const byte_t* buffer, size_t size);
-		virtual void WriteInverse(const byte_t* buffer, size_t size);
-		virtual void WriteStream(IStream *pStream, int64_t nPos = -1, int64_t nSize = -1);
-		virtual bool IsEnoughSpace(size_t size) const;
+		virtual std::streamsize WriteBytes(const byte_t* buffer, size_t size);
+		virtual std::streamsize WriteInverse(const byte_t* buffer, size_t size);
+ 
 	private:
 	};
 
