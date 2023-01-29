@@ -5,11 +5,10 @@
 
 namespace CommonLib
 {
-	CWriteMemoryStream::CWriteMemoryStream(std::shared_ptr<IAlloc> pAlloc) : TBase(pAlloc)
+	CWriteMemoryStream::CWriteMemoryStream(std::shared_ptr<IAlloc> ptrAlloc) : TBase(ptrAlloc.get() == nullptr ? IAlloc::CreateSimpleAlloc() : ptrAlloc)
 	{
-		if (m_pAlloc.get() == nullptr)
-			m_pAlloc = IAlloc::CreateSimpleAlloc();
 	}
+
 	CWriteMemoryStream::~CWriteMemoryStream()
 	{
 
@@ -22,7 +21,7 @@ namespace CommonLib
 			if (size > 0)
 			{
 				ResizeWithCapacity(size);
-				::memcpy(this->m_pBuffer + m_nPos, buffer, size);
+				::memcpy(Buffer() + m_nPos, buffer, size);
 				m_nPos += size;
 			}
 
@@ -40,8 +39,9 @@ namespace CommonLib
 		try
 		{
 			ResizeWithCapacity(size);
+			byte_t *pBuffer = Buffer();
 			for (size_t i = 0; i < size; m_nPos++, i++)
-				this->m_pBuffer[m_nPos + size - i - 1] = buffer[i];
+				pBuffer[m_nPos + size - i - 1] = buffer[i];
 
 			return size;
 		}
@@ -56,28 +56,28 @@ namespace CommonLib
 	{
 		try
 		{
-			if (m_bAttach)
-				throw CExcBase(L"Stream is attached");
+			if (m_ptrBuffer->IsAttachedBuffer())
+				throw CExcBase("Buffer is attached");
 
-			if (m_nSize > nSize)
+			if (Size() > nSize)
 				return;
+		 
+			IMemStreamBufferPtr pBuffer = m_ptrBuffer->CreateBuffer();
+			pBuffer->Create(nSize);
 
-			m_nSize = nSize;
-			byte_t* buffer = (byte_t*)this->m_pAlloc->Alloc(sizeof(byte_t) * m_nSize);
-			 if (this->m_pBuffer)
-			 {
-				 memcpy(buffer, m_pBuffer, m_nSize);
-				 this->m_pAlloc->Free(m_pBuffer);
-				 
-			 }
-			 m_pBuffer = buffer;
+			if (Buffer())
+			{
+				memcpy(pBuffer->GetData(), Buffer(), Size());				 
+			}
 
-			if (m_nPos > m_nSize)
-				m_nPos = m_nSize;
+			m_ptrBuffer = pBuffer;
+
+			if (m_nPos > Size())
+				m_nPos = Size();
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsg(L"Failed ResizeWithCapacity");
+			exc.AddMsgT(L"Failed resize buffer, size: %1", nSize);
 			throw;
 		}
 	
@@ -88,32 +88,31 @@ namespace CommonLib
 
 		try
 		{
-			if (m_bAttach)
-				throw CExcBase(L"Stream is attached");
+			if (m_ptrBuffer->IsAttachedBuffer())
+				throw CExcBase("Buffer is attached");
 
-			size_t newSize = m_nSize;
+			size_t newSize = Size();
 			while (m_nPos + nSize > newSize)
 				newSize = size_t(newSize * 1.5) + 1;
 
-			if (newSize > m_nSize)
+			if (newSize > Size())
 			{
-				m_nSize = newSize;
-				byte_t* buffer = (byte_t*)this->m_pAlloc->Alloc(sizeof(byte_t) * newSize);
-				if (this->m_pBuffer)
-				{
-					memcpy(buffer, this->m_pBuffer, this->m_nPos);
-					if (!m_bAttach)
-					{
-						this->m_pAlloc->Free(m_pBuffer);
-					}
-				}
-				this->m_pBuffer = buffer;
+				 
+				IMemStreamBufferPtr pBuffer = m_ptrBuffer->CreateBuffer();
+				pBuffer->Create(nSize);
 
+				if (Buffer())
+				{
+					memcpy(pBuffer->GetData(), Buffer(), m_nPos);
+					
+				}
+				
+				m_ptrBuffer = pBuffer;
 			}
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsg(L"Failed ResizeWithCapacity");
+			exc.AddMsgT("Failed resize with capacity, size %1", nSize);
 			throw;
 		}
 
@@ -129,10 +128,10 @@ namespace CommonLib
 
 	std::streamsize  CReadMemoryStream::ReadBytes(byte_t* dst, size_t size)
 	{
-		if ((this->m_nPos + size) > m_nSize)
+		if ((this->m_nPos + size) > Size())
 			throw CExcBase(L"ReadMemoryStream: out of range pos: %1, read size: %2", m_nPos, size);
 
-		::memcpy(dst, this->m_pBuffer + this->m_nPos, size);
+		::memcpy(dst, Buffer() + this->m_nPos, size);
 		this->m_nPos += size;
 
 		return size;
@@ -141,11 +140,12 @@ namespace CommonLib
 
 	std::streamsize  CReadMemoryStream::ReadInverse(byte_t* buffer, size_t size)
 	{
-		if ((this->m_nPos + size) > m_nSize)
+		if ((this->m_nPos + size) > Size())
 			throw CExcBase(L"ReadMemoryStream: out of range pos: %1, read size: %2", m_nPos, size);
 
+		byte_t *pData = Buffer();
 		for (size_t i = 0; i < size; m_nPos++, i++)
-			buffer[i] = this->m_pBuffer[m_nPos + size - i - 1];
+			buffer[i] = pData[m_nPos + size - i - 1];
 
 		this->m_nPos += size;	 
 

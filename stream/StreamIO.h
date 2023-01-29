@@ -15,9 +15,7 @@ namespace CommonLib
 
 		virtual std::streamsize ReadBytes(byte_t* buffer, size_t size);
 		virtual std::streamsize ReadInverse(byte_t* buffer, size_t size);
-
-		virtual std::streamsize ReadBytesSafe(byte_t* buffer, size_t size);
-		virtual std::streamsize ReadInverseSafe(byte_t* buffer, size_t size);
+ 
  
 	private:
 		io::TReadPtr m_ptrRead;

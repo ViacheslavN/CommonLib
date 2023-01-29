@@ -2,6 +2,7 @@
 #include "../alloc/alloc.h"
 #include "../exception/exc_base.h"
 #include "io.h"
+#include "MemoryStreamBuffer.h"
 
 namespace CommonLib
 {
@@ -35,6 +36,7 @@ class IMemoryStream
 {
 public:
 	virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false) = 0;
+	virtual void AttachBuffer(IMemStreamBufferPtr ptrBuffer) = 0;
 	virtual byte_t* DeattachBuffer() = 0;
 
 	virtual byte_t* Buffer() = 0;
@@ -219,6 +221,8 @@ public:
 	virtual ~IMemoryReadStream() {}
 };
 
+typedef std::shared_ptr<IMemoryWriteStream> IMemoryWriteStreamPtr;
+typedef std::shared_ptr<IMemoryReadStream> IMemoryReadStreamPtr;
 
 
 template<class I>
@@ -230,37 +234,28 @@ private:
 	TMemoryStreamBase& operator=(const TMemoryStreamBase& stream) {}
 public:
 
-	TMemoryStreamBase(std::shared_ptr<IAlloc> pAlloc = std::shared_ptr<IAlloc>()) : m_pAlloc(pAlloc), m_pBuffer(0)
-		, m_nPos(0)
-		, m_nSize(0)
-		, m_bAttach(false)
-		, m_pAttachStream(NULL)
-
+	TMemoryStreamBase(std::shared_ptr<IAlloc> ptrAlloc = std::shared_ptr<IAlloc>()) :  m_nPos(0)
 	{
 		m_bIsBigEndian = IStream::IsBigEndian();
-
+		m_ptrBuffer = std::make_shared<CMemoryStreamBuffer>(ptrAlloc);
 	}
 
 	~TMemoryStreamBase()
 	{
-		if (!m_bAttach && m_pBuffer)
-		{
-			m_pAlloc->Free(m_pBuffer);
-			m_pBuffer = 0;
-		}
+	
 	}
 
 	//IStream
 	virtual size_t Size() const
 	{
-		return m_nSize;
+		return m_ptrBuffer->GetSize();
 	}
 
 	virtual void Seek(size_t position, enSeekOffset offset)
 	{
 		try
 		{
-			if (!m_pBuffer)
+			if (!m_ptrBuffer->GetData())
 				throw CExcBase(L"buffer is null", position);
 
 			size_t newpos = 0;
@@ -273,13 +268,11 @@ public:
 				newpos = m_nPos + position;
 				break;
 			case soFromEnd:
-				newpos = m_nSize + position;
+				newpos = Size() - position;
 				break;
-			}
-			if (newpos > m_nSize && m_bAttach)
-				throw CExcBase(L"out of range  and buffer is attached pos %1 size %2", position, m_nSize);
+			}	 
 
-			if (newpos > m_nSize && !m_bAttach)
+			if (newpos > Size())
 			{
 				Resize(newpos);
 			}
@@ -292,7 +285,7 @@ public:
 		}
 	}
 
-	bool  SeekSafe(size_t position, enSeekOffset offset)
+	bool SeekSafe(size_t position, enSeekOffset offset)
 	{
 		try
 		{
@@ -318,107 +311,53 @@ public:
 	
 	virtual void Close()
 	{
-		try
-		{
-			m_nPos = 0;
-			m_nSize = 0;
-			m_pBuffer = 0;
-
-			if (!m_bAttach && m_pBuffer)
-			{
-				if (m_pAlloc.get() == nullptr)
-					throw CExcBase(L"Allocator is null");
-
-				m_pAlloc->Free(m_pBuffer);
-				m_pBuffer = 0;
-			}
-		}
-		catch (CExcBase& exc)
-		{
-			exc.AddMsg(L"Can't close stream");
-			throw;
-		}
+		m_ptrBuffer->Close();
 	}
 
 
 	//IMemoryStream
 	virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false)
 	{
-		try
-		{
-			if (bCopy)
-			{
-				Create(nSize);
-				memcpy(m_pBuffer, pBuffer, nSize);
-				m_bAttach = false;
-			}
-			else
-			{
-				m_pBuffer = pBuffer;
-				m_bAttach = true;
+		m_ptrBuffer->AttachBuffer(pBuffer, nSize, bCopy);
+	}
 
-			}
-			if (m_pAttachStream)
-				m_pAttachStream = NULL;
-
-			m_nPos = 0;
-			m_nSize = nSize;
-		}
-		catch (CExcBase& exc)
-		{
-			exc.AddMsg(L"Can't attach to buffer");
-			throw;
-		}
+	virtual void AttachBuffer(IMemStreamBufferPtr ptrBuffer)
+	{
+		m_ptrBuffer = ptrBuffer;
 	}
 
 	virtual byte_t* DeattachBuffer()
-	{
-		byte_t* tmp = m_pBuffer;
-		m_nPos = 0;
-		m_nSize = 0;
-		m_pBuffer = 0;
-		m_bAttach = false;
-		return tmp;
+	{ 
+		m_nPos = 0; 
+		return m_ptrBuffer->DeattachBuffer();
 	}
 
 	virtual byte_t* Buffer()
 	{
-		return m_pBuffer;
+		return m_ptrBuffer->GetData();
 	}
 
 	virtual const byte_t* Buffer() const
 	{
-		return m_pBuffer;
+		return m_ptrBuffer->GetData();
 	}
 
 	virtual byte_t* BufferFromCurPos()
 	{
-		return m_pBuffer + m_nPos; 
+		return Buffer() + m_nPos;
 	}
 
 	virtual const byte_t* BufferFromCurPos() const
 	{
-		return m_pBuffer + m_nPos;
+		return Buffer() + m_nPos;
 	}
 
 	virtual void Create(size_t nSize)
 	{
 		try
 		{
-
-			if (m_pAlloc.get() == nullptr)
-				throw CExcBase(L"Allocator is null");
-
-			if (!m_bAttach && m_pBuffer)
-			{
-				m_pAlloc->Free(m_pBuffer);
-			}
-
-			m_pAttachStream = NULL;
-			m_pBuffer = (byte_t*)m_pAlloc->Alloc(sizeof(byte_t) * nSize);
 			m_nPos = 0;
-			m_nSize = nSize;
-			m_bAttach = false;
+			m_ptrBuffer->Create(nSize);
 		}
 		catch (CExcBase& exc)
 		{
@@ -430,13 +369,10 @@ public:
 	virtual void Resize(size_t nSize) { throw CExcBase(L"TMemoryStreamBase: resize isn't implemented"); }
 protected:
 
-	byte_t * m_pBuffer;
-	size_t  m_nPos;
-	size_t   m_nSize;
-	bool m_bIsBigEndian;
-	std::shared_ptr<IAlloc> m_pAlloc;
-	bool m_bAttach;
-	TStreamPtr m_pAttachStream;
+	IMemStreamBufferPtr m_ptrBuffer;	 
+	size_t  m_nPos; 
+	bool m_bIsBigEndian; 
+ 
  };
 
  

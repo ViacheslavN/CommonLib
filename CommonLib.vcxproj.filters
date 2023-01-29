@@ -486,6 +486,9 @@
     <ClInclude Include="stream\StreamIO.h">
       <Filter>stream</Filter>
     </ClInclude>
+    <ClInclude Include="stream\MemoryStreamBuffer.h">
+      <Filter>stream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -792,6 +795,9 @@
       <Filter>stream</Filter>
     </ClCompile>
     <ClCompile Include="stream\StreamIO.cpp">
+      <Filter>stream</Filter>
+    </ClCompile>
+    <ClCompile Include="stream\MemoryStreamBuffer.cpp">
       <Filter>stream</Filter>
     </ClCompile>
   </ItemGroup>

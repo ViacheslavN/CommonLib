@@ -18,17 +18,17 @@ namespace CommonLib
 
 	bool CFxMemoryWriteStream::IsEnoughSpace(size_t size) const
 	{
-		return !((m_nPos + size) > m_nSize);
+		return !((m_nPos + size) > Size());
 	}
 		
 	std::streamsize CFxMemoryWriteStream::WriteBytes(const byte_t* buffer, size_t size)
 	{
 		if (size > 0)
 		{
-			if ((this->m_nPos + size) > m_nSize)
+			if ((this->m_nPos + size) > Size())
 				throw CExcBase(L"CFxMemoryWriteStream: out of range pos: %1, read size: %2", m_nPos, size);
 
-			::memcpy(m_pBuffer + m_nPos, buffer, size);
+			::memcpy(Buffer() + m_nPos, buffer, size);
 			m_nPos += size;
 		}
 
@@ -39,11 +39,12 @@ namespace CommonLib
 	{
 		if (size > 0)
 		{
-			if ((this->m_nPos + size) > m_nSize)
+			if ((this->m_nPos + size) > Size())
 				throw CExcBase(L"CFxMemoryWriteStream: out of range pos: %1, read size: %2", m_nPos, size);
 
+			byte_t *pBuffer = Buffer();
 			for (size_t i = 0; i < size; m_nPos++, i++)
-				m_pBuffer[m_nPos + size - i - 1] = buffer[i];
+				pBuffer[m_nPos + size - i - 1] = buffer[i];
 		}
 
 		return size;

@@ -17,30 +17,27 @@ namespace CommonLib
 	{
 		try
 		{
-			uint32_t newSize = (uint32_t)m_nSize;
+			if(m_ptrBuffer->IsAttachedBuffer())
+				throw CExcBase("Stream is attached");
+
+			uint32_t newSize = (uint32_t)Size();
 
 			while (m_nPos + nSize > newSize)
 				newSize = uint32_t(newSize * 1.5) + 1;
 
-			if (newSize > m_nSize)
-			{
-				if (m_bAttach)
-					throw CExcBase("Stream is attached");
+			if (newSize > Size())
+			{		 
 
-				m_nSize = newSize;
-				byte_t* buffer = (byte_t*)this->m_pAlloc->Alloc(sizeof(byte_t) * newSize);
-				memset(buffer, 0, newSize);
+				IMemStreamBufferPtr pBuffer = m_ptrBuffer->CreateBuffer();
+				pBuffer->Create(newSize);
+				memset(pBuffer->GetData(), 0, pBuffer->GetSize());					
 
-				if (this->m_pBuffer)
+				if (Buffer())
 				{
-					memcpy(buffer, this->m_pBuffer, this->m_nPos);
-					if (!m_bAttach)
-					{
-						this->m_pAlloc->Free(m_pBuffer);
-					}
+					memcpy(pBuffer->GetData(), Buffer(), this->m_nPos);
 				}
 
-				this->m_pBuffer = buffer;
+				m_ptrBuffer = pBuffer;
 			}
 		}
 		catch (std::exception& exc)
@@ -57,29 +54,33 @@ namespace CommonLib
 			if (m_nCurrBit > m_nBitBase)
 			{
 				m_nPos++;
-				if (m_nPos == m_nSize)
+				if (m_nPos == Size())
 				{
-					if (m_bAttach)
+					if (m_ptrBuffer->IsAttachedBuffer())
 						throw CExcBase("Stream is attached");
 
-					uint32_t newSize = uint32_t(m_nSize * 1.5) + 1;
-					m_nSize = newSize;
-
-					byte_t* buffer = (byte_t*)m_pAlloc->Alloc(sizeof(byte_t) * newSize);
-					if (m_pBuffer)
+					uint32_t newSize = uint32_t(Size() * 1.5) + 1;
+					IMemStreamBufferPtr pBuffer = m_ptrBuffer->CreateBuffer();
+					pBuffer->Create(newSize);
+					memset(pBuffer->GetData(), 0, pBuffer->GetSize());
+ 
+					if (Buffer())
 					{
-						memcpy(buffer, m_pBuffer, m_nPos);
-						if (!m_bAttach)
-							m_pAlloc->Free(m_pBuffer);
+						memcpy(pBuffer->GetData(), Buffer(), m_nPos);
 					}
-					m_pBuffer = buffer;
+
+					m_ptrBuffer = pBuffer;
 
 				}
+
+				byte_t *pData = Buffer();
 				m_nCurrBit = 0;
-				m_pBuffer[m_nPos] = 0;
+				pData[m_nPos] = 0;
 			}
+
+			byte_t *pData = Buffer();
 			if (bBit)
-				m_pBuffer[m_nPos] |= (1 << m_nCurrBit);
+				pData[m_nPos] |= (1 << m_nCurrBit);
 
 			m_nCurrBit++;
 		}
