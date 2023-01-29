@@ -49,11 +49,7 @@ namespace CommonLib
 			throw CExcBase("TMemoryStreamBaseEmpty: Reset isn't implemented");
 		
 		}
-		virtual void Attach(TStreamPtr pStream, int64_t nPos = -1, int64_t nSize = -1, bool bSeekPos = false)
-		{
-			throw CExcBase("TMemoryStreamBaseEmpty: Attach isn't implemented");
-		}
-			
+					
 		virtual TStreamPtr Deattach()
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: Deattach isn't implemented");
@@ -66,6 +62,11 @@ namespace CommonLib
 
 		//IMemoryStream
 		virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false)
+		{
+			throw CExcBase("TMemoryStreamBaseEmpty: AttachBuffer isn't implemented");
+		}
+
+		virtual void AttachBuffer(CommonLib::IMemStreamBufferPtr ptrBuffer)
 		{
 			throw CExcBase("TMemoryStreamBaseEmpty: AttachBuffer isn't implemented");
 		}

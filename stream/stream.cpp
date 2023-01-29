@@ -480,7 +480,7 @@ namespace CommonLib
 			if (!IsEnoughSpace(bufLen))
 				return 0;
 
-			return IReadStream::ReadSafe(pBuffer, bufLen);
+			return IReadStream::ReadSafe(pBuffer, (uint32_t)bufLen);
 		}
 		catch (...)
 		{

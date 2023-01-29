@@ -160,6 +160,11 @@ namespace CommonLib
 			return AStrUint32(val);
 		}
 
+		static  astr AStrFrom(const long& val)
+		{
+			return AStrInt32((int32_t)val);
+		}
+
 		static  astr AStrFrom(const uint32_t& val, uint32_t nZero)
 		{
 			return AStrUint32(val, nZero);
