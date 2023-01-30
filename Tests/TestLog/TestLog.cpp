@@ -3,6 +3,7 @@
 
 
 #include "stdafx.h"
+#include "../../../CommonLib/date/DateUtil.h"
 void TestZlib();
 #include "../../../CommonLib/exception/PosixExc.h"
 int main()
@@ -31,6 +32,8 @@ int main()
 	{
 		sleep(1);
 	}*/
+
+	uint64_t dateTime = CommonLib::dateutil::CDateUtil::GetCurrentDateTime();
 
 	CommonLib::CPosixExc posizExc(12, "%1, %2", 34, 45.5);
 

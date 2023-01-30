@@ -376,6 +376,7 @@
     <ClInclude Include="crypto\winapi\random\RandomGenerator.h" />
     <ClInclude Include="crypto\XTSBlockChiper.h" />
     <ClInclude Include="data\ByteArray.h" />
+    <ClInclude Include="date\DateUtil.h" />
     <ClInclude Include="exception\ComExc.h" />
     <ClInclude Include="exception\exc_base.h" />
     <ClInclude Include="exception\PosixExc.h" />
@@ -639,6 +640,7 @@
     <ClCompile Include="crypto\winapi\random\RandomGenerator.cpp" />
     <ClCompile Include="crypto\XTSBlockChiper.cpp" />
     <ClCompile Include="data\ByteArray.cpp" />
+    <ClCompile Include="date\DateUtil.cpp" />
     <ClCompile Include="exception\ComExc.cpp" />
     <ClCompile Include="exception\exc_base.cpp" />
     <ClCompile Include="exception\PosixExc.cpp">

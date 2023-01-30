@@ -115,6 +115,9 @@
     <Filter Include="synch\WaitForGraph">
       <UniqueIdentifier>{90357fee-3385-48d7-919e-8bdf0c305a8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="date">
+      <UniqueIdentifier>{0ada976d-e8f4-4f2a-a8c5-cc9a3cadd794}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -489,6 +492,9 @@
     <ClInclude Include="stream\MemoryStreamBuffer.h">
       <Filter>stream</Filter>
     </ClInclude>
+    <ClInclude Include="date\DateUtil.h">
+      <Filter>date</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -799,6 +805,9 @@
     </ClCompile>
     <ClCompile Include="stream\MemoryStreamBuffer.cpp">
       <Filter>stream</Filter>
+    </ClCompile>
+    <ClCompile Include="date\DateUtil.cpp">
+      <Filter>date</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
