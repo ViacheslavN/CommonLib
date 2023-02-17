@@ -318,7 +318,7 @@ public:
 	//IMemoryStream
 	virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false)
 	{
-		m_ptrBuffer->AttachBuffer(pBuffer, nSize, bCopy);
+		m_ptrBuffer->AttachBuffer(pBuffer, (uint32_t)nSize, bCopy);
 	}
 
 	virtual void AttachBuffer(IMemStreamBufferPtr ptrBuffer)
@@ -357,7 +357,7 @@ public:
 		try
 		{
 			m_nPos = 0;
-			m_ptrBuffer->Create(nSize);
+			m_ptrBuffer->Create((uint32_t)nSize);
 		}
 		catch (CExcBase& exc)
 		{

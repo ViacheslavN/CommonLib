@@ -63,7 +63,7 @@ namespace CommonLib
 				return;
 		 
 			IMemStreamBufferPtr pBuffer = m_ptrBuffer->CreateBuffer();
-			pBuffer->Create(nSize);
+			pBuffer->Create((uint32_t)nSize);
 
 			if (Buffer())
 			{
@@ -99,7 +99,7 @@ namespace CommonLib
 			{
 				 
 				IMemStreamBufferPtr pBuffer = m_ptrBuffer->CreateBuffer();
-				pBuffer->Create(nSize);
+				pBuffer->Create((uint32_t)nSize);
 
 				if (Buffer())
 				{

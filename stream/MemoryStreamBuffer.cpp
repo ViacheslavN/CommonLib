@@ -26,7 +26,7 @@ namespace CommonLib
 		}
 	}
 
-	void CMemoryStreamBuffer::AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy)
+	void CMemoryStreamBuffer::AttachBuffer(byte_t* pBuffer, uint32_t nSize, bool bCopy)
 	{
 		try
 		{
@@ -56,7 +56,7 @@ namespace CommonLib
 		return m_bAttach;
 	}
 
-	void CMemoryStreamBuffer::Create(size_t nSize)
+	void CMemoryStreamBuffer::Create(uint32_t nSize)
 	{
 		try
 		{
@@ -122,10 +122,10 @@ namespace CommonLib
 
 	uint32_t CMemoryStreamBuffer::GetSize() const
 	{
-		return (uint32_t)m_nSize;
+		return  m_nSize;
 	}
 
-	IMemStreamBufferPtr CMemoryStreamBuffer::CreateBuffer()
+	IMemStreamBufferPtr CMemoryStreamBuffer::CreateBuffer() const
 	{
 		return std::make_shared<CMemoryStreamBuffer>(m_ptrAlloc);
 	}

@@ -17,15 +17,15 @@ namespace CommonLib
 		IMemStreamBuffer() {}
 		virtual ~IMemStreamBuffer() {}
 
-		virtual void Create(size_t nSize) = 0;
-		virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false) = 0;
+		virtual void Create(uint32_t nSize) = 0;
+		virtual void AttachBuffer(byte_t* pBuffer, uint32_t nSize, bool bCopy = false) = 0;
 		virtual bool IsAttachedBuffer() const = 0;
 		virtual byte_t* DeattachBuffer() = 0;
 		virtual byte_t* GetData() = 0;
 		virtual const byte_t* GetData() const = 0;
 		virtual uint32_t GetSize() const = 0;
 		virtual void Close() = 0;
-		virtual IMemStreamBufferPtr CreateBuffer() = 0;
+		virtual IMemStreamBufferPtr CreateBuffer() const = 0;
 	};
 
 
@@ -36,21 +36,21 @@ namespace CommonLib
 		virtual ~CMemoryStreamBuffer();
 
 
-		virtual void Create(size_t nSize);
-		virtual void AttachBuffer(byte_t* pBuffer, size_t nSize, bool bCopy = false);
+		virtual void Create(uint32_t nSize);
+		virtual void AttachBuffer(byte_t* pBuffer, uint32_t nSize, bool bCopy = false);
 		virtual bool IsAttachedBuffer() const;
 		virtual byte_t* DeattachBuffer();
 		virtual byte_t* GetData();
 		virtual const byte_t* GetData() const;
 		virtual uint32_t GetSize() const;
 		virtual void Close();
-		virtual IMemStreamBufferPtr CreateBuffer();
+		virtual IMemStreamBufferPtr CreateBuffer() const;
 
 	private:
 		byte_t* m_pBuffer;
 		std::shared_ptr<IAlloc> m_ptrAlloc;
 		bool m_bAttach;
-		size_t m_nSize;
+		uint32_t m_nSize;
 
 	};
 }
