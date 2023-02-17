@@ -57,7 +57,7 @@ namespace CommonLib
 			astr fileLogName;
 			for (uint32_t i = 0; i < 0xFFFFFFFF; ++i)
 			{
-				fileLogName = str_format::AStrFormatSafeT("%1\\%2_%3.%4", logPath, logName, i, logExt);
+				fileLogName = str_format::AStrFormatSafeT("{0}\\{1}_{2}.{3}", logPath, logName, i, logExt);
 				if (!CFileUtils::IsFileExist(fileLogName))
 					break;
 			}

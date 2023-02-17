@@ -30,7 +30,7 @@ namespace CommonLib
 			case CommonLib::crypto::AES_256:
 				return 32;
 			default:
-				throw CExcBase("AESCipher: unknown type %1", m_keySize);
+				throw CExcBase("AESCipher: unknown type {0}", m_keySize);
 				break;
 			}
 		}
@@ -69,11 +69,11 @@ namespace CommonLib
 			{
 
 				if (plainInSize % GetBlockSize())
-					throw CExcBase("Wrong plain size %1, without padding size must be multiple %2", plainInSize, GetBlockSize());
+					throw CExcBase("Wrong plain size {0}, without padding size must be multiple {1}", plainInSize, GetBlockSize());
 			}
 
 			if(dstBufSize < GetBufferSize(plainInSize))
-				throw CExcBase("Wrong output size %1, expected %2", dstBufSize, GetBufferSize(plainInSize));
+				throw CExcBase("Wrong output size {0}, expected {1}", dstBufSize, GetBufferSize(plainInSize));
 
 		}
 		

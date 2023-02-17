@@ -35,7 +35,7 @@ namespace CommonLib
 			catch (std::exception& ex)
 			{
 				m_exeption = CExcBase::CloneFromExc(ex);
-				m_exeption->AddMsgT("Failed to create thread %1", (uint64_t)GetCurThreadId());
+				m_exeption->AddMsgT("Failed to create thread {0}", (uint64_t)GetCurThreadId());
 			}
 		}
 
@@ -54,7 +54,7 @@ namespace CommonLib
 			catch (std::exception& ex)
 			{
 				m_exeption = CExcBase::CloneFromExc(ex);
-				m_exeption->AddMsgT("Failed in thread %1", (uint64_t)GetCurThreadId());
+				m_exeption->AddMsgT("Failed in thread {0}", (uint64_t)GetCurThreadId());
 			}
 		}
 

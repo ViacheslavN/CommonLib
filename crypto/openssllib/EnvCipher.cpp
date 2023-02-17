@@ -26,7 +26,7 @@ namespace CommonLib
 					m_pCipher = GetEVPcipherGCM(keySize);
 					break;
 				default:
-					throw CExcBase("EvpCipher unknown chain mode: %1", (int)mode);
+					throw CExcBase("EvpCipher unknown chain mode: {0}", (int)mode);
 
 				}
 
@@ -57,7 +57,7 @@ namespace CommonLib
 				case CommonLib::crypto::AES_256:
 					return EVP_aes_256_ecb();
 				default:
-					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+					throw CExcBase("EvpCipher, unknown key size {0}", keySize);
 				}
 			}
 
@@ -72,7 +72,7 @@ namespace CommonLib
 				case CommonLib::crypto::AES_256:
 					return EVP_aes_256_cbc();
 				default:
-					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+					throw CExcBase("EvpCipher, unknown key size {0}", keySize);
 				}
 			}
 
@@ -87,7 +87,7 @@ namespace CommonLib
 				case CommonLib::crypto::AES_256:
 					return EVP_aes_256_ccm();
 				default:
-					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+					throw CExcBase("EvpCipher, unknown key size {0}", keySize);
 				}
 			}
 
@@ -102,7 +102,7 @@ namespace CommonLib
 				case CommonLib::crypto::AES_256:
 					return EVP_aes_256_gcm();
 				default:
-					throw CExcBase("EvpCipher, unknown key size %1", keySize);
+					throw CExcBase("EvpCipher, unknown key size {0}", keySize);
 				}
 			}
 		}

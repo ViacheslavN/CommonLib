@@ -8,8 +8,8 @@
 	#include "../exception/PosixExc.h"
 #endif
 
-#define  ERR_STR_CONVERT_MB_2_UNICODE "Multibyte string cannot be converted to unicode string. Source string: [%1]."
-#define  ERR_STR_CONVERT_UTF8_2_UNICODE "Multibyte UTF8 string cannot be converted to unicode string. Source string: [%1]."
+#define  ERR_STR_CONVERT_MB_2_UNICODE "Multibyte string cannot be converted to unicode string. Source string: [{0}]."
+#define  ERR_STR_CONVERT_UTF8_2_UNICODE "Multibyte UTF8 string cannot be converted to unicode string. Source string: [{0}]."
 
 namespace CommonLib
 {
@@ -244,21 +244,21 @@ namespace StringEncoding
 #ifdef  _WIN32
 		int unicode_len = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), (int)utf8.length() + 1, 0, 0);
 		if (unicode_len <= 0)
-			throw CWinExc("error convert utf8 to unicode. Failed to get buffer size, Source string: %1", utf8, GetLastError());
+			throw CWinExc("error convert utf8 to unicode. Failed to get buffer size, Source string: {0}", utf8, GetLastError());
 
 		unicode.resize(unicode_len);
 		int res = MultiByteToWideChar(CP_UTF8, 0, utf8.c_str(), (int)utf8.length() + 1, &unicode[0], (int)unicode.length());
 		if (res == 0)
-			throw CWinExc("error convert utf8 to unicode, str %1", utf8, GetLastError());
+			throw CWinExc("error convert utf8 to unicode, str {0}", utf8, GetLastError());
 #else
 		size_t  unicode_len = mbstowcs(0, utf8.c_str(), 0);
 		if (unicode_len == 0 || unicode_len == size_t(-1))
-			throw CExcBase("Multibyte string cannot be converted to unicode string. Failed to get buffer size. Source string: [%1].", utf8);
+			throw CExcBase("Multibyte string cannot be converted to unicode string. Failed to get buffer size. Source string: [{0}].", utf8);
 
 		unicode.resize(unicode_len);
 		size_t  res = mbstowcs(&unicode[0], utf8.c_str(), unicode_len);
 		if (res == 0 || res == size_t(-1))
-			throw  CExcBase("Multibyte string cannot be converted to unicode string. Source string: [%1].", utf8);
+			throw  CExcBase("Multibyte string cannot be converted to unicode string. Source string: [{0}].", utf8);
 #endif
 	}
 
@@ -392,22 +392,22 @@ namespace StringEncoding
 #ifdef  _WIN32
 		int i_req_buf_size = MultiByteToWideChar(CP_ACP, 0, src_str.c_str(), (int)src_str.length() + 1, 0, 0);
 		if (i_req_buf_size <= 0)
-			throw CWinExc(L"Error convert mb to unicode [%1]", src_str, GetLastError());
+			throw CWinExc(L"Error convert mb to unicode [{0}]", src_str, GetLastError());
 
 		std::vector< wchar_t >  unicode_str_buf(i_req_buf_size + 1, 0);
 		int i_conv_res = MultiByteToWideChar(CP_ACP, 0, src_str.c_str(), (int)src_str.length() + 1, &unicode_str_buf[0], (int)unicode_str_buf.size());
 		if (i_conv_res == 0)
-			throw CWinExc(L"Error convert mb to unicode [%1]", src_str, GetLastError());
+			throw CWinExc(L"Error convert mb to unicode [{0}]", src_str, GetLastError());
 #else
 		size_t  i_req_buf_size = mbstowcs(0, src_str.c_str(), 0);
 		if (i_req_buf_size <= 0 || i_req_buf_size == size_t(-1))
-			throw CExcBase("Multibyte string cannot be converted to unicode string. Failed to get buffer size. Source string: [%1].", src_str);
+			throw CExcBase("Multibyte string cannot be converted to unicode string. Failed to get buffer size. Source string: [{0}].", src_str);
 
 		std::vector< wchar_t > unicode_str_buf(i_req_buf_size + 1, 0);
 
 		size_t  i_conv_res = mbstowcs(&unicode_str_buf[0], src_str.c_str(), unicode_str_buf.size()* sizeof(wchar_t));
 		if (i_conv_res <= 0 || i_conv_res == size_t(-1))
-			throw CExcBase("Multibyte string cannot be converted to unicode string. Source string: [%1].", src_str);
+			throw CExcBase("Multibyte string cannot be converted to unicode string. Source string: [{0}].", src_str);
 #endif
 		unicode = &unicode_str_buf[0];
 	}

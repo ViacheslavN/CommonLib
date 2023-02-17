@@ -35,7 +35,7 @@ int main()
 
 	uint64_t dateTime = CommonLib::dateutil::CDateUtil::GetCurrentDateTime();
 
-	CommonLib::CPosixExc posizExc(12, "%1, %2", 34, 45.5);
+	CommonLib::CPosixExc posizExc(12, "{0}, {1}", 34, 45.5);
 
 	astr msg = posizExc.GetErrorMessageA(45);
 
@@ -52,15 +52,15 @@ int main()
 
 	for (size_t i = 0; i < 100; ++i)
 	{
-		Log.InfoT("Message %1", i);
-		CommonLib::CLogInfo logInfo(Log, "%1, %2, %3", i, i + 1, 3.154);
+		Log.InfoT("Message {0}", i);
+		CommonLib::CLogInfo logInfo(Log, "{0}, {1}, {2}", i, i + 1, 3.154);
 	//	logInfo.Ok();
 	}
 
 	/*fileLogger->Close();
 	for (size_t i = 0; i < 100; ++i)
 	{
-		log.InfoT("Message %1", i);
+		log.InfoT("Message {0}", i);
 	}
 
 	fileLogger->Open("D:\\backup.log");*/

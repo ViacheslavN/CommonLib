@@ -22,7 +22,7 @@ namespace CommonLib
 			void CAESCipherSSL::SetKey(const crypto_vector& keyData)
 			{
 				if (GetKeySize() != keyData.size())
-					throw CExcBase("CAESCipherSSL: wrong key size, input %1, expected: %2 ", keyData.size(), GetKeySize());
+					throw CExcBase("CAESCipherSSL: wrong key size, input {0}, expected: {1} ", keyData.size(), GetKeySize());
 
 				m_keyData = keyData;
 			}

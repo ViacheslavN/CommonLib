@@ -36,7 +36,7 @@ namespace CommonLib
 		}
 		catch (std::exception& ex)
 		{
-			CExcBase::RegenExc("Failed to open log file %1", path, ex);
+			CExcBase::RegenExc("Failed to open log file {0}", path, ex);
 		}
 		
 	}

@@ -24,7 +24,7 @@ namespace win
 	{
 		m_handle = ::LoadLibraryW(path.c_str());
 		if (m_handle == NULL)
-			throw  CWinExc("Failed to load library %1", StringEncoding::str_w2a_safe(path));
+			throw  CWinExc("Failed to load library {0}", StringEncoding::str_w2a_safe(path));
 	}
 
 	CDynamicLibraryWin::~CDynamicLibraryWin()
@@ -37,7 +37,7 @@ namespace win
 	{
 		FARPROC  pfunAddr = (FARPROC)GetProcAddress(m_handle, proc_name.c_str());
 		if (pfunAddr == NULL)
-			throw  CWinExc("Failed to get proc addr %1", proc_name);
+			throw  CWinExc("Failed to get proc addr {0}", proc_name);
 
 		return pfunAddr;
 	}

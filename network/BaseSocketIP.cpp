@@ -42,7 +42,7 @@ namespace CommonLib
 			}
 			catch (std::exception& exc)
 			{
-				CExcBase::RegenExcT("Failed to create socket type %1", type, exc);
+				CExcBase::RegenExcT("Failed to create socket type {0}", type, exc);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace CommonLib
 			}
 			catch (std::exception& exc)
 			{
-				CExcBase::RegenExcT("Failed to set blockmode  %1 ", block ? 1 : 0, exc);
+				CExcBase::RegenExcT("Failed to set blockmode  {0} ", block ? 1 : 0, exc);
 			}
 		}
 
@@ -164,7 +164,7 @@ namespace CommonLib
 				}
 
 				if (selRet == 0)
-					throw COperationTimeout(timeout, "Socket timed out (%1 sec).", timeout);
+					throw COperationTimeout(timeout, "Socket timed out ({0} sec).", timeout);
 
 				CheckSocketRetVal(selRet, "select socket");
 
@@ -219,7 +219,7 @@ namespace CommonLib
 				}
 
 				if (selRet == 0)
-					throw COperationTimeout(timeout, "Socket timed out (%1 sec).", timeout);
+					throw COperationTimeout(timeout, "Socket timed out ({0} sec).", timeout);
 
 				CheckSocketRetVal(selRet, "select socket");
 

@@ -47,7 +47,7 @@ namespace CommonLib
 	{
 		std::streamsize readSize = m_ptrFile->Read(dst, size);
 		if(readSize != size)
-			throw CExcBase("FileReadStream bytes to read %1, result %2", size, readSize);
+			throw CExcBase("FileReadStream bytes to read {0}, result {1}", size, readSize);
 
 		return readSize;
 	}
@@ -56,7 +56,7 @@ namespace CommonLib
 	{
 		std::streamsize readSize = m_ptrFile->Read(buffer, size); //TO DO inverse
 		if (readSize != size)
-			throw CExcBase("FileReadStream bytes to read %1, result %2", size, readSize);
+			throw CExcBase("FileReadStream bytes to read {0}, result {1}", size, readSize);
 
 		return readSize;
 	} 

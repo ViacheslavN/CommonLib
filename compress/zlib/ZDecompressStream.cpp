@@ -12,7 +12,7 @@ namespace CommonLib
 			m_strm.zfree = 0;
 			int res = inflateInit(&m_strm);
 			if (res != Z_OK)
-				throw CExcBase("inflateInit error %1", res);
+				throw CExcBase("inflateInit error {0}", res);
 		}
 		catch (std::exception& exc)
 		{
@@ -26,7 +26,7 @@ namespace CommonLib
 		{
 			int err = inflateEnd(&m_strm);
 			if (err != Z_OK)
-				throw CExcBase("inflateEnd error %1", err);
+				throw CExcBase("inflateEnd error {0}", err);
 		}
 		catch (std::exception& exc)
 		{
@@ -38,7 +38,7 @@ namespace CommonLib
 	{
 		int res = Inflate(Z_NO_FLUSH);
 		if (res != Z_OK && res != Z_STREAM_END)
-			throw CExcBase("Inflate error %1", res);
+			throw CExcBase("Inflate error {0}", res);
 	}
 
 	int CZDecompressStream::Inflate(int flush)

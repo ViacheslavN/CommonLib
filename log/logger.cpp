@@ -255,6 +255,6 @@ namespace CommonLib
 
 	void CLogger::Exc(const std::exception& exc)
 	{
-		Msg(eError, str_format::StrFormatSafe("exc: %1", CExcBase::GetErrorDesc(exc)));
+		Msg(eError, str_format::StrFormatSafe("exc: {0}", CExcBase::GetErrorDesc(exc)));
 	}
  }

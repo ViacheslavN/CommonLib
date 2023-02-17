@@ -285,7 +285,7 @@ namespace CommonLib
 		else if (StrCaseIcmp(val, "false"))
 			return false;
 	 
-		throw CExcBase("Failed convert str to bool, %1", val);
+		throw CExcBase("Failed convert str to bool, {0}", val);
 	}
 	
 	int8_t str_utils::AStr2Int8(const astr& val)
@@ -315,7 +315,7 @@ namespace CommonLib
 
 		int32_t ret = strtol(val.c_str(), &stop, 10);
 		if (start == stop)
-			throw CExcBase("Failed convert str to int32, %1", val);
+			throw CExcBase("Failed convert str to int32, {0}", val);
 
 		return ret;
 	}
@@ -327,7 +327,7 @@ namespace CommonLib
 
 		uint32_t ret = strtoul(val.c_str(), &stop, 10);
 		if (start == stop)
-			throw CExcBase("Failed convert str to uint32_t, %1", val);
+			throw CExcBase("Failed convert str to uint32_t, {0}", val);
 
 		return ret;
 	}
@@ -339,7 +339,7 @@ namespace CommonLib
 
 		int64_t ret = strtoll(val.c_str(), &stop, 10);
 		if (start == stop)
-			throw CExcBase("Failed convert str to int64_t, %1", val);
+			throw CExcBase("Failed convert str to int64_t, {0}", val);
 
 		return ret;
 	}
@@ -351,7 +351,7 @@ namespace CommonLib
 
 		uint64_t ret = strtoul(val.c_str(), &stop, 10);
 		if (start == stop)
-			throw CExcBase("Failed convert str to uint64_t, %1", val);
+			throw CExcBase("Failed convert str to uint64_t, {0}", val);
 
 		return ret;
 	}
@@ -368,7 +368,7 @@ namespace CommonLib
 
 		double ret = strtod(val.c_str(), &stop);
 		if (start == stop)
-			throw CExcBase("Failed convert str to double, %1", val);
+			throw CExcBase("Failed convert str to double, {0}", val);
 
 		return ret;
 	}

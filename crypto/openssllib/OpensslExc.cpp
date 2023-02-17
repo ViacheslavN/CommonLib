@@ -39,7 +39,7 @@ namespace CommonLib
 			astr COpenSSLExc::GetErrorDesc(int errorCode)
 			{
 				const char*  pszErrdescr = ERR_error_string(errorCode, 0);
-				return  str_format::AStrFormatSafeT("OpenSSL error code: %1, desc: %2", errorCode, pszErrdescr ? pszErrdescr : "Unknown error");
+				return  str_format::AStrFormatSafeT("OpenSSL error code: {0}, desc: {1}", errorCode, pszErrdescr ? pszErrdescr : "Unknown error");
 			}
 		}
 	}

@@ -280,7 +280,7 @@ public:
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT(L"Can't seek stream pos: %1", position);
+			exc.AddMsgT(L"Can't seek stream pos: {0}", position);
 			throw;
 		}
 	}
@@ -361,7 +361,7 @@ public:
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT(L"Can't create stream size: %1", nSize);
+			exc.AddMsgT(L"Can't create stream size: {0}", nSize);
 			throw;
 		}
 	}

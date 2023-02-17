@@ -82,7 +82,7 @@ namespace multibyte
 				/* This is an illegal encoding.  */
 				/* errno = (EILSEQ); */
 				//return (size_t)-1;
-				throw CExcBase("mbsnrtowcs wrong symbol %1", byte);
+				throw CExcBase("mbsnrtowcs wrong symbol {0}", byte);
 			}
 
 			/* Read the possible remaining bytes.  */
@@ -94,7 +94,7 @@ namespace multibyte
 				{
 					/* This is an illegal encoding.  */
 					/* errno = (EILSEQ); */
-					throw CExcBase("mbsnrtowcs wrong symbol %1", byte);
+					throw CExcBase("mbsnrtowcs wrong symbol {0}", byte);
 				}
 
 				value <<= 6;
@@ -177,7 +177,7 @@ namespace multibyte
 			{
 				/* This is an illegal encoding.  */
 				/* errno = (EILSEQ); */
-				throw CExcBase("mbslen wrong symbol %1", byte);
+				throw CExcBase("mbslen wrong symbol {0}", byte);
 			}
 
 			/* Read the possible remaining bytes.  */
@@ -189,7 +189,7 @@ namespace multibyte
 				{
 					/* This is an illegal encoding.  */
 					/* errno = (EILSEQ); */
-					throw CExcBase("mbslen wrong symbol %1", byte);
+					throw CExcBase("mbslen wrong symbol {0}", byte);
 				}
 
 				value <<= 6;
@@ -263,7 +263,7 @@ namespace multibyte
 			{
 				/* This is an illegal encoding.  */
 				/* errno = (EILSEQ); */
-				throw CExcBase("mbslen wrong symbol %1", byte);
+				throw CExcBase("mbslen wrong symbol {0}", byte);
 			}
 
 			/* Read the possible remaining bytes.  */
@@ -275,7 +275,7 @@ namespace multibyte
 				{
 					/* This is an illegal encoding.  */
 					/* errno = (EILSEQ); */
-					throw CExcBase("mbslen wrong symbol %1", byte);
+					throw CExcBase("mbslen wrong symbol {0}", byte);
 				}
 
 				value <<= 6;
@@ -317,7 +317,7 @@ namespace multibyte
 			{
 				/* This is no correct ISO 10646 character.  */
 				/* errno = (EILSEQ); */
-				throw CExcBase("wcsnrtombs: wrong symbol %1", wc);
+				throw CExcBase("wcsnrtombs: wrong symbol {0}", wc);
 			}
 			else if (!(wc & ~0x7f))
 			{
@@ -386,7 +386,7 @@ namespace multibyte
 			{
 				/* This is no correct ISO 10646 character.  */
 				/* errno = (EILSEQ); */
-				throw CExcBase("wcsmblen: wrong symbol %1", wc);
+				throw CExcBase("wcsmblen: wrong symbol {0}", wc);
 			}
 			if (!(wc & ~0x7f))
 			{
@@ -423,7 +423,7 @@ namespace multibyte
 			{
 				/* This is no correct ISO 10646 character.  */
 				/* errno = (EILSEQ); */
-				throw CExcBase("wcsmblen: wrong symbol %1", wc);
+				throw CExcBase("wcsmblen: wrong symbol {0}", wc);
 			}
 			if (!(wc & ~0x7f))
 			{

@@ -26,7 +26,7 @@ namespace CommonLib
 		if (size > 0)
 		{
 			if ((this->m_nPos + size) > Size())
-				throw CExcBase(L"CFxMemoryWriteStream: out of range pos: %1, read size: %2", m_nPos, size);
+				throw CExcBase(L"CFxMemoryWriteStream: out of range pos: {0}, read size: {1}", m_nPos, size);
 
 			::memcpy(Buffer() + m_nPos, buffer, size);
 			m_nPos += size;
@@ -40,7 +40,7 @@ namespace CommonLib
 		if (size > 0)
 		{
 			if ((this->m_nPos + size) > Size())
-				throw CExcBase(L"CFxMemoryWriteStream: out of range pos: %1, read size: %2", m_nPos, size);
+				throw CExcBase(L"CFxMemoryWriteStream: out of range pos: {0}, read size: {1}", m_nPos, size);
 
 			byte_t *pBuffer = Buffer();
 			for (size_t i = 0; i < size; m_nPos++, i++)

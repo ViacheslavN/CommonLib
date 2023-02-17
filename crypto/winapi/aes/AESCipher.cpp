@@ -59,7 +59,7 @@ namespace CommonLib
 				try
 				{
 					if (keyData.size() != GetKeySize())
-						throw CExcBase("AESCipher: wrong size %1, expected ", keyData.size(), GetKeySize());
+						throw CExcBase("AESCipher: wrong size {0}, expected ", keyData.size(), GetKeySize());
 
 					PBYTE pbKeyObject = (PBYTE)::HeapAlloc(::GetProcessHeap(), 0, m_nObjectSize);
 				

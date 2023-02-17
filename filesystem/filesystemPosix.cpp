@@ -36,7 +36,7 @@ namespace CommonLib
 	void CFileUtils::RenameFile(const astr& oldFile, const astr& newFile)
 	{
 		if(rename(oldFile.c_str(), newFile.c_str()) != 0)
-			throw CPosixExc(errno, "Failed to rename file %1->%2", oldFile, newFile);
+			throw CPosixExc(errno, "Failed to rename file {0}->{1}", oldFile, newFile);
 	}
 
 	void CFileUtils::RenameFile(const wstr& oldFile, const wstr& newFile)
@@ -47,7 +47,7 @@ namespace CommonLib
 	void  CFileUtils::DeleteFile(const astr& path)
 	{
 		if (remove(path.c_str()) != 0)
-			throw CPosixExc(errno, "Failed to delete file %1", path);
+			throw CPosixExc(errno, "Failed to delete file {0}", path);
 	}
 
 	void CFileUtils::DeleteFile(const wstr& path)
@@ -58,7 +58,7 @@ namespace CommonLib
 	void CFileUtils::FileDelFolder(const astr& path)
 	{
 		if (rmdir(path.c_str()) != 0)
-			throw CPosixExc(errno, "Failed to delete dir %1", path);
+			throw CPosixExc(errno, "Failed to delete dir {0}", path);
 	}
 
 	void CFileUtils::FileDelFolder(const wstr& path)

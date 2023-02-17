@@ -49,7 +49,7 @@ namespace CommonLib
 		size_t  initResult = ZSTD_initCStream(m_pZstd->m_stream, compressionLevel);
 		if (ZSTD_isError(initResult))
 		{
-			throw CExcBase("failed to create ZSTD_initCStream: %1", ZSTD_getErrorName(initResult));
+			throw CExcBase("failed to create ZSTD_initCStream: {0}", ZSTD_getErrorName(initResult));
 		}
 
 	}
@@ -81,7 +81,7 @@ namespace CommonLib
 			size_t toRead = ZSTD_compressStream(m_pZstd->m_stream, &m_pZstd->m_output, &m_pZstd->m_input);
 			if (ZSTD_isError(toRead))
 			{
-				throw CExcBase("Execute compressStream failed: %1", ZSTD_getErrorName(toRead));
+				throw CExcBase("Execute compressStream failed: {0}", ZSTD_getErrorName(toRead));
 
 			}
 		}
@@ -94,7 +94,7 @@ namespace CommonLib
 
 		size_t unflushed = ZSTD_endStream(m_pZstd->m_stream, &m_pZstd->m_output);
 		if (ZSTD_isError(unflushed)) 
-			throw CExcBase("ZSTD_endStream() error: %1", ZSTD_getErrorName(unflushed));
+			throw CExcBase("ZSTD_endStream() error: {0}", ZSTD_getErrorName(unflushed));
 		
 	}
 

@@ -103,10 +103,10 @@ void TestDatabase(CommonLib::crypto::ICryptoFactoryPtr ptrCryptoFactory, const a
 		{			
 			ptrStatment->Reset();
 			ptrStatment->BindInt32(1, key);
-			ptrStatment->BindText(2, CommonLib::str_format::AStrFormatSafeT("first_name_%1", key), true);
-			ptrStatment->BindText(3, CommonLib::str_format::AStrFormatSafeT("last_name_%1", key), true);
-			ptrStatment->BindText(4, CommonLib::str_format::AStrFormatSafeT("email_%1", key), true);
-			ptrStatment->BindText(5, CommonLib::str_format::AStrFormatSafeT("phone_%1", key), true);
+			ptrStatment->BindText(2, CommonLib::str_format::AStrFormatSafeT("first_name_{0}", key), true);
+			ptrStatment->BindText(3, CommonLib::str_format::AStrFormatSafeT("last_name_{0}", key), true);
+			ptrStatment->BindText(4, CommonLib::str_format::AStrFormatSafeT("email_{0}", key), true);
+			ptrStatment->BindText(5, CommonLib::str_format::AStrFormatSafeT("phone_{0}", key), true);
 
 			key += 1;
 			ptrStatment->Next();

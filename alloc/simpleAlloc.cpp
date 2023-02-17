@@ -24,7 +24,7 @@ void* CSimpleAlloc::Alloc(size_t size)
 {
 	if (size > m_maxBlockAllocSize)
 	{
-		throw CExcBase("Failed alloc: size %1 more than maximum %2", size, m_maxBlockAllocSize);
+		throw CExcBase("Failed alloc: size {0}1 more than maximum {1}", size, m_maxBlockAllocSize);
 	}
 
 	if (size == 0)
@@ -45,7 +45,7 @@ void* CSimpleAlloc::Alloc(size_t size)
 
 	if (data == nullptr)
 	{
-		throw CExcBase("Failed alloc, size: %1", size);
+		throw CExcBase("Failed alloc, size: {0}", size);
 	}
 
 	if (IsDebugMode())
@@ -92,13 +92,13 @@ void  CSimpleAlloc::Free(void* ptr)
 			throw CExcBase("Failed free, error check first symbol");
 
 		if (size == 0 || size > m_maxBlockAllocSize)
-			throw CExcBase("Failed free, wrong size %1", size);
+			throw CExcBase("Failed free, wrong size {0}", size);
 
 	
 		memcpy(&checkSum, pBuf + 2*sizeof(size_t) + size, sizeof(size_t));
 
 		if ((_mem_check_symbol_ - size) != checkSum)
-			throw CExcBase("Failed free, wrong checksum, size %1, checksum %2", size, checkSum);
+			throw CExcBase("Failed free, wrong checksum, size {0}, checksum {1}", size, checkSum);
 
 		m_totalFree += size;
 		m_totalBalanceAllocMemory -= size;

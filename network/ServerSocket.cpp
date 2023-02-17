@@ -41,7 +41,7 @@ namespace CommonLib
 			}
 			catch (std::exception& exc)
 			{
-				CExcBase::RegenExcT("Failed to bind socket to port %1", port, exc);
+				CExcBase::RegenExcT("Failed to bind socket to port {0}", port, exc);
 			}
 
 		}
@@ -51,7 +51,7 @@ namespace CommonLib
 			try
 			{
 				if (startPort > endPort)
-					throw CExcBase("invalid range start %1, end %2", startPort, endPort);
+					throw CExcBase("invalid range start {0}, end {1}", startPort, endPort);
 
 				SetExclusiveAddressOption();
 				CSocketAddr addr;
@@ -88,7 +88,7 @@ namespace CommonLib
 			}
 			catch (std::exception& exc)
 			{
-				CExcBase::RegenExcT("Failed to bind socket from  %1 to %2", startPort, endPort, exc);
+				CExcBase::RegenExcT("Failed to bind socket from  {0} to {1}", startPort, endPort, exc);
 			}
 		}
 

@@ -24,7 +24,7 @@ namespace CommonLib
 
 			int res = deflateInit(&strm, level);
 			if (res != Z_OK)
-				throw CExcBase("deflateInit error %1", res);
+				throw CExcBase("deflateInit error {0}", res);
 
 			std::streamsize size;
 			while ((size =  pSrc->Read(&inBuf[0], inBuf.size())) != 0)
@@ -37,7 +37,7 @@ namespace CommonLib
 				{
 					res = deflate(&strm, Z_NO_FLUSH);
 					if (res != Z_OK)
-						throw CExcBase("deflate error %1", res);
+						throw CExcBase("deflate error {0}", res);
 
 					if (strm.avail_out == 0)
 					{
@@ -63,12 +63,12 @@ namespace CommonLib
 			}
 
 			if (res != Z_STREAM_END)
-				throw CExcBase("deflate error %1", res);
+				throw CExcBase("deflate error {0}", res);
 
 			pDst->Write(&outBuf[0], outBuf.size() - strm.avail_out);
 			int err = deflateEnd(&strm);
 			if (err != Z_OK)
-				throw CExcBase("deflateEnd error %1", err);
+				throw CExcBase("deflateEnd error {0}", err);
 		}
 		catch (std::exception& exc)
 		{
@@ -96,7 +96,7 @@ namespace CommonLib
 
 			int res = inflateInit(&strm);
 			if (res != Z_OK)
-				throw CExcBase("inflateInit error %1", res);
+				throw CExcBase("inflateInit error {0}", res);
 
 			std::streamsize size;
 			while ((size = pSrc->Read(&inBuf[0], inBuf.size())) != 0)
@@ -131,12 +131,12 @@ namespace CommonLib
 			}
 
 			if (res != Z_STREAM_END)
-				throw CExcBase("inflate error %1", res);
+				throw CExcBase("inflate error {0}", res);
 				 
 			pDst->Write(&outBuf[0], outBuf.size() - strm.avail_out);
 			res = inflateEnd(&strm);
 			if (res != Z_OK)
-				throw CExcBase("inflateEnd error %1", res);
+				throw CExcBase("inflateEnd error {0}", res);
 
 		}
 		catch (std::exception& exc)

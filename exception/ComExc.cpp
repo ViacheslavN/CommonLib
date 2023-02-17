@@ -19,7 +19,7 @@ namespace CommonLib
 			if (!descriptionIsNull)
 				errDesc = err.Description();
 
-			CExcBase::AddMsg(str_format::AStrFormatSafeT("com err: %1, decs: %2", StringEncoding::str_w2utf8_safe(err.ErrorMessage()), StringEncoding::str_w2utf8_safe(errDesc)));
+			CExcBase::AddMsg(str_format::AStrFormatSafeT("com err: {0}, decs: {1}", StringEncoding::str_w2utf8_safe(err.ErrorMessage()), StringEncoding::str_w2utf8_safe(errDesc)));
 			CExcBase::AddMsg(GetComErrorDesc(m_hr));
 		}
 	}
@@ -33,7 +33,7 @@ namespace CommonLib
 			if (!descriptionIsNull)
 				errDesc = err.Description();
 
-			CExcBase::AddMsg(str_format::AStrFormatSafeT("com err: %1, decs: %2", StringEncoding::str_w2utf8_safe(err.ErrorMessage()), StringEncoding::str_w2utf8_safe(errDesc)));
+			CExcBase::AddMsg(str_format::AStrFormatSafeT("com err: {0}, decs: {1}", StringEncoding::str_w2utf8_safe(err.ErrorMessage()), StringEncoding::str_w2utf8_safe(errDesc)));
 			CExcBase::AddMsg(GetComErrorDesc(m_hr));
 		}
 	}

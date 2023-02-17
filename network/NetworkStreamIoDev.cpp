@@ -189,7 +189,7 @@ namespace CommonLib
 			m_BufForCipher.resize(m_stage.m_recvSize);
 			uint32_t decSize = m_pDataCipher->Decrypt(m_stage.m_BufForRead.data(), m_stage.m_recvSize, m_BufForCipher.data(), (uint32_t)m_BufForCipher.size());
 			if (dataSize != decSize)
-				throw CommonLib::CExcBase("Wrong read size %1, dec size %2", dataSize, decSize);
+				throw CommonLib::CExcBase("Wrong read size {0}, dec size {1}", dataSize, decSize);
 
 			memcpy(dataPtr, m_BufForCipher.data(), decSize);
 			return decSize;

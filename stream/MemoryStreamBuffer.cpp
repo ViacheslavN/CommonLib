@@ -75,7 +75,7 @@ namespace CommonLib
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT(L"Can't create stream size: %1", nSize);
+			exc.AddMsgT(L"Can't create stream size: {0}", nSize);
 			throw;
 		}
 	}	

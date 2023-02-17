@@ -25,7 +25,7 @@ namespace CommonLib
 		uint32_t CXTSBlockChiper::Encrypt(int64_t nBlockId, const byte_t* srcBuf, uint32_t srcSize, byte_t* dstBuf, uint32_t dstSize)
 		{
 			if (srcSize < dstSize)
-				throw CExcBase("XTSBlockChiper: wrong dst size, src: %1, dst: %2", srcSize, dstSize);
+				throw CExcBase("XTSBlockChiper: wrong dst size, src: {0}, dst: {1}", srcSize, dstSize);
 
 			memcpy(dstBuf, srcBuf, srcSize);
 			return Encrypt(nBlockId, dstBuf, srcSize);
@@ -67,7 +67,7 @@ namespace CommonLib
 			}
 			catch (std::exception& exc)
 			{
-				CExcBase::RegenExcT("XTSBlockChiper: Failed to encrypt, block id %1, src: %2", nBlockId, srcSize, exc);
+				CExcBase::RegenExcT("XTSBlockChiper: Failed to encrypt, block id {0}, src: {1}", nBlockId, srcSize, exc);
 				throw;
 			}
 		}
@@ -110,7 +110,7 @@ namespace CommonLib
 			}
 			catch (std::exception& exc)
 			{
-				CExcBase::RegenExcT("XTSBlockChiper: Failed to decrypt, block id %1, src: %2", nBlockId, srcSize, exc);
+				CExcBase::RegenExcT("XTSBlockChiper: Failed to decrypt, block id {0}, src: {1}", nBlockId, srcSize, exc);
 				throw;
 			}
 

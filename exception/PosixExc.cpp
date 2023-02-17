@@ -37,7 +37,7 @@ namespace CommonLib
 			return astr(err_descr);
 #endif
 
-		return str_format::AStrFormatSafeT("POSIX Error: %1", errCode);
+		return str_format::AStrFormatSafeT("POSIX Error: {0}", errCode);
 
 	}
 

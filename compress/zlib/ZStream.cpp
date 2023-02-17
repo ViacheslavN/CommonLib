@@ -52,7 +52,7 @@ namespace CommonLib
 			m_strm.zfree = 0;
 			int res = deflateInit(&m_strm, level);
 			if (res != Z_OK)
-				throw CommonLib::CExcBase("deflateInit error %1", res);
+				throw CommonLib::CExcBase("deflateInit error {0}", res);
 		}
 		catch (std::exception& exc)
 		{
@@ -68,7 +68,7 @@ namespace CommonLib
 			m_strm.zfree = 0;
 			int	res = inflateInit(&m_strm);
 			if (res != Z_OK)
-				throw CommonLib::CExcBase("deflateInit error %1", res);
+				throw CommonLib::CExcBase("deflateInit error {0}", res);
 		}
 		catch (std::exception& exc)
 		{
@@ -87,7 +87,7 @@ namespace CommonLib
 				err = inflateEnd(&m_strm);
 
 			if (err != Z_OK)
-				throw CExcBase("deflateEnd error %1", err);
+				throw CExcBase("deflateEnd error {0}", err);
 		}
 		catch (std::exception& exc)
 		{

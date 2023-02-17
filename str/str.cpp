@@ -24,43 +24,53 @@ long TStrtol<char>(const char * str, char ** endptr, int base)
 	return  strtol(str, endptr, base);
 }
 
+
 template <class TChar, class TStr, class TContainer>
-TStr StrFormatSafeT(const TStr& format, const TContainer& args, TChar checkSymbol)
+TStr StrFormatSafeT(const TStr& format, const TContainer& args, TChar startSymbol, TChar endSymbol)
 {
-	std::basic_stringstream<TChar>  outBuf;
-
-	const TChar* pFormaStr = format.c_str();
-	while (*pFormaStr != 0)
+	TStr result;
+	for (size_t i = 0, sz = format.length(); i < sz;)
 	{
-
-		if (*pFormaStr != checkSymbol)
+		if (format[i] == startSymbol)
 		{
-			outBuf << *pFormaStr;
-			pFormaStr++;
+			size_t pos = format.find(endSymbol, i);
+			if (pos == TStr::npos)
+			{
+				result += format.c_str() + i;
+				break;
+			}
+
+			size_t len = pos - i - 1;
+			TStr subStr = format.substr(i + 1, len);
+
+			TChar* pSubStrAfterNumber = 0;
+			long  arg = TStrtol<TChar>(subStr.c_str(), &pSubStrAfterNumber, 10);
+			if (subStr.c_str() == pSubStrAfterNumber)
+			{
+				arg = -1;
+			}		 
+
+			if (arg >= (long)args.size() || arg < 0)
+			{
+				result += startSymbol;
+				result += subStr;
+				result += endSymbol;
+			}
+			else
+				result += args[arg];
+
+			i = pos + 1;
+
 		}
 		else
 		{
-			pFormaStr++;
-
-			TChar* pSubStrAfterNumber = 0;
-			long  arg = TStrtol<TChar>(pFormaStr, &pSubStrAfterNumber, 10);
-
-			if (pSubStrAfterNumber == pFormaStr)
-				outBuf << checkSymbol;
-			else if ((arg - 1) >= (long)args.size() || arg < 1)
-			{
-				outBuf << checkSymbol;
-				outBuf << arg;
-			}
-			else
-				outBuf << args[arg - 1];
-
-			pFormaStr = pSubStrAfterNumber;
+			result += format[i];
+			i += 1;
 		}
+
 	}
 
-	return outBuf.str();
-
+	return result;
 }
 
 wstr str_format::StrFormatSafe(const wstr& str)
@@ -70,7 +80,7 @@ wstr str_format::StrFormatSafe(const wstr& str)
 
 wstr str_format::StrFormatSafe(const wstr& format, const wstrvec& args)
 {
-	return StrFormatSafeT(format, args, L'%');
+	return StrFormatSafeT(format, args, L'{', L'}');
 }
 
 wstr str_format::StrFormatSafe(const wstr& format, const wstr& arg1)
@@ -140,7 +150,7 @@ wstr str_format::StrFormatSafe(const wstr& format, const wstr& arg1, const wstr&
 
 astr str_format::StrFormatSafe(const astr& format, const astrvec& args)
 {
-	return StrFormatSafeT(format, args, '%');
+	return StrFormatSafeT(format, args, '{', '}');
 }
 
 astr str_format::StrFormatSafe(const astr& str)

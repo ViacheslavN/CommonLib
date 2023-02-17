@@ -77,7 +77,7 @@ namespace CommonLib
 				pAddrInfo = pAddrInfo->ai_next;
 			}
 
-			throw CExcBase("Cannot connect to host %1. Errors: %2", hostName, errors);
+			throw CExcBase("Cannot connect to host {0}. Errors: {1}", hostName, errors);
 		}
 	}
 }

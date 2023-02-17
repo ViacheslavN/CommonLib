@@ -29,7 +29,7 @@ namespace CommonLib
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT(L"Failed write bytes, size: %1", size);
+			exc.AddMsgT(L"Failed write bytes, size: {0}", size);
 			throw;
 		}
 	}
@@ -47,7 +47,7 @@ namespace CommonLib
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT(L"Failed write bytes inverse, size: %1", size);
+			exc.AddMsgT(L"Failed write bytes inverse, size: {0}", size);
 			throw;
 		}
 	}
@@ -77,7 +77,7 @@ namespace CommonLib
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT(L"Failed resize buffer, size: %1", nSize);
+			exc.AddMsgT(L"Failed resize buffer, size: {0}", nSize);
 			throw;
 		}
 	
@@ -112,7 +112,7 @@ namespace CommonLib
 		}
 		catch (CExcBase& exc)
 		{
-			exc.AddMsgT("Failed resize with capacity, size %1", nSize);
+			exc.AddMsgT("Failed resize with capacity, size {0}", nSize);
 			throw;
 		}
 
@@ -129,7 +129,7 @@ namespace CommonLib
 	std::streamsize  CReadMemoryStream::ReadBytes(byte_t* dst, size_t size)
 	{
 		if ((this->m_nPos + size) > Size())
-			throw CExcBase(L"ReadMemoryStream: out of range pos: %1, read size: %2", m_nPos, size);
+			throw CExcBase(L"ReadMemoryStream: out of range pos: {0}, read size: {1}", m_nPos, size);
 
 		::memcpy(dst, Buffer() + this->m_nPos, size);
 		this->m_nPos += size;
@@ -141,7 +141,7 @@ namespace CommonLib
 	std::streamsize  CReadMemoryStream::ReadInverse(byte_t* buffer, size_t size)
 	{
 		if ((this->m_nPos + size) > Size())
-			throw CExcBase(L"ReadMemoryStream: out of range pos: %1, read size: %2", m_nPos, size);
+			throw CExcBase(L"ReadMemoryStream: out of range pos: {0}, read size: {1}", m_nPos, size);
 
 		byte_t *pData = Buffer();
 		for (size_t i = 0; i < size; m_nPos++, i++)

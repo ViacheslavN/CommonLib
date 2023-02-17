@@ -80,7 +80,7 @@ namespace CommonLib
 				m_FileHandle = open(pszFileNameUtf8, file_flags, pmode);
 
 				if (!IsValid())
-					throw CPosixExc(errno, "Filed open file: %1, ft: %2, mode %3", pszFileNameUtf8, file_flags, (int)pmode);
+					throw CPosixExc(errno, "Filed open file: {0}, ft: {1}, mode {2}", pszFileNameUtf8, file_flags, (int)pmode);
 
 			}
 
@@ -104,14 +104,14 @@ namespace CommonLib
 				int64_t nRet = lseek64(m_FileHandle, nPos, offset == soFromBegin ? SEEK_SET : offset == soFromCurrent ? SEEK_CUR : SEEK_END);
 
 				if(nRet == -1)
-					throw CPosixExc(errno, "Filed to set file64 pos: %1, offset: %2", nPos, offset);
+					throw CPosixExc(errno, "Filed to set file64 pos: {0}, offset: {1}", nPos, offset);
 			}
 
 			void CFilePosix::SetFilePos(uint32_t nPos, enSeekOffset offset)
 			{
 				int nRet = lseek(m_FileHandle, nPos, offset == soFromBegin ? SEEK_SET : offset == soFromCurrent ? SEEK_CUR
 					: SEEK_END);
-				throw CPosixExc(errno, "Filed to set file pos: %1, offset: %2", nPos, offset);
+				throw CPosixExc(errno, "Filed to set file pos: {0}, offset: {1}", nPos, offset);
 			}
 
 			uint64_t CFilePosix::GetFilePos() const

@@ -35,20 +35,20 @@ namespace CommonLib
 	void CFileUtils::DeleteFile(const wstr& path)
 	{
 		if (::DeleteFile(path.c_str()) == FALSE)
-			throw CWinExc("Failed to delete file %1", StringEncoding::str_w2a_safe(path));
+			throw CWinExc("Failed to delete file {0}", StringEncoding::str_w2a_safe(path));
 
 	}
 
 	void CFileUtils::FileDelFolder(const wstr& path)
 	{
 		if (::RemoveDirectoryW(path.c_str()) == FALSE)
-			throw CWinExc("Failed to delete folder %1", StringEncoding::str_w2a_safe(path));
+			throw CWinExc("Failed to delete folder {0}", StringEncoding::str_w2a_safe(path));
 	}
 
 	void CFileUtils::RenameFile(const wstr& oldFile, const wstr& newFile)
 	{
 		if(::MoveFileW(oldFile.c_str(), newFile.c_str()) == FALSE)
-			throw CWinExc("Failed rename file %1->%2", StringEncoding::str_w2a_safe(oldFile), StringEncoding::str_w2a_safe(newFile));
+			throw CWinExc("Failed rename file {0}->{1}", StringEncoding::str_w2a_safe(oldFile), StringEncoding::str_w2a_safe(newFile));
 	}
 
 

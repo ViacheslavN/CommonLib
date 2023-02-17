@@ -20,7 +20,7 @@ namespace CommonLib
 				}
 				catch (std::exception& exc)
 				{
-					CExcBase::RegenExcT("CNG: Failed to create provider AlgId: %1, Flags: %2", pszAlgId, (uint32_t)dwFlags, exc);
+					CExcBase::RegenExcT("CNG: Failed to create provider AlgId: {0}, Flags: {1}", pszAlgId, (uint32_t)dwFlags, exc);
 					throw;
 				}
 			}

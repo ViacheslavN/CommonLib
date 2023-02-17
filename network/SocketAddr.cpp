@@ -94,7 +94,7 @@ namespace CommonLib
 
 		astr CSocketAddr::GetAddres(const in_addr& sin_addr, unsigned short port)
 		{
-			return str_format::AStrFormatSafeT("%1.%2.%3.%4:%5", int(sin_addr.s_addr & 0xFF),
+			return str_format::AStrFormatSafeT("{0}.{1}.{2}.{3}:{4}", int(sin_addr.s_addr & 0xFF),
 				int((sin_addr.s_addr & 0xFF00) >> 8),
 				int((sin_addr.s_addr & 0xFF0000) >> 16),
 				int((sin_addr.s_addr & 0xFF000000) >> 24),

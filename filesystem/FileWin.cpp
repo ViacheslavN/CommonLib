@@ -119,13 +119,13 @@ namespace CommonLib
 					win_mode = OPEN_EXISTING;
 					break;
 				default:
-					throw CExcBase(L"Error open file %1, Wrong OpenFileType %2", pszFileName, (int)mode);
+					throw CExcBase(L"Error open file {0}, Wrong OpenFileType {1}", pszFileName, (int)mode);
 					break;
 				}
 
 				m_FileHandle = ::CreateFile(pszFileName, win_access, win_share, lpSecurityAttributes, win_mode, dwFlagsAndAttributes, hTemplateFile);
 				if (!IsValid())
-					throw CWinExc(L"Error open file %1", pszFileName);
+					throw CWinExc(L"Error open file {0}", pszFileName);
 			}
 
 			uint64_t CFileWin32::GetFileSize() const
@@ -146,7 +146,7 @@ namespace CommonLib
 					: FILE_END);
 
 				if (bRet == FALSE)
-					throw CWinExc(L"Error set file pos, position %1, type %2", nPos, (int)offset);
+					throw CWinExc(L"Error set file pos, position {0}, type {1}", nPos, (int)offset);
 			}
 
 			void CFileWin32::SetFilePos(uint32_t nPos, enSeekOffset offset)
@@ -191,7 +191,7 @@ namespace CommonLib
 				DWORD dww = 0;
 				BOOL bRet = ::WriteFile(m_FileHandle, pData, (DWORD)nSize, &dww, NULL);
 				if (bRet == FALSE)
-					throw CWinExc(L"Error write file, data size %1", nSize);
+					throw CWinExc(L"Error write file, data size {0}", nSize);
 
 				return dww;
 			}
@@ -201,7 +201,7 @@ namespace CommonLib
 				DWORD dwr = 0;
 				BOOL bRet = ::ReadFile(m_FileHandle, pData, (DWORD)nSize, &dwr, NULL);
 				if (bRet == FALSE)
-					throw CWinExc(L"Error read file, data size %1", nSize);
+					throw CWinExc(L"Error read file, data size {0}", nSize);
 
 				return dwr;
 			}
