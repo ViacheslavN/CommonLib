@@ -282,5 +282,66 @@ namespace CommonLib
 			recvdata = retVal;
 			return true;
 		}
+
+		std::streamsize CBaseSocketIP::Write(const byte_t* dataPtr, size_t dataSize)
+		{
+			try
+			{
+				Send(dataPtr, dataSize);
+				return dataSize;
+			}
+			catch (std::exception& excSrc)
+			{
+				CExcBase::RegenExc("Failed to write to socket", excSrc);
+				throw;
+			}
+
+		}
+
+		std::streamsize CBaseSocketIP::Read(byte_t* dataPtr, size_t dataSize)
+		{
+			try
+			{
+				Recv(dataPtr, dataSize);
+				return dataSize;
+			}
+			catch (std::exception& excSrc)
+			{
+				CExcBase::RegenExc("Failed to read from socket", excSrc);
+				throw;
+			}
+		}
+
+		std::streamsize CBaseSocketIP::WriteNotBlocking(const byte_t* dataPtr, size_t dataSize)
+		{
+			try
+			{
+				size_t sendSize;
+				SendNotBlocking(dataPtr, dataSize, sendSize);
+
+				return (std::streamsize)sendSize;
+			}
+			catch (std::exception& excSrc)
+			{
+				CExcBase::RegenExc("Failed to write non blocking to socket", excSrc);
+				throw;
+			}
+		}
+
+		std::streamsize CBaseSocketIP::ReadNotBlocking(byte_t* dataPtr, size_t dataSize)
+		{
+			try
+			{
+				size_t readSize;
+				RecvNotBlocking(dataPtr, dataSize, readSize);
+
+				return (std::streamsize)readSize;
+			}
+			catch (std::exception& excSrc)
+			{
+				CExcBase::RegenExc("Failed to read non blocking from socket", excSrc);
+				throw;
+			}
+		}
 	}
 }

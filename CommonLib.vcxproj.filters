@@ -118,6 +118,9 @@
     <Filter Include="date">
       <UniqueIdentifier>{0ada976d-e8f4-4f2a-a8c5-cc9a3cadd794}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Communication">
+      <UniqueIdentifier>{6e73e566-a1a3-43be-be52-a9e702c0b545}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

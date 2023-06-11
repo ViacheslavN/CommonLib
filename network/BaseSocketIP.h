@@ -42,7 +42,7 @@ namespace CommonLib
  
 		typedef std::shared_ptr<class CBaseSocketIP> CSocketIPPtr;
 
-		class CBaseSocketIP
+		class CBaseSocketIP : public io::IWriteRead, io::IWriteReadNotBlocking
 		{
 			public:
 				enum OpenType
@@ -56,6 +56,12 @@ namespace CommonLib
 				CBaseSocketIP(SOCKET socket);
 
 				virtual ~CBaseSocketIP();
+
+				virtual std::streamsize Write(const byte_t* dataPtr, size_t dataSize);
+				virtual std::streamsize Read(byte_t* dataPtr, size_t dataSize);
+
+				virtual std::streamsize WriteNotBlocking(const byte_t* dataPtr, size_t dataSize);
+				virtual std::streamsize ReadNotBlocking(byte_t* dataPtr, size_t dataSize);
 
 				void OpenSocket(OpenType type);
 				void Close();

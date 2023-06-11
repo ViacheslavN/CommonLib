@@ -11,6 +11,8 @@ namespace CommonLib
 
 		int Compare(const TVecBuffer& first, const TVecBuffer& second);
 		bool Equals(const TVecBuffer& first, const TVecBuffer& second);
+
+		typedef std::shared_ptr<TVecBuffer> TVecBufferPtr;
 	
 	}
 
